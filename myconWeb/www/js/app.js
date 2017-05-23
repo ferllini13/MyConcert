@@ -83,7 +83,32 @@ angular.module('starter', ['ionic'])
 
 
 
-.controller('controlador_menu', function($scope, $state){
+.controller('controlador_menu', function($scope, $state,loginData){
+	$scope.login = loginData.getLogin();
+	$scope.usuario_fanatico=false;
+    $scope.usuario_promocion=false;
+	
+	var tipo_usuario=loginData.getLogin().rol;
+	if (tipo_usuario==0){
+		$scope.usuario_fanatico=true;
+	}
+	else if (tipo_usuario==1){
+		$scope.usuario_promocion=true;
+	}
+	else if (tipo_usuario==2){//usuario dios
+		$scope.usuario_promocion=true;
+		$scope.usuario_fanatico=true;
+	}
+	//colocar el else y algun tipo de error
+	
+	
+	
+	$scope.logout = function(){        
+        $state.go('login');
+        window.location.reload()    
+    ;
+    };
+	
 })
 
 
@@ -104,7 +129,7 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
    	this.login = login;// username, password
    	this.login.id=id;
    	this.login.name=name;
-	this.login.name=name;
+	this.login.rol=rol;
 }
 }
 })
