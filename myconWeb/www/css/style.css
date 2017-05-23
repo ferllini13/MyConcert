@@ -1,13 +1,7 @@
-body {
-      font: 400 15px/1.8 Lato, sans-serif;
-      color: #777;
-  }  
-
-
 .carousel-inner img {
       -webkit-filter: grayscale(90%);
       filter: grayscale(90%); /* make all photos black and white */ 
-      width: 50%; /* Set width to 100% */
+      width: 39%; /* Set width to 100% */
       margin: auto;
   }
   .carousel-caption h3 {
