@@ -6,7 +6,7 @@ angular.module('starter', ['ionic'])
 	$stateProvider.state('login', {
                 url:'/login',
                 controller: 'controlador_login',
-                templateUrl:'templates/login.html'
+                templateUrl:'html/login.html'
             })
     $stateProvider.state('inicio', {
                 url:'/inicio',
@@ -20,11 +20,11 @@ angular.module('starter', ['ionic'])
 
 
 .controller('controladro_login', function($scope, $state, loginData,$http){
-    $scope.login = {username:'', password:'',name:'',id:'', rol='' };
-        var form = document.getElementById("myForm");  
-        form.onsubmit = function(){
-        form.reset();
-      }
+    $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
+        //var form = document.getElementById("myForm");  
+        //form.onsubmit = function(){
+        //form.reset();
+      //}
 		
 		
 		
@@ -70,6 +70,26 @@ angular.module('starter', ['ionic'])
 
 
 
+
+
+
+
+
+.controller('controlador_inicio', function($scope, $state){
+})
+
+
+
+
+
+
+.controller('controlador_menu', function($scope, $state){
+})
+
+
+
+
+
 //hay que modificar lo de abajo en nombres segun fotmato y lo que se va a guardar XD
 
 
@@ -91,6 +111,6 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
 
 .directive('menu', function() {
   return {
-     templateUrl: 'templates/menu.html',
+     templateUrl: 'html/menu.html',
       controller:"controlador_menu"
   };});
