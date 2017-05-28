@@ -1,4 +1,5 @@
-var web_sevice_ip = ""; 
+var webSeviceIp = 'http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear';
+
 angular.module('starter', ['ionic'])
 
 .config( function ( $stateProvider , $urlRouterProvider ){
@@ -14,12 +15,12 @@ angular.module('starter', ['ionic'])
                 templateUrl:'html/inicio.html'
             })
     
-      $urlRouterProvider.otherwise('/main');
+      $urlRouterProvider.otherwise('/login');
 })
    
 
 
-.controller('LoginController', function($scope, $state, loginData,$http){
+.controller('LoginController', function($scope, $state,$http){
     $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
         //var form = document.getElementById("myForm");  
         //form.onsubmit = function(){
@@ -75,9 +76,6 @@ angular.module('starter', ['ionic'])
 
 
 
-.controller('mainController', function($scope, $state){
-})
-
 
 
 
@@ -105,11 +103,10 @@ angular.module('starter', ['ionic'])
 	
 	$scope.tryp = function () {
 		console.log("entramos p");
-     var url = 'http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear'; 
      var roleObj = { 
          frase:"JASON MAMAPICHAS"
      };
-     $http.post(url, roleObj).then(function(response) {
+     $http.post(webSeviceIp, roleObj).then(function(response) {
 		 console.log("respuesta");
 		  var answer= angular.fromJson(response.data.d);
          console.log(answer);
@@ -120,8 +117,8 @@ angular.module('starter', ['ionic'])
 	
 	$scope.tryg =  function(login){
 		console.log("entramos g");
-		var url2='http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear?frase={%22frase%22:%22jason%20es%20playo%22}';
-       $http.get(url2)
+		var request = request.concat(webSeviceIp, '?frase={%22frase%22:%22jason%20es%20playo%22}');
+       $http.get(request)
           .then(function (response) {
             console.log("respuesta");
 		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
@@ -143,6 +140,9 @@ angular.module('starter', ['ionic'])
 })
 
 
+
+.controller('mainController', function($scope, $state){
+})
 
 
 
