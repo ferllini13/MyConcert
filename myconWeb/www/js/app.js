@@ -5,21 +5,21 @@ angular.module('starter', ['ionic'])
     
 	$stateProvider.state('login', {
                 url:'/login',
-                controller: 'controlador_login',
+                controller: 'loginControlker',
                 templateUrl:'html/login.html'
             })
-    $stateProvider.state('inicio', {
-                url:'/inicio',
-                controller: 'controlador_inicio',
+    $stateProvider.state('main', {
+                url:'/main',
+                controller: 'mainController',
                 templateUrl:'html/inicio.html'
             })
     
-      $urlRouterProvider.otherwise('/inicio');
+      $urlRouterProvider.otherwise('/main');
 })
    
 
 
-.controller('controladro_login', function($scope, $state, loginData,$http){
+.controller('LoginController', function($scope, $state, loginData,$http){
     $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
         //var form = document.getElementById("myForm");  
         //form.onsubmit = function(){
@@ -75,7 +75,7 @@ angular.module('starter', ['ionic'])
 
 
 
-.controller('controlador_inicio', function($scope, $state){
+.controller('mainController', function($scope, $state){
 })
 
 
@@ -83,7 +83,63 @@ angular.module('starter', ['ionic'])
 
 
 
-.controller('controlador_menu', function($scope, $state){
+.controller('menuController', function($scope, $state,$http){
+	//$scope.login = loginData.getLogin();
+	//$scope.usuario_fanatico=false;
+    //$scope.usuario_promocion=false;
+	
+	/*var tipo_usuario=loginData.getLogin().rol;
+	if (tipo_usuario==0){
+		$scope.usuario_fanatico=true;
+	}
+	else if (tipo_usuario==1){
+		$scope.usuario_promocion=true;
+	}
+	else if (tipo_usuario==2){//usuario dios
+		$scope.usuario_promocion=true;
+		$scope.usuario_fanatico=true;
+	}
+	//colocar el else y algun tipo de error
+	*/
+	
+	
+	$scope.tryp = function () {
+		console.log("entramos p");
+     var url = 'http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear'; 
+     var roleObj = { 
+         frase:"JASON MAMAPICHAS"
+     };
+     $http.post(url, roleObj).then(function(response) {
+		 console.log("respuesta");
+		  var answer= angular.fromJson(response.data.d);
+         console.log(answer);
+       
+       });
+};
+	
+	
+	$scope.tryg =  function(login){
+		console.log("entramos g");
+		var url2='http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear?frase={%22frase%22:%22jason%20es%20playo%22}';
+       $http.get(url2)
+          .then(function (response) {
+            console.log("respuesta");
+		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
+         	console.log(answer);
+
+                  
+
+                        
+
+                    });
+    };
+	
+	$scope.logOut = function(){        
+        $state.go('login');
+        window.location.reload()    
+    ;
+    };
+	
 })
 
 
@@ -93,7 +149,7 @@ angular.module('starter', ['ionic'])
 //hay que modificar lo de abajo en nombres segun fotmato y lo que se va a guardar XD
 
 
-.service('login_datos', function() {
+.service('loginData', function() {
 return {
 login: {},
 getLogin: function() {// para recuperar los datos 
@@ -104,7 +160,7 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
    	this.login = login;// username, password
    	this.login.id=id;
    	this.login.name=name;
-	this.login.name=name;
+	this.login.rol=rol;
 }
 }
 })
@@ -112,5 +168,5 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
 .directive('menu', function() {
   return {
      templateUrl: 'html/menu.html',
-      controller:"controlador_menu"
+      controller:"menuController"
   };});
