@@ -1,9 +1,14 @@
 <nav class="navbar navbar-default navbar-fixed-top">
   <div class="container-fluid">
     <div class="navbar-header">
-		 <a><img src="https://image.ibb.co/dE2cav/My_Concert3.png" width="95" height="70"/></a>
+		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+		 <a><img   src="https://image.ibb.co/dE2cav/My_Concert3.png" width="95" height="70"/></a>
     </div>
-    <div id="myNavbar">
+    <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         <li><a  ng-click="tryg()" href="#/main">INICIO</a></li>
 		    <li><a href="#/login">AÑADIR BANDAS</a></li>
