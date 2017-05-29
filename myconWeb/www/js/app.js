@@ -5,7 +5,7 @@ angular.module('starter', ['ionic'])
     
 	$stateProvider.state('login', {
                 url:'/login',
-                controller: 'loginControlker',
+                controller: 'LoginController',
                 templateUrl:'html/login.html'
             })
     $stateProvider.state('main', {
