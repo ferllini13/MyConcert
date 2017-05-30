@@ -9,6 +9,12 @@ angular.module('starter', ['ionic'])
                 controller: 'LoginController',
                 templateUrl:'html/login.html'
             })
+    $stateProvider.state('register', {
+                url:'/register',
+                controller: 'RegisterController',
+                templateUrl:'html/registro.html'
+            })
+    
     $stateProvider.state('main', {
                 url:'/main',
                 controller: 'mainController',
@@ -74,7 +80,9 @@ angular.module('starter', ['ionic'])
 
 
 
-
+.controller('RegisterController', function($scope, $state,$http){
+            
+            })
 
 
 

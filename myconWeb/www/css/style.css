@@ -66,11 +66,25 @@ body{
     margin: 5px;
 }
 
+.background, .background .pane, .background .item, .background .item-complex .item-content {
+    background-color: #004253;
+}
+
+.letra{
+    color: #57BC90;
+}
+
+
+.boton{
+    background-color: #8b008b;
+    color:white;
+}
+
 #polina { 
   font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
   font-weight:100; 
-  background: rgba(0,0,0,0.7);
-  color: white;
+  background: rgba(165,165,175,0.7);
+  color: #000000;
   padding: 2%;
   width: 31%;
   margin: 100px 5% 5% auto;
@@ -81,22 +95,22 @@ body{
 #polinami { 
   font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
   font-weight:100; 
-  background: rgba(0,0,0,0.7);
-  color: white;
+  background: rgba(165,165,175,0.7);
+  color: #000000;
   padding: 2%;
   width: 31%;
-  margin: 50px 10px 200px 200px;
+  margin: 50px 10px 300px 200px;
   float: right;
 }
 
 #polinavi { 
   font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
   font-weight:100; 
-  background: rgba(0,0,0,0.7);
-  color: white;
+  background: rgba(165,165,175,0.7);
+  color: #000000;
   padding: 2%;
   width: 31%;
-  margin: 300px -30px -60px -390px;
+  margin: 350px -30px 70px -390px;
   float: right;
 }
 
