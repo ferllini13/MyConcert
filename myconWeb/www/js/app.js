@@ -1,27 +1,48 @@
 var webSeviceIp = 'http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear';
 
-angular.module('MyConcert', ['ionic','ngCordova','spotify','MyConcert.spotifyController'])
+angular.module('MyConcert', ['ionic','spotify'])
 
-.config( function ( $stateProvider , $urlRouterProvider ){
 
-	$stateProvider.state('login', {
+.config(function (SpotifyProvider) {
+	    SpotifyProvider.setClientId('4ea812437f8242599ceefeddacb80df0') ;
+        SpotifyProvider.setRedirectUri('http://localhost:8100/callback.html');
+        SpotifyProvider.setScope('user-read-private playlist-read-private playlist-modify-private playlist-modify-public');
+		SpotifyProvider.setAuthToken(localStorage.getItem('spotify-token'));
+})
+
+
+.config( 
+	
+	function ( $stateProvider , $urlRouterProvider ){
+
+		$stateProvider.state('login', {
                 url:'/login',
                 controller: 'LoginController',
                 templateUrl:'html/login.html'
             })
-    $stateProvider.state('main', {
+    	$stateProvider.state('main', {
                 url:'/main',
                 controller: 'mainController',
                 templateUrl:'html/inicio.html'
             })
-    stateProvider.state
+    	$stateProvider.state('band', {
+                url:'/band',
+                controller: 'bandController',
+                templateUrl:'html/banda.html'
+            })
 
-      $urlRouterProvider.otherwise('/login');
+      	$urlRouterProvider.otherwise('/band');
 })
 
 
 
 .controller('LoginController', function($scope, $state,$http){
+	
+	$scope.starPage=function(){
+		localStorage.clear();
+	};
+	
+	
     $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
         //var form = document.getElementById("myForm");
         //form.onsubmit = function(){
@@ -75,13 +96,6 @@ angular.module('MyConcert', ['ionic','ngCordova','spotify','MyConcert.spotifyCon
 
 
 
-
-
-
-
-
-
-
 .controller('menuController', function($scope, $state,$http){
 	//$scope.login = loginData.getLogin();
 	//$scope.usuario_fanatico=false;
@@ -126,9 +140,6 @@ angular.module('MyConcert', ['ionic','ngCordova','spotify','MyConcert.spotifyCon
          	console.log(answer);
 
 
-
-
-
                     });
     };
 
@@ -151,6 +162,47 @@ angular.module('MyConcert', ['ionic','ngCordova','spotify','MyConcert.spotifyCon
 
 
 
+
+
+.controller('bandController', function($scope, $state,Spotify,$http){
+	var clientId ="4ea812437f8242599ceefeddacb80df0";
+	var clientSecret ="13c8e7890bc34b34b1bfd3784e5de0fd";
+	$scope.tracks = [];
+	$scope.audio=new Audio();
+	
+	
+	/*$http.get('https://accounts.spotify.com/authorize/?client_id=4ea812437f8242599ceefeddacb80df0&response_type=token&redirect_uri=http://localhost:8102/callback.html&scope=user-read-private').then(function(response) {
+		 console.log(response);
+                    });
+	*/
+	$scope.spotifyLogin=function(){	Spotify.login();}
+	
+
+	console.log(localStorage.getItem('spotify-token'));
+	
+	
+	$scope.fun =  function(){
+		
+		var req = {method: 'GET', url: 'https://api.spotify.com/v1/tracks/5XcZRgJv3zMhTqCyESjQrF',headers: {'Authorization': 'Bearer ' + localStorage.getItem('spotify-token')}};
+		
+		$http(req).then(function(response){
+			$scope.tracks=response.items; 
+			console.log(response)
+		});
+    };
+	
+	
+		
+	
+})
+
+	
+	
+	
+	 
+	
+	
+	
 //hay que modificar lo de abajo en nombres segun fotmato y lo que se va a guardar XD
 
 
