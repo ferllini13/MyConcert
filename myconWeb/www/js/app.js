@@ -1,4 +1,4 @@
-var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/';
+var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/MyConcert.asmx/';
 
 angular.module('MyConcert', ['ionic','spotify'])
 
@@ -124,10 +124,10 @@ angular.module('MyConcert', ['ionic','spotify'])
 	
 	$scope.tryp = function () {
 		console.log("entramos p");
-     var roleObj = { 
-         frase:"JASON MAMAPICHAS"
+     var msj = { 
+         frase:"Mauricio el chunche montero:PRESENTE"
      };
-     $http.post(webSeviceIp, roleObj).then(function(response) {
+     $http.post(webSeviceIp+'Publicar', msj).then(function(response) {
 		 console.log("respuesta");
 		  var answer= angular.fromJson(response.data.d);
          console.log(answer);
@@ -138,8 +138,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 	
 	$scope.tryg =  function(login){
 		console.log("entramos g");
-		var request = request.concat(webSeviceIp, '?frase={%22frase%22:%22jason%20es%20playo%22}');
-       $http.get(request)
+       $http.get(webSeviceIp +'Publicar?frase=holaMau')
           .then(function (response) {
             console.log("respuesta");
 		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
