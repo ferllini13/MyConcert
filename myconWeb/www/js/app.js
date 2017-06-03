@@ -223,9 +223,7 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
    	this.login.id=id;
    	this.login.name=name;
 	this.login.rol=rol;
-}
-}
-})
+}}})
 
 .directive('menu', function() {
   return {
