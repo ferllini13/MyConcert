@@ -43,7 +43,6 @@ angular.module('MyConcert', ['ionic','spotify'])
 })
    
 
-
 .controller('LoginController', function($scope, $state,$http){
 		$scope.starPage=function(){
 		localStorage.clear();
@@ -98,8 +97,6 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 };
 })
-
-
 
 
 
