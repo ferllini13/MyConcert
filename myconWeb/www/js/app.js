@@ -38,11 +38,15 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'verbandController',
                 templateUrl:'html/verbanda.html'
             })
-    
+	$stateProvider.state('catalogue', {
+                url:'/catalogue',
+                controller: 'catalogueController',
+                templateUrl:'html/catalogo.html'
+            })
+	
       $urlRouterProvider.otherwise('/login');
 })
    
-
 
 .controller('LoginController', function($scope, $state,$http){
 		$scope.starPage=function(){
@@ -98,8 +102,6 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 };
 })
-
-
 
 
 
@@ -171,7 +173,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 	
 })
 
-
+.controller('catalogueController', function($scope, $state){})
 
 .controller('mainController', function($scope, $state){
 	$scope.imageArray =["https://www.googleplaymusicdesktopplayer.com/img/par1.jpg","http://www.desicomments.com/wp-content/uploads/2017/04/Music-image.jpg","http://az616578.vo.msecnd.net/files/2015/12/19/6358614596527738711752945771_music.jpg","http://az616578.vo.msecnd.net/files/2017/03/05/636243282134517774-314545726_music9.jpg"];
@@ -221,9 +223,7 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
    	this.login.id=id;
    	this.login.name=name;
 	this.login.rol=rol;
-}
-}
-})
+}}})
 
 .directive('menu', function() {
   return {

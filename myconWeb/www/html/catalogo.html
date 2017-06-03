@@ -1,0 +1,26 @@
+<div menu ></div>
+
+<div class="container scroll" >
+
+<br><br><br>
+
+	<h2 ALIGN="center"> Catalogo de bandas registradas</h2>
+	<div class="col-sm-3 sidenav"></div>
+		<div class="col-sm-6">
+            <input type="search"
+             	placeholder="Busca una banda"
+             	ng-model="search"
+             	ng-change="scrollTop()"  
+                class="full-width white-background">
+	
+		<ion-list class="list-group">
+      		<ion-item class="list-group-item" ng-repeat="band in catalogue | filter:search" >
+       
+				{{band.name}}
+      
+			</ion-item>
+    	</ion-list>
+	</div>
+		<div class="col-sm-3 sidenav"></div>
+			
+</div>
