@@ -1,6 +1,14 @@
-var webSeviceIp = 'http://webserviceepatec.azurewebsites.net/MyConcert.asmx/Parsear';
+var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/';
 
-angular.module('starter', ['ionic'])
+angular.module('MyConcert', ['ionic','spotify'])
+
+.config(function (SpotifyProvider) {
+	    SpotifyProvider.setClientId('4ea812437f8242599ceefeddacb80df0') ;
+        SpotifyProvider.setRedirectUri('http://localhost:8100/callback.html');
+        SpotifyProvider.setScope('user-read-private playlist-read-private playlist-modify-private playlist-modify-public');
+		SpotifyProvider.setAuthToken(localStorage.getItem('spotify-token'));
+})
+
 
 .config( function ( $stateProvider , $urlRouterProvider ){
     
@@ -19,6 +27,11 @@ angular.module('starter', ['ionic'])
                 url:'/main',
                 controller: 'mainController',
                 templateUrl:'html/inicio.html'
+            })
+	$stateProvider.state('band', {
+                url:'/band',
+                controller: 'bandController',
+                templateUrl:'html/banda.html'
             })
     
       $urlRouterProvider.otherwise('/login');
@@ -132,9 +145,6 @@ angular.module('starter', ['ionic'])
 		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
          	console.log(answer);
 
-                  
-
-                        
 
                     });
     };
@@ -155,6 +165,29 @@ angular.module('starter', ['ionic'])
 	$scope.imageArray2 =["http://darbaculture.com/wp-content/uploads/2014/10/sonar-festival-1.jpg","http://estaticos.codigonuevo.com/wp-content/uploads/2015/05/Festivales.jpg","https://www.parkapp.com/blog/wp-content/uploads/2016/05/Festivales-mayo-festify.jpg","http://static.t13.cl/images/sizes/1200x675/mgr_bild-berlin-1.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0b/Electrobeach_Music_Festival_2013.jpg"];
 	
 	
+})
+
+
+
+.controller('bandController', function($scope, $state,Spotify,$http){
+	var clientId ="4ea812437f8242599ceefeddacb80df0";
+	var clientSecret ="13c8e7890bc34b34b1bfd3784e5de0fd";
+	$scope.tracks = [];
+	$scope.audio=new Audio();
+	
+	$scope.spotifyLogin=function(){	Spotify.login();}
+	
+	console.log(localStorage.getItem('spotify-token'));
+	
+	$scope.fun =  function(){
+		
+		var req = {method: 'GET', url: 'https://api.spotify.com/v1/tracks/5XcZRgJv3zMhTqCyESjQrF',headers: {'Authorization': 'Bearer ' + localStorage.getItem('spotify-token')}};
+		
+		$http(req).then(function(response){
+			$scope.tracks=response.items; 
+			console.log(response)
+		});
+    };
 })
 
 
