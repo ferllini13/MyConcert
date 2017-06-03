@@ -84,6 +84,10 @@ body{
     color:white;
 }
 
+.despuestit{
+    margin: 100px 10px 300px 200px; 
+}
+
 #polina { 
   font-family: Agenda-Light, Agenda Light, Agenda, Arial Narrow, sans-serif;
   font-weight:100; 
