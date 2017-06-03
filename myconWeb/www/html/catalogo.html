@@ -1,0 +1,15 @@
+<div menu></div>
+
+
+<div class="container jumbotron">
+	
+Catalogo de bandas registradas
+    <input ng-model="searchText">
+	<ion-list class="list-group">
+      <ion-item class="list-group-item" ng-repeat="band in catalogue" >
+       
+		  {{band.name}}
+      
+		</ion-item>
+    </ion-list>
+</div>
