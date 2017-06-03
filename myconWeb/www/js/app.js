@@ -33,6 +33,11 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'bandController',
                 templateUrl:'html/banda.html'
             })
+	$stateProvider.state('verband', {
+                url:'/verband',
+                controller: 'verbandController',
+                templateUrl:'html/verbanda.html'
+            })
     
       $urlRouterProvider.otherwise('/login');
 })
@@ -94,6 +99,10 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 .controller('RegisterController', function($scope, $state,$http){
+            
+            })
+
+.controller('verbandController', function($scope, $state,$http){
             
             })
 
