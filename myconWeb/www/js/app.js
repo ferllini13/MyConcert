@@ -45,6 +45,12 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 .controller('LoginController', function($scope, $state,$http){
+		$scope.starPage=function(){
+		localStorage.clear();
+	};
+	
+	
+	
     $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
         //var form = document.getElementById("myForm");  
         //form.onsubmit = function(){
