@@ -63,7 +63,8 @@ angular.module('MyConcert', ['ionic','spotify'])
 		
 		
 		
-    $scope.verificar =  function(login){
+    $scope.checkUser =  function(username,password){
+        $state.go('main');
 		
 		//lo comentado son las llamadas que vamos a combiar del WS
 					/*
