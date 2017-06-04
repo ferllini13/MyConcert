@@ -11,13 +11,13 @@ BEGIN
 
     Begin Try	
 		
-		declare @tmpTable table(id int, rolID int)
+		declare @tmpTable table(id int, rolID int, activo bit)
 		
-		insert into @tmpTable(id, rolID)
-			select UF.id,  UF.rolID
+		insert into @tmpTable(id, rolID, activo)
+			select UF.id,  UF.rolID, UG.activo
 			from USUARIO_GENERAL as UG inner join FAN_USUARIO as UF on UF.guID = UG.id
 			where UG.nombreUsuario = @nombreUsuario and UG.contraseña = @contraseña
-			group by UF.id, UF.rolID
+			group by UF.id, UF.rolID, UG.activo
 		
 		select * from @tmpTable
 
