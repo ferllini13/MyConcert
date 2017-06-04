@@ -174,7 +174,15 @@ angular.module('MyConcert', ['ionic','spotify'])
 	
 })
 
-.controller('catalogueController', function($scope, $state){})
+.controller('catalogueController', function($scope, $state){
+	$scope.isEmpty=true;
+	$scope.catalogue=[];
+	
+	if ($scope.catalogue.length!=0){
+		$scope.isEmpty=false;
+	}
+	else{$scope.isEmpty=true;}
+})
 
 .controller('mainController', function($scope, $state){
 	$scope.imageArray =["https://www.googleplaymusicdesktopplayer.com/img/par1.jpg","http://www.desicomments.com/wp-content/uploads/2017/04/Music-image.jpg","http://az616578.vo.msecnd.net/files/2015/12/19/6358614596527738711752945771_music.jpg","http://az616578.vo.msecnd.net/files/2017/03/05/636243282134517774-314545726_music9.jpg"];
