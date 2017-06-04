@@ -1,5 +1,5 @@
 CREATE PROCEDURE pr_ObtenerPromotor
-	@nombreUsuario varchar(10)
+	@id int
 
 AS
 BEGIN
@@ -16,7 +16,7 @@ BEGIN
 		insert into @tmpTable(id, nombre, apellido, contraseña, nombreUsuario, diaInscripcion, activo,uniqueID, rolID)
 			select UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UP.rolID
 			from USUARIO_GENERAL as UG inner join USUARIO_PROMOCION as UP on UP.guID = UG.id
-			where UG.nombreUsuario = @nombreUsuario
+			where UP.id = @id
 			group by UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UP.rolID
 		
 		select * from @tmpTable

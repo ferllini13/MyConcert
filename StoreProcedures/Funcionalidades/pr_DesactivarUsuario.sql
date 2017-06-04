@@ -13,10 +13,15 @@ BEGIN
 		declare @guID int;
 
 		set @guID = (select FAN_USUARIO.guID from FAN_USUARIO where FAN_USUARIO.id = @usuarioID)
-
+		
+		print @guID
+		
 		update USUARIO_GENERAL
 		set activo = 0
 		where USUARIO_GENERAL.id = @guID
+		
+		SET @msg = '102'
+		print @msg
         
         COMMIT TRAN DesactivarUsuario
 

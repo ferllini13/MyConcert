@@ -92,6 +92,9 @@ CREATE TABLE CANCION
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	nombre varchar(30) NOT NULL,
+	bandaID int NOT NULL,
+	CONSTRAINT Banda_Cancion_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
 	CONSTRAINT Cancion_pk PRIMARY KEY (id)
 );
 
@@ -117,16 +120,7 @@ CREATE TABLE CATALOGO_BANDA
 	CONSTRAINT CatalogoBanda_pkey PRIMARY KEY (catalogoID,bandaID)	
 );
 
-CREATE TABLE BANDA_CANCION
-(
-	bandaID int NOT NULL,
-	cancionID int NOT NULL,
-	CONSTRAINT Cancion_Banda_fkey FOREIGN KEY (cancionID)
-		REFERENCES CANCION (id),
-	CONSTRAINT Banda_Cancion_fkey FOREIGN KEY (bandaID)
-		REFERENCES BANDA (id),
-	CONSTRAINT BandaCancion_pkey PRIMARY KEY (cancionID,bandaID)
-);
+
 
 CREATE TABLE BANDA_COMENTARIO
 (
@@ -156,14 +150,18 @@ CREATE TABLE CARTELERA
 	diaFinalVotaciones date NOT NULL,
 	diaDeInicio date NOT NULL,
 	diaFinal date NOT NULL,
-	CONSTRAINT Cartelera_pk PRIMARY KEY (id),
+	CONSTRAINT Cartelera_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE HORARIO
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	dia date NOT NULL,
-	tiempo time NOT NULL,
+	horaInicio varchar(10),
+	horaFinal varchar(10),
+	carteleraID int NOT NULL,
+	CONSTRAINT Cartelera_horario_fkey FOREIGN KEY (carteleraID)
+		REFERENCES CARTELERA (id),
 	CONSTRAINT Horario_pk PRIMARY KEY (id)
 );
 
@@ -193,15 +191,3 @@ CREATE TABLE CARTELERA_CATEGORIA_BANDA
 	CONSTRAINT BCB_pkey PRIMARY KEY (carteleraID,categoriaID,bandaID)
 );
 
-
-
-CREATE TABLE CARTELERA_HORARIO
-(
-	horarioID int NOT NULL,
-	carteleraID int NOT NULL,
-	CONSTRAINT BS1_fkey FOREIGN KEY (horarioID)
-		REFERENCES HORARIO (id),
-	CONSTRAINT BS2_fkey FOREIGN KEY (carteleraID)
-		REFERENCES CARTELERA (id),
-	CONSTRAINT BSchedule_pkey PRIMARY KEY (carteleraID,horarioID)
-);

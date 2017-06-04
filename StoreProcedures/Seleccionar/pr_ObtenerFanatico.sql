@@ -1,5 +1,5 @@
 CREATE PROCEDURE pr_ObtenerFanatico
-	@nombreUsuario varchar(10)
+	@id int
 
 AS
 BEGIN
@@ -21,7 +21,7 @@ BEGIN
 		insert into @tmpTable(id, nombre, apellido, contraseña, nombreUsuario, diaInscripcion, activo, pais, ubicacion, universidad, celular, fechaNacimiento, descripcion, foto, email, rolID)
 			select UF.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UF.pais, UF.ubicacion, UF.universidad, UF.celular, UF.fechaNacimiento, UF.descripcion, UF.foto, UF.email, UF.rolID
 			from USUARIO_GENERAL as UG inner join FAN_USUARIO as UF on UF.guID = UG.id
-			where UG.nombreUsuario = @nombreUsuario
+			where UF.id = @id
 			group by UF.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UF.pais, UF.ubicacion, UF.universidad, UF.celular, UF.fechaNacimiento, UF.descripcion, UF.foto, UF.email, UF.rolID
 		
 		select * from @tmpTable
