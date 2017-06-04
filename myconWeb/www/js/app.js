@@ -38,6 +38,12 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'verbandController',
                 templateUrl:'html/verbanda.html'
             })
+    $stateProvider.state('editbanda', {
+                url:'/editbanda',
+                controller: 'editbandaController',
+                templateUrl:'html/editbanda.html'
+            })
+    
 	$stateProvider.state('catalogue', {
                 url:'/catalogue',
                 controller: 'catalogueController',
@@ -112,6 +118,10 @@ angular.module('MyConcert', ['ionic','spotify'])
             })
 
 .controller('verbandController', function($scope, $state,$http){
+            
+            })
+
+.controller('editbandaController', function($scope, $state,$http){
             
             })
 
