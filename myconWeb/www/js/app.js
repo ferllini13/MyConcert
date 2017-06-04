@@ -54,7 +54,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 })
    
 
-.controller('LoginController', function($scope, $state,$http,connectApi){
+.controller('LoginController', function($scope,$http,$state,connectApi){
 		$scope.starPage=function(){
 		localStorage.clear();
 	};
@@ -72,10 +72,10 @@ angular.module('MyConcert', ['ionic','spotify'])
     $scope.checkUser =  function(username,password){
 		
 		
-		var mothod="Pruebas";
-		var json={};
+		var method="Pruebas";
+		var json={userName:username,passWord:password};
 		
-		var answer = connectApi.httpPost(method,json);
+		$scope.answer = connectApi.httpGet($http,method,json)
 		
         //$state.go('main');
 	};
@@ -243,22 +243,19 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
   };})
 
 
-.service('connectApi',function($scope,$state,$http){
+.service('connectApi',function(){
 	return {
-		httpGet: function(method,requestJson){
+		httpGet: function($http,method,requestJson){
 			$http.get(webSeviceIp + method+'?frase='+requestJson)
-          .then(function (response) {meto
-            console.log("respuesta");
-		    var answer= angular.fromJson(response.data.substring(34, response.data.length - 9));
-         	console.log(answer);
-			return answer;
-
-
+          		.then(function (response) {
+		    		var answer= angular.fromJson(response.data.substring(34, response.data.length - 9));
+         			console.log(answer);
+					return answer;
                     });
 			
 			
 		},
-		httpPost: function(method,requestJson){
+		httpPost: function($scope,$http,method,requestJson){
 			$http.post(webSeviceIp+method, requestJson).then(function(response) {
 		 		console.log("respuesta");
 		  		var answer= angular.fromJson(response.data.d);
