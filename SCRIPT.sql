@@ -1,209 +1,193 @@
-CREATE TABLE GENERAL_USER
+CREATE TABLE USUARIO_GENERAL
 (
-  id varchar(10) UNIQUE NOT NULL,
-  name varchar(30) NOT NULL,
-  lastName varchar(30),
-  password varchar(15) NOT NULL,
-  username varchar(10) NOT NULL,
-  inscriptionDate DATE,
-  active bit,
+  id int IDENTITY(1,1) UNIQUE NOT NULL,
+  nombre varchar(30) NOT NULL,
+  apellido varchar(30),
+  contraseña varchar(15) NOT NULL,
+  nombreUsuario varchar(10) NOT NULL,
+  diaInscripcion DATE,
+  activo bit DEFAULT 1,
   CONSTRAINT GU_pk PRIMARY KEY (id),  
-  CONSTRAINT GU_username_key UNIQUE (username),
+  CONSTRAINT GU_nombreUsuario_key UNIQUE (nombreUsuario),
  );
 
 CREATE TABLE ROL
 (
-  id varchar(10) UNIQUE NOT NULL,
-  description varchar(30),
+  id int IDENTITY(1,1) UNIQUE NOT NULL,
+  descripcion varchar(30),
   CONSTRAINT R_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE FAN_USER
+CREATE TABLE FAN_USUARIO
 (
-  id varchar(10) UNIQUE NOT NULL,
-  country varchar(30),
-  location varchar(100) DEFAULT NULL,
-  university varchar (30) DEFAULT NULL,
-  cellPhone varchar(8) NOT NULL, 
-  birthDate DATE NOT NULL,
-  description varchar (300) DEFAULT NULL,
-  photo varchar(100) DEFAULT NULL,
+  id int IDENTITY(1,1) UNIQUE NOT NULL,
+  pais varchar(30),
+  ubicacion varchar(100) DEFAULT NULL,
+  universidad varchar (30) DEFAULT NULL,
+  celular varchar(8) NOT NULL, 
+  fechaNacimiento DATE NOT NULL,
+  descripcion varchar (300) DEFAULT NULL,
+  foto varchar(100) DEFAULT NULL,
   email varchar(30),
-  rolID varchar(10) NOT NULL,
-  guID varchar(10) NOT NULL,
+  rolID int NOT NULL,
+  guID int NOT NULL,
   CONSTRAINT FU_pk PRIMARY KEY (id),
   CONSTRAINT FU_email_key UNIQUE (email),
-  CONSTRAINT FU_cell_phone_number_key UNIQUE (cellPhone),
+  CONSTRAINT FU_celular_key UNIQUE (celular),
   CONSTRAINT FU_rol_fkey FOREIGN KEY (rolID)
       REFERENCES ROL (id),
   CONSTRAINT FU_gu_fkey FOREIGN KEY (guID)
-      REFERENCES GENERAL_USER (id)
+      REFERENCES USUARIO_GENERAL (id)
 );
 
-CREATE TABLE PROMOTION_USER
+CREATE TABLE USUARIO_PROMOCION
 (
-  id varchar(10) UNIQUE NOT NULL,
+  id int IDENTITY(1,1) NOT NULL,
   uniqueID varchar NOT NULL,
-  rolID varchar(10) NOT NULL,
-  generalUserID varchar(10) NOT NULL,
+  rolID int NOT NULL,
+  guID int NOT NULL,
   CONSTRAINT PU_pk PRIMARY KEY (id),
   CONSTRAINT PU_rol_fkey FOREIGN KEY (rolID)
       REFERENCES ROL (id),
-  CONSTRAINT PU_gu_fkey FOREIGN KEY (generalUserID)
-      REFERENCES GENERAL_USER (id)
+  CONSTRAINT PU_gu_fkey FOREIGN KEY (guID)
+      REFERENCES USUARIO_GENERAL (id)
 );
 
-CREATE TABLE GENRE 
+CREATE TABLE GENERO 
 (
-	id varchar(10) UNIQUE NOT NULL,
-	name varchar(15) UNIQUE NOT NULL,	
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(15) UNIQUE NOT NULL,	
 	CONSTRAINT G_pk PRIMARY KEY (id),
 );
 
 
-CREATE TABLE FAN_GENRE
+CREATE TABLE FAN_GENERO
 ( 
-	fanID varchar(10) NOT NULL,
-	genreID varchar(10) NOT NULL,
-	CONSTRAINT FAN_GENRE_fkey FOREIGN KEY (fanID)
-		REFERENCES FAN_USER (id),
-	CONSTRAINT GENRE_FAN_fkey FOREIGN KEY (genreID)
-		REFERENCES GENRE (id),
-	CONSTRAINT FG_pkey PRIMARY KEY (fanID,genreID)
+	fanID int NOT NULL,
+	generoID int NOT NULL,
+	CONSTRAINT FAN_GENERO_fkey FOREIGN KEY (fanID)
+		REFERENCES FAN_USUARIO (id),
+	CONSTRAINT GENERO_FAN_fkey FOREIGN KEY (generoID)
+		REFERENCES GENERO (id),
+	CONSTRAINT FG_pkey PRIMARY KEY (fanID,generoID)
 );
 
-CREATE TABLE CATALOG
+CREATE TABLE CATALOGO
 (
-	id varchar(10) UNIQUE NOT NULL,
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	CONSTRAINT Catalog_pk PRIMARY KEY (id)
 );
 
 
-CREATE TABLE BAND
+CREATE TABLE BANDA
 (
-	id varchar(10) UNIQUE NOT NULL,
-	name varchar(30) UNIQUE NOT NULL,
-	calification INT NOT NULL,
-	active bit DEFAULT 1,
-	CONSTRAINT Band_pk PRIMARY KEY (id)
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(30) UNIQUE NOT NULL,
+	calificacion FLOAT NOT NULL,
+	activo bit DEFAULT 1,
+	CONSTRAINT Banda_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE SONG
+CREATE TABLE CANCION
 (
-	id varchar(10) UNIQUE NOT NULL,
-	name varchar(30) NOT NULL,
-	CONSTRAINT Song_pk PRIMARY KEY (id)
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(30) NOT NULL,
+	bandaID int NOT NULL,
+	CONSTRAINT Banda_Cancion_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT Cancion_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE COMMENT
+CREATE TABLE COMENTARIO
 (
-	id varchar(10) UNIQUE NOT NULL,
-	description varchar(300) NOT NULL,
-	calification INT NOT NULL,
-	CONSTRAINT Comment_pk PRIMARY KEY (id)
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	fanID int NOT NULL,
+	descripcion varchar(300) NOT NULL,
+	calificacion INT NOT NULL,
+	CONSTRAINT FAN_COMENTARIO_fkey FOREIGN KEY (fanID)
+		REFERENCES FAN_USUARIO (id),
+	CONSTRAINT Comentario_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE CATALOG_BAND
+CREATE TABLE CATALOGO_BANDA
 (
-	bandID varchar(10) NOT NULL,
-	catalogID varchar(10) NOT NULL,
-	CONSTRAINT Catalog_Band_fkey FOREIGN KEY (catalogID)
-		REFERENCES CATALOG (id),
-	CONSTRAINT Band_Catalog_fkey FOREIGN KEY (bandID)
-		REFERENCES BAND (id),
-	CONSTRAINT CB_pkey PRIMARY KEY (catalogID,bandID)	
+	bandaID int NOT NULL,
+	catalogoID int NOT NULL,
+	CONSTRAINT Catalogo_Banda_fkey FOREIGN KEY (catalogoID)
+		REFERENCES CATALOGO (id),
+	CONSTRAINT Banda_Catalogo_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT CatalogoBanda_pkey PRIMARY KEY (catalogoID,bandaID)	
 );
 
-CREATE TABLE BAND_SONG
+
+
+CREATE TABLE BANDA_COMENTARIO
 (
-	bandID varchar(10) NOT NULL,
-	songID varchar(10) NOT NULL,
-	CONSTRAINT Song_Band_fkey FOREIGN KEY (songID)
-		REFERENCES SONG (id),
-	CONSTRAINT Band_Song_fkey FOREIGN KEY (bandID)
-		REFERENCES BAND (id),
-	CONSTRAINT BS_pkey PRIMARY KEY (songID,bandID)
+	bandaID int NOT NULL,
+	comentarioID int NOT NULL,
+	CONSTRAINT comentario_Banda_fkey FOREIGN KEY (comentarioID)
+		REFERENCES COMENTARIO (id),
+	CONSTRAINT Banda_comentario_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT BandaComentario_pkey PRIMARY KEY (comentarioID,bandaID)
 );
 
-CREATE TABLE BAND_COMMENT
+CREATE TABLE CATEGORIA
 (
-	bandID varchar(10) NOT NULL,
-	commentID varchar(10) NOT NULL,
-	CONSTRAINT comment_Band_fkey FOREIGN KEY (commentID)
-		REFERENCES COMMENT (id),
-	CONSTRAINT Band_comment_fkey FOREIGN KEY (bandID)
-		REFERENCES BAND (id),
-	CONSTRAINT BC_pkey PRIMARY KEY (commentID,bandID)
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(15) UNIQUE NOT NULL,
+	descripcion varchar(100) DEFAULT NULL,
+	CONSTRAINT categoria_pk PRIMARY KEY (id),
 );
 
-CREATE TABLE CATEGORY 
+CREATE TABLE CARTELERA 
 (
-	id varchar(10) UNIQUE NOT NULL,
-	name varchar(15) UNIQUE NOT NULL,
-	description varchar(100) DEFAULT NULL,
-	CONSTRAINT category_pk PRIMARY KEY (id),
+	id int UNIQUE NOT NULL,
+	nombre varchar(15) UNIQUE NOT NULL,
+	pais varchar(30) NOT NULL,
+	ubicacion varchar(100) NOT NULL,
+	diaFinalVotaciones date NOT NULL,
+	diaDeInicio date NOT NULL,
+	diaFinal date NOT NULL,
+	CONSTRAINT Cartelera_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE BILLBOARD 
+CREATE TABLE HORARIO
 (
-	id varchar(10) UNIQUE NOT NULL,
-	name varchar(15) UNIQUE NOT NULL,
-	country varchar(30) NOT NULL,
-	location varchar(100) NOT NULL,
-	votationFinish date NOT NULL,
-	initDay date NOT NULL,
-	finishDay date NOT NULL,
-	CONSTRAINT Billboard_pk PRIMARY KEY (id),
-);
-
-CREATE TABLE SCHEDULE
-(
-	id varchar(10) UNIQUE NOT NULL,
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	dia date NOT NULL,
-	tiempo time NOT NULL,
-	CONSTRAINT Schedule_pk PRIMARY KEY (id)
+	horaInicio varchar(10),
+	horaFinal varchar(10),
+	carteleraID int NOT NULL,
+	CONSTRAINT Cartelera_horario_fkey FOREIGN KEY (carteleraID)
+		REFERENCES CARTELERA (id),
+	CONSTRAINT Horario_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE BILLBOARD_CATEGORY
+CREATE TABLE CARTELERA_CATEGORIA
 (
-	categoryID varchar(10) NOT NULL,
-	billboardID varchar(10) NOT NULL,
-	CONSTRAINT BC1_fkey FOREIGN KEY (categoryID)
-		REFERENCES CATEGORY (id),
-	CONSTRAINT BC2_fkey FOREIGN KEY (billboardID)
-		REFERENCES BILLBOARD (id),
-	CONSTRAINT BCategory_pkey PRIMARY KEY (billboardID,categoryID)
+	categoriaID int NOT NULL,
+	carteleraID int NOT NULL,
+	CONSTRAINT Categoria_Cartelera_fkey FOREIGN KEY (categoriaID)
+		REFERENCES CATEGORIA (id),
+	CONSTRAINT Cartelera_Categora_fkey FOREIGN KEY (carteleraID)
+		REFERENCES CARTELERA (id),
+	CONSTRAINT CarteleraCategoria_pkey PRIMARY KEY (carteleraID,categoriaID)
 );
 
-CREATE TABLE BILLBOARD_CATEGORY_BAND
+CREATE TABLE CARTELERA_CATEGORIA_BANDA
 (
-	bandID varchar(10) NOT NULL,
-	categoryID varchar(10) NOT NULL,
-	billboardID varchar(10) NOT NULL,
-	CONSTRAINT BCB1_fkey FOREIGN KEY (categoryID)
-		REFERENCES CATEGORY (id),
-	CONSTRAINT BCB2_fkey FOREIGN KEY (bandID)
-		REFERENCES BAND (id),
-	CONSTRAINT BCB3_fkey FOREIGN KEY (billboardID)
-		REFERENCES BILLBOARD (id),
-	CONSTRAINT BCB_pkey PRIMARY KEY (billboardID,categoryID,bandID)
+	bandaID int NOT NULL,
+	categoriaID int NOT NULL,
+	carteleraID int NOT NULL,
+	vote int DEFAULT 0,
+	CONSTRAINT BCB1_fkey FOREIGN KEY (categoriaID)
+		REFERENCES CATEGORIA (id),
+	CONSTRAINT BCB2_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT BCB3_fkey FOREIGN KEY (carteleraID)
+		REFERENCES CARTELERA (id),
+	CONSTRAINT BCB_pkey PRIMARY KEY (carteleraID,categoriaID,bandaID)
 );
-
-
-
-CREATE TABLE BILLBOARD_SCHEDULE
-(
-	scheduleID varchar(10) NOT NULL,
-	billboardID varchar(10) NOT NULL,
-	CONSTRAINT BS1_fkey FOREIGN KEY (scheduleID)
-		REFERENCES SCHEDULE (id),
-	CONSTRAINT BS2_fkey FOREIGN KEY (billboardID)
-		REFERENCES BILLBOARD (id),
-	CONSTRAINT BSchedule_pkey PRIMARY KEY (billboardID,scheduleID)
-);
-
-
-
-
-
 
