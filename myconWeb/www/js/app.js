@@ -43,6 +43,11 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'editbandaController',
                 templateUrl:'html/editbanda.html'
             })
+    $stateProvider.state('addbanda', {
+                url:'/addbanda',
+                controller: 'addbandaController',
+                templateUrl:'html/addbanda.html'
+            })
     
 	$stateProvider.state('catalogue', {
                 url:'/catalogue',
@@ -118,7 +123,9 @@ angular.module('MyConcert', ['ionic','spotify'])
             
             })
 
-
+.controller('addbandaController', function($scope, $state,$http){
+            
+            })
 
 
 
