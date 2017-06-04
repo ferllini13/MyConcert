@@ -3,7 +3,7 @@ CREATE TABLE USUARIO_GENERAL
   id int IDENTITY(1,1) UNIQUE NOT NULL,
   nombre varchar(30) NOT NULL,
   apellido varchar(30),
-  contraseña varchar(15) NOT NULL,
+  contraseña varchar(50) NOT NULL,
   nombreUsuario varchar(10) NOT NULL,
   diaInscripcion DATE,
   activo bit DEFAULT 1,

@@ -1,5 +1,6 @@
 CREATE PROCEDURE pr_ObtenerUsuario
-	@nombreUsuario varchar(10)
+	@nombreUsuario varchar(10),
+	@contraseña varchar(50)
 
 AS
 BEGIN
@@ -15,7 +16,7 @@ BEGIN
 		insert into @tmpTable(id, rolID)
 			select UF.id,  UF.rolID
 			from USUARIO_GENERAL as UG inner join FAN_USUARIO as UF on UF.guID = UG.id
-			where UG.nombreUsuario = @nombreUsuario
+			where UG.nombreUsuario = @nombreUsuario and UG.contraseña = @contraseña
 			group by UF.id, UF.rolID
 		
 		select * from @tmpTable
