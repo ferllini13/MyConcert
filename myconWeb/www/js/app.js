@@ -54,14 +54,14 @@ angular.module('MyConcert', ['ionic','spotify'])
 })
    
 
-.controller('LoginController', function($scope, $state,$http){
+.controller('LoginController', function($scope, $state,$http,connectApi){
 		$scope.starPage=function(){
 		localStorage.clear();
 	};
 	
 	
 	
-    $scope.login = {username:'', password:'',name:'',id:'', rol:'' };
+    //$scope.login = {username:'', password:'',name:'',id:'', rol:'' };
         //var form = document.getElementById("myForm");  
         //form.onsubmit = function(){
         //form.reset();
@@ -70,23 +70,15 @@ angular.module('MyConcert', ['ionic','spotify'])
 		
 		
     $scope.checkUser =  function(username,password){
-        $state.go('main');
 		
-		//lo comentado son las llamadas que vamos a combiar del WS
-					/*
-                                $http.get(request)
-                        .then(function (response) {
-                        var data = response.data;
-                        var result = data.substring(76, data.length - 9);
-    					//si el mae si exite, se procede...
-                    
-                            var result2 = angular.fromJson(result);
-                            updateRoles(login,result2[0]._id,result2[0]._name,result2[0]._office,loginData)
-
-                        }
-
-                    });  */ 
-    };
+		
+		var mothod="Pruebas";
+		var json={};
+		
+		var answer = connectApi.httpPost(method,json);
+		
+        //$state.go('main');
+	};
     
     function updateRoles(login,id,name,office,loginData){
       /*  
@@ -251,13 +243,13 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
   };})
 
 
-.service('conectApi',function($scope,$state,$http){
+.service('connectApi',function($scope,$state,$http){
 	return {
 		httpGet: function(method,requestJson){
 			$http.get(webSeviceIp + method+'?frase='+requestJson)
           .then(function (response) {meto
             console.log("respuesta");
-		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
+		    var answer= angular.fromJson(response.data.substring(34, response.data.length - 9));
          	console.log(answer);
 			return answer;
 
