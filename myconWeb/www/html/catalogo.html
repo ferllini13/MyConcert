@@ -1,10 +1,9 @@
 <div menu ></div>
-
 <div class="container scroll" >
 
 <br><br><br>
 
-	<h2 ALIGN="center"> Catalogo de bandas registradas</h2>
+	<h2 ALIGN="center"> Catálogo de bandas registradas</h2>
 	<div class="col-sm-3 sidenav"></div>
 	
 		<div class="col-sm-6">
@@ -15,14 +14,12 @@
                 		class="full-width white-background">
 		<ion-list class="list-group">
       		<ion-item class="list-group-item" ng-repeat="band in catalogue | filter:search" >
-       				
+       		
 				{{band.name}}
       
 			</ion-item>
-				
     	</ion-list>
-			<h4 style="color:#FF0101" ALIGN="center" ng-if="isEmpty">NO SE ENCUENTRAN BASDAS REGISTRADAS</h4 color="">
+			<h4 style="color:#FF0101" ALIGN="center" ng-if="isEmpty">NO SE ENCUENTRAN BASDAS REGISTRADAS</h4 >
 	</div>
-		<div class="col-sm-3 sidenav"></div>
-			
+		<div class="col-sm-3 sidenav"></div>	
 </div>

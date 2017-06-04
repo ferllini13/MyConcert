@@ -238,4 +238,34 @@ updateLogin: function(login,id,name,rol) {// para actualizar los datos del login
   return {
      templateUrl: 'html/menu.html',
       controller:"menuController"
-  };});
+  };})
+
+
+.service('conectApi',function($scope,$state,$http){
+	return {
+		httpGet: function(method,requestJson){
+			$http.get(webSeviceIp + method+'?frase='+requestJson)
+          .then(function (response) {meto
+            console.log("respuesta");
+		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
+         	console.log(answer);
+			return answer;
+
+
+                    });
+			
+			
+		},
+		httpPost: function(method,requestJson){
+			$http.post(webSeviceIp+method, requestJson).then(function(response) {
+		 		console.log("respuesta");
+		  		var answer= angular.fromJson(response.data.d);
+         		console.log(answer);
+				return answer;
+       
+       		});
+		}
+		
+		
+	};
+})
