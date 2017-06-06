@@ -1,0 +1,3 @@
+CREATE TYPE StringList AS TABLE(
+    item VARCHAR(MAX) NULL
+);

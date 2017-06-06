@@ -3,7 +3,7 @@ CREATE TABLE USUARIO_GENERAL
   id int IDENTITY(1,1) UNIQUE NOT NULL,
   nombre varchar(30) NOT NULL,
   apellido varchar(30),
-  contraseña varchar(15) NOT NULL,
+  contraseña varchar(50) NOT NULL,
   nombreUsuario varchar(10) NOT NULL,
   diaInscripcion DATE,
   activo bit DEFAULT 1,
@@ -88,6 +88,16 @@ CREATE TABLE BANDA
 	CONSTRAINT Banda_pk PRIMARY KEY (id)
 );
 
+CREATE TABLE ARTISTA
+(
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(80) NOT NULL,
+	bandaID int NOT NULL,
+	CONSTRAINT Banda_artista_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT artista_pkey PRIMARY KEY (id)
+);
+
 CREATE TABLE CANCION
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
@@ -119,8 +129,6 @@ CREATE TABLE CATALOGO_BANDA
 		REFERENCES BANDA (id),
 	CONSTRAINT CatalogoBanda_pkey PRIMARY KEY (catalogoID,bandaID)	
 );
-
-
 
 CREATE TABLE BANDA_COMENTARIO
 (
@@ -165,16 +173,6 @@ CREATE TABLE HORARIO
 	CONSTRAINT Horario_pk PRIMARY KEY (id)
 );
 
-CREATE TABLE CARTELERA_CATEGORIA
-(
-	categoriaID int NOT NULL,
-	carteleraID int NOT NULL,
-	CONSTRAINT Categoria_Cartelera_fkey FOREIGN KEY (categoriaID)
-		REFERENCES CATEGORIA (id),
-	CONSTRAINT Cartelera_Categora_fkey FOREIGN KEY (carteleraID)
-		REFERENCES CARTELERA (id),
-	CONSTRAINT CarteleraCategoria_pkey PRIMARY KEY (carteleraID,categoriaID)
-);
 
 CREATE TABLE CARTELERA_CATEGORIA_BANDA
 (
@@ -191,3 +189,52 @@ CREATE TABLE CARTELERA_CATEGORIA_BANDA
 	CONSTRAINT BCB_pkey PRIMARY KEY (carteleraID,categoriaID,bandaID)
 );
 
+CREATE TABLE VOTO
+(
+	bandaID int NOT NULL,
+	categoriaID int NOT NULL,
+	carteleraID int NOT NULL,
+	fanID int NOT NULL,
+	vote int,
+	CONSTRAINT V0_fkey FOREIGN KEY (fanID)
+		REFERENCES FAN_USUARIO (id),
+	CONSTRAINT V1_fkey FOREIGN KEY (categoriaID)
+		REFERENCES CATEGORIA (id),
+	CONSTRAINT V2_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT V3_fkey FOREIGN KEY (carteleraID)
+		REFERENCES CARTELERA (id),
+	CONSTRAINT Voto_pkey PRIMARY KEY (carteleraID,categoriaID,bandaID, fanID)
+);
+
+CREATE TABLE FESTIVAL
+(
+	id int UNIQUE NOT NULL,
+	nombre varchar(15) UNIQUE NOT NULL,
+	pais varchar(30) NOT NULL,
+	ubicacion varchar(100) NOT NULL,
+	diaFinalVotaciones date NOT NULL,
+	diaDeInicio date NOT NULL,
+	diaFinal date NOT NULL,
+	servicios varchar(300) NOT NULL,
+	transporte varchar(300) NOT NULL,
+	comida varchar(300) NOT NULL,
+	bandaID int NOT NULL,
+	CONSTRAINT BF2_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT festival_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE FESTIVAL_CATEGORIA_BANDA
+(
+	bandaID int NOT NULL,
+	categoriaID int NOT NULL,
+	festivalID int NOT NULL,
+	CONSTRAINT BCF1_fkey FOREIGN KEY (categoriaID)
+		REFERENCES CATEGORIA (id),
+	CONSTRAINT BCF2_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT BCF3_fkey FOREIGN KEY (festivalID)
+		REFERENCES FESTIVAL (id),
+	CONSTRAINT BCF_pkey PRIMARY KEY (festivalID,categoriaID,bandaID)
+);
