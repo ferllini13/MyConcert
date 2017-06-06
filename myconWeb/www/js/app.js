@@ -28,25 +28,25 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'mainController',
                 templateUrl:'html/inicio.html'
             })
+	$stateProvider.state('pband', {
+                url:'/pband',
+                controller: 'pbandController',
+                templateUrl:'html/banda.html'
+            })
 	$stateProvider.state('band', {
                 url:'/band',
                 controller: 'bandController',
-                templateUrl:'html/banda.html'
+                templateUrl:'html/verBanda.html'
             })
-	$stateProvider.state('verband', {
-                url:'/verband',
-                controller: 'verbandController',
-                templateUrl:'html/verbanda.html'
+    $stateProvider.state('editband', {
+                url:'/editband',
+                controller: 'editBandController',
+                templateUrl:'html/editarBanda.html'
             })
-    $stateProvider.state('editbanda', {
-                url:'/editbanda',
-                controller: 'editbandaController',
-                templateUrl:'html/editbanda.html'
-            })
-    $stateProvider.state('addbanda', {
-                url:'/addbanda',
-                controller: 'addbandaController',
-                templateUrl:'html/addbanda.html'
+    $stateProvider.state('addband', {
+                url:'/addband',
+                controller: 'addBandController',
+                templateUrl:'html/añadirBanda.html'
             })
     
 	$stateProvider.state('catalogue', {
@@ -115,15 +115,15 @@ angular.module('MyConcert', ['ionic','spotify'])
             
             })
 
-.controller('verbandController', function($scope, $state,$http){
+.controller('bandController', function($scope, $state,$http){
             
             })
 
-.controller('editbandaController', function($scope, $state,$http){
+.controller('editBandaController', function($scope, $state,$http){
             
             })
 
-.controller('addbandaController', function($scope, $state,$http){
+.controller('addBandaController', function($scope, $state,$http){
             
             })
 
@@ -204,7 +204,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 
-.controller('bandController', function($scope, $state,Spotify,$http){
+.controller('pbandController', function($scope, $state,Spotify,$http){
 	var clientId ="4ea812437f8242599ceefeddacb80df0";
 	var clientSecret ="13c8e7890bc34b34b1bfd3784e5de0fd";
 	$scope.tracks = [];
