@@ -31,7 +31,6 @@ BEGIN
 		values(@nombre, @apellido, @contraseña, @nombreUsuario, @diaInscripcion);
 
 		set @guID = (select id from USUARIO_GENERAL where nombreUsuario = @nombreUsuario)
-		
 		insert into USUARIO_PROMOCION(uniqueID,rolID, guID)
 		values(@uniqueID, @rolID, @guID)
 		
