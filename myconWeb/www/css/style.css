@@ -18,10 +18,11 @@ div.scroll {
 .full-width {
   width: 100%;
 }
-
 .white-background {
     background-color: #FFFFFF;
 }
+
+
 /*parte de login*/
 @import url("https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css");
 body{

@@ -22,7 +22,6 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'RegisterController',
                 templateUrl:'html/registro.html'
             })
-    
     $stateProvider.state('main', {
                 url:'/main',
                 controller: 'mainController',
@@ -33,18 +32,18 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'pbandController',
                 templateUrl:'html/banda.html'
             })
-	$stateProvider.state('band', {
-                url:'/band',
-                controller: 'bandController',
+	$stateProvider.state('seeBand', {
+                url:'/seeBand/:bandId',
+                controller: 'SeeBandController',
                 templateUrl:'html/verBanda.html'
             })
-    $stateProvider.state('editband', {
-                url:'/editband',
+    $stateProvider.state('editBand', {
+                url:'/editBand/:bandId',
                 controller: 'editBandController',
                 templateUrl:'html/editarBanda.html'
             })
-    $stateProvider.state('addband', {
-                url:'/addband',
+    $stateProvider.state('addBand', {
+                url:'/addBand',
                 controller: 'addBandController',
                 templateUrl:'html/añadirBanda.html'
             })
@@ -54,28 +53,19 @@ angular.module('MyConcert', ['ionic','spotify'])
                 controller: 'catalogueController',
                 templateUrl:'html/catalogo.html'
             })
-	
+	$stateProvider.state('profile', {
+                url:'/profile',
+                controller: 'profileController',
+                templateUrl:'html/perfil.html'
+            })
       $urlRouterProvider.otherwise('/login');
 })
    
 
 .controller('LoginController', function($scope,$http,$state,connectApi){
-		$scope.starPage=function(){
-		localStorage.clear();
-	};
-	
-	
-	
-    //$scope.login = {username:'', password:'',name:'',id:'', rol:'' };
-        //var form = document.getElementById("myForm");  
-        //form.onsubmit = function(){
-        //form.reset();
-      //}
-		
-		
-		
+	$scope.starPage=function(){localStorage.clear();};
+			
     $scope.checkUser =  function(loginUserName,loginPasword){
-		
 		
 		var method="VerificarLogeo";
 		var msj={'userName':loginUserName,'password':loginPasword};
@@ -85,104 +75,50 @@ angular.module('MyConcert', ['ionic','spotify'])
 		
         //$state.go('main');
 	};
-    
-    function updateRoles(login,id,name,office,loginData){
-      /*  
-		var request="";
-    	$http.post(request)
-            .then(function (response) {
-            var data = response.data;
-            var result = data.substring(76, data.length - 9);
-            var result4 = angular.fromJson(result);
-		
-            rol=result4.rol_id);
-                                    }
-			//acomodar roles
-            if (rol==0){  
-            loginData.updateLogin(login,id,name,office,rol);
-                
-            $state.go('inicio');
-            }
-         }); */
-
-};
 })
 
 
-
+.controller('profileController', function($scope, $state,$http){
+            
+            })
 
 .controller('RegisterController', function($scope, $state,$http){
             
             })
 
-.controller('bandController', function($scope, $state,$http){
+.controller('SeeBandController', function($scope,$state,$stateParams,$http){
+	$scope.bandToSee= $stateParams.bandId;
             
             })
 
-.controller('editBandaController', function($scope, $state,$http){
+.controller('editBandController', function($scope, $state,$stateParams,$http){
+	$scope.bandToEdit= $stateParams.bandId;
+	
             
             })
 
-.controller('addBandaController', function($scope, $state,$http){
-            
+.controller('addBandController', function($scope, $state,$http){
             })
-
-
-
 
 .controller('menuController', function($scope, $state,$http){
-	//$scope.login = loginData.getLogin();
-	//$scope.usuario_fanatico=false;
-    //$scope.usuario_promocion=false;
+	var userName=localStorage.getItem('userName');
+	var rol = localStorage.getItem('userRol');
+
+	$scope.fanaticUser=false;
+    $scope.pomotionUser=false;
 	
-	/*var tipo_usuario=loginData.getLogin().rol;
-	if (tipo_usuario==0){
-		$scope.usuario_fanatico=true;
+	if (rol===1){
+		$scope.fanaticUser=true;
+		$scope.pomotionUser=false;
 	}
-	else if (tipo_usuario==1){
-		$scope.usuario_promocion=true;
+	else if (rol===3){
+		$scope.pomotionUser=true;
+		$scope.fanaticUser=false;
 	}
-	else if (tipo_usuario==2){//usuario dios
-		$scope.usuario_promocion=true;
-		$scope.usuario_fanatico=true;
-	}
+
 	//colocar el else y algun tipo de error
-	*/
-	
-	
-	$scope.tryp = function () {
-		console.log("entramos p");
-     var msj = { 
-         frase:"Mauricio el chunche montero:PRESENTE"
-     };
-     $http.post(webSeviceIp+'Publicar', msj).then(function(response) {
-		 console.log("respuesta");
-		  var answer= angular.fromJson(response.data.d);
-         console.log(answer);
-       
-       });
-};
-	
-	
-	$scope.tryg =  function(login){
-		console.log("entramos g");
-       $http.get(webSeviceIp +'Publicar?frase=holaMau')
-          .then(function (response) {
-            console.log("respuesta");
-		    var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
-         	console.log(answer);
-
-
-                    });
-    };
-	
-	$scope.logOut = function(){        
-        $state.go('login');
-        window.location.reload()    
-    ;
-    };
-	
 })
+
 
 .controller('catalogueController', function($scope, $state){
 	$scope.isEmpty=true;
@@ -193,6 +129,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 	}
 	else{$scope.isEmpty=true;}
 })
+
 
 .controller('mainController', function($scope, $state){
 	$scope.imageArray =["https://www.googleplaymusicdesktopplayer.com/img/par1.jpg","http://www.desicomments.com/wp-content/uploads/2017/04/Music-image.jpg","http://az616578.vo.msecnd.net/files/2015/12/19/6358614596527738711752945771_music.jpg","http://az616578.vo.msecnd.net/files/2017/03/05/636243282134517774-314545726_music9.jpg"];
@@ -227,53 +164,28 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 
-//hay que modificar lo de abajo en nombres segun fotmato y lo que se va a guardar XD
-
-
-.service('loginData', function() {
-return {
-login: {},
-getLogin: function() {// para recuperar los datos 
- 	return this.login;
-},
-	
-updateLogin: function(login,id,name,rol) {// para actualizar los datos del login, y definir el tipo de menu segun tipo de usuario
-   	this.login = login;// username, password
-   	this.login.id=id;
-   	this.login.name=name;
-	this.login.rol=rol;
-}}})
-
-.directive('menu', function() {
-  return {
-     templateUrl: 'html/menu.html',
-      controller:"menuController"
-  };})
-
 
 .service('connectApi',function(){
 	return {
 		httpGet: function($http,method,requestJson){
-			$http.get(webSeviceIp + method+'?frase='+JSON.stringify(requestJson))
-          		.then(function (response) {
-					
-					console.log(response.data.substring(73, response.data.length - 9));
-		    		var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
-					return this.answer;
-                    });
-			
-			
-		},
+			$http.get(webSeviceIp + method+'?frase='+JSON.stringify(requestJson)).then(function (response){
+		    	var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
+				return this.answer;              
+		});},
+		
 		httpPost: function($http,method,requestJson){
 			$http.post(webSeviceIp+method, requestJson).then(function(response) {
-		 		console.log("respuesta");
 		  		var answer= angular.fromJson(response.data.d);
-         		console.log(answer);
 				return this.answer;
-       
-       		});
-		}
-		
-		
+       		});}
+	};
+})
+
+
+
+.directive('menu', function() {
+ 	return {
+    	templateUrl: 'html/menu.html',
+      	controller:"menuController"
 	};
 })
