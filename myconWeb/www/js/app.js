@@ -67,6 +67,7 @@ angular.module('MyConcert', ['ionic'])
 			console.log(answer)
       		if (answer.length!=0){
 				localStorage.setItem('userName', loginUserName);
+                localStorage.setItem('password',loginPasword);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
 				localStorage.setItem('userState', answer[0].activo);
@@ -86,6 +87,7 @@ angular.module('MyConcert', ['ionic'])
 .controller('profileController', function($scope, $state,$http){
 	$scope.active=true;
 	$scope.active=localStorage.getItem('userState');
+    $scope.userName=localStorage.getItem('userName');
 })
 
 .controller('RegisterController', function($scope, $state,$http){
