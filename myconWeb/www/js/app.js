@@ -96,6 +96,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 .controller('profileController', function($scope, $state,$http){
 	$scope.active=localStorage.getItem('userState');
+    $scope.userName=localStorage.getItem('userName');
 })
 
 .controller('RegisterController', function($scope, $state,$http){
