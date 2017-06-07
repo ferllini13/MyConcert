@@ -12,21 +12,21 @@
         <input type="file" class="text-center center-block well well-sm">
       </div>
 		
+	<div ALIGN="center"><input  type="checkbox" checked data-toggle="toggle"/></div>
+	<div ALIGN="center"><label>Activar/Desactivar su Cuenta</label></div><br><br>	
+
 		
-	<div ALIGN="center">
-		<input type="checkbox" checked data-toggle="toggle">
-  	</div>
-	<div ALIGN="center"><label>Active/Desactive su Cuenta</label></div><br><br>	
+		
 		
     </div>
     <!-- edit form column -->
     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-      <div class="alert alert-danger alert-dismissable">
+      <div ng-if="!active" class="alert alert-danger alert-dismissable">
         <a class="panel-close close" data-dismiss="alert">×</a> 
         <i class="fa fa-coffee"></i>
         Su cuenta se Encuentra Desactivada. Favor de Activar Para Acceder a las caracteristicas de My Concert
       </div>
-      <h3>MI INFORMACIÓN</h3>
+      <h3 ALIGN="center">MI INFORMACIÓN</h3>
       <form class="form-horizontal" role="form">
         <div class="form-group">
           <label class="col-lg-3 control-label">Nombre:</label>
@@ -79,7 +79,7 @@
           <label class="col-lg-3 control-label">Fecha de Nacimienot:</label>
           <div class="col-lg-8">
 			<label>
-            	<input class="form-control" value="25/12/2015" type="date"/>
+            	<input class="form-control" value="2015-10-10" type="date"/>
 			</label>  
 		</div>
         </div>    
