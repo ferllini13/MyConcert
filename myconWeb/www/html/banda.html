@@ -8,15 +8,15 @@
     </ion-list>
 </div>
 
-
         <div class="container">
-			<img ng-src={{pic}} alt="" height="30" width="auto">
+			
             <div class="row">
                 <div class="col-md-3">
-                    <input id="file" type="file" nv-file-select uploader="{FileUploader}"/>
-					<button ng-click="add()">Add</button>
+					<form name="upload" ng-submit="uploadFile()">
+                			<input type="file" name="file" id="file" uploader-model="file"/> <br>
+                			<input type="submit" value="Enviar"> 
+            </form>
                 </div>
-
             </div>
 
         </div>

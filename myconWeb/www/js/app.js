@@ -1,6 +1,6 @@
 var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/MyConcert.asmx/';
 
-angular.module('MyConcert', ['ionic','spotify','angularFileUpload'])
+angular.module('MyConcert', ['ionic','spotify'])
 
 
 
@@ -127,6 +127,12 @@ angular.module('MyConcert', ['ionic','spotify','angularFileUpload'])
 	}
 
 	//colocar el else y algun tipo de error
+	
+	
+	$scope.logOut=function(){
+		localStorage.clear();
+		$state.go('login');
+	};
 })
 
 
@@ -151,19 +157,37 @@ angular.module('MyConcert', ['ionic','spotify','angularFileUpload'])
 
 
 
-.controller('pbandController', function($scope, $state,Spotify,$http){
+.controller('pbandController', function($scope, $state,Spotify,$http,uploadFile){
 	var clientId ="4ea812437f8242599ceefeddacb80df0";
 	var clientSecret ="13c8e7890bc34b34b1bfd3784e5de0fd";
 	$scope.tracks = [];
 	$scope.audio=new Audio();
 	
 	
-	$scope.pic="";
+	$scope.pic;
 	$scope.add=function(){
 		var f = document.getElementById('file').files[0];
 		console.log(f);
+		$scope.pic=f;
 		
 	}
+	
+	
+	$scope.uploadFile = function()
+	{
+		var name = localStorage.getItem('userName');
+		var file = document.getElementById('file').files[0];
+		
+		console.log(file);
+		uploadFile.uploadFile(file, name).then(function(res)
+		{
+			console.log(res);
+		})
+	}
+	
+	
+	
+	
 	
 	$scope.spotifyLogin=function(){	Spotify.login();}
 	
@@ -201,4 +225,33 @@ angular.module('MyConcert', ['ionic','spotify','angularFileUpload'])
        	});
 		return postPromise;
 	}
+})
+
+
+
+.service('uploadFile', function ($http, $q) 
+{
+	this.uploadFile = function(file, name)
+	{
+		var deferred = $q.defer();
+		var formData = new FormData();
+		formData.append("name", name);
+		formData.append("file", file);
+		return $http.post('server.php', formData, {
+			headers: {
+				"Content-type": undefined
+			},
+			transformRequest: angular.identity
+
+		})
+		.success(function(res)
+		{
+			deferred.resolve(res);
+		})
+		.error(function(msg, code)
+		{
+			deferred.reject(msg);
+		})
+		return deferred.promise;
+	}	
 })
