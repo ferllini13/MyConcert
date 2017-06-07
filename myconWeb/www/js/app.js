@@ -75,6 +75,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 			console.log(answer)
       		if (answer.length!=0){
 				localStorage.setItem('userName', loginUserName);
+                localStorage.setItem('password',loginPasword);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
 				localStorage.setItem('userState', answer[0].activo);
