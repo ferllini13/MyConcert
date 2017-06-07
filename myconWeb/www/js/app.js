@@ -1,6 +1,9 @@
 var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/MyConcert.asmx/';
 
-angular.module('MyConcert', ['ionic','spotify'])
+angular.module('MyConcert', ['ionic','spotify','angularFileUpload'])
+
+
+
 
 .config(function (SpotifyProvider) {
 	    SpotifyProvider.setClientId('4ea812437f8242599ceefeddacb80df0') ;
@@ -154,9 +157,17 @@ angular.module('MyConcert', ['ionic','spotify'])
 	$scope.tracks = [];
 	$scope.audio=new Audio();
 	
+	
+	$scope.pic="";
+	$scope.add=function(){
+		var f = document.getElementById('file').files[0];
+		console.log(f);
+		
+	}
+	
 	$scope.spotifyLogin=function(){	Spotify.login();}
 	
-	console.log(localStorage.getItem('spotify-token'));
+	//console.log(localStorage.getItem('spotify-token'));
 	
 	$scope.fun =  function(){
 		

@@ -9,19 +9,14 @@
 </div>
 
 
+        <div class="container">
+			<img ng-src={{pic}} alt="" height="30" width="auto">
+            <div class="row">
+                <div class="col-md-3">
+                    <input id="file" type="file" nv-file-select uploader="{FileUploader}"/>
+					<button ng-click="add()">Add</button>
+                </div>
 
- <div ng-init="friends = [{name:'John', phone:'555-1276'},
-                         {name:'Mary', phone:'800-BIG-MARY'},
-                         {name:'Mike', phone:'555-4321'},
-                         {name:'Adam', phone:'555-5678'},
-                         {name:'Julie', phone:'555-8765'},
-                         {name:'Juliette', phone:'555-5678'}]"></div>
+            </div>
 
-<label>Search: <input ng-model="searchText"></label>
-<table id="searchTextResults">
-  <tr><th>Name</th><th>Phone</th></tr>
-  <tr ng-repeat="friend in friends | filter:searchText">
-    <td>{{friend.name}}</td>
-    <td>{{friend.phone}}</td>
-  </tr>
-</table>d
+        </div>
