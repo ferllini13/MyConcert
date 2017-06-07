@@ -3,8 +3,6 @@ var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/MyConcert.asmx/'
 angular.module('MyConcert', ['ionic','spotify'])
 
 
-
-
 .config(function (SpotifyProvider) {
 	    SpotifyProvider.setClientId('4ea812437f8242599ceefeddacb80df0') ;
         SpotifyProvider.setRedirectUri('http://localhost:8100/callback.html');
