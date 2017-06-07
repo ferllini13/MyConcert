@@ -78,8 +78,15 @@ angular.module('MyConcert', ['ionic','spotify'])
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
 				localStorage.setItem('userState', answer[0].activo);
-				$state.go('main');
+				if (answer[0].activo==false){
+					$state.go('profile')	
+				}
+				else{
+					$state.go('main');
+				}
 		 	}
+			
+				
     	});
 		
 	};
@@ -174,13 +181,12 @@ angular.module('MyConcert', ['ionic','spotify'])
 	$scope.uploadFile = function()
 	{
 		var name = localStorage.getItem('userName');
-		var file = document.getElementById('file').files[0];
-		
-		console.log(file);
-		uploadFile.uploadFile(file, name).then(function(res)
-		{
-			console.log(res);
-		})
+		var file = document.getElementById('file');
+		console.log(file.files[0]);
+		//uploadFile.uploadFile(file, name).then(function(res)
+		//{
+			//console.log(res);
+		//})
 	}
 	
 	
@@ -235,13 +241,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 		var formData = new FormData();
 		formData.append("name", name);
 		formData.append("file", file);
-		return $http.post('server.php', formData, {
-			headers: {
-				"Content-type": undefined
-			},
-			transformRequest: angular.identity
-
-		})
+		return $http({method: 'POST',url:'server.php',formData,headers:{"Content-type": undefined},transformRequest: angular.identity})
 		.success(function(res)
 		{
 			deferred.resolve(res);

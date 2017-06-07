@@ -9,16 +9,17 @@
 </div>
 
 
-<input type="date">
-
         <div class="container">
 			
             <div class="row">
                 <div class="col-md-3">
-					<form name="upload" ng-submit="uploadFile()">
-                			<input type="file" name="file" id="file" uploader-model="file"/> <br>
-                			<input type="submit" value="Enviar"> 
-            </form>
+					<img src={{pic}}>
+					<form method="post" enctype="multipart/form-data" ng-submit="uploadFile()"><br>
+
+						<input id="file" type=file size=60 name="file"><br><br>
+						<input type="submit" placeholder="dele aqui">
+					</form>
+	
                 </div>
             </div>
 
@@ -26,6 +27,3 @@
 
 
 <div calss container>
-<label >
-  <input type="date" id="date-format" placeholder="Select date & time (dd/mm/yyyy)" /> </label>
-</div>
