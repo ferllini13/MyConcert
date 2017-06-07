@@ -1,115 +1,67 @@
-
-<form class="form-horizontal background2 scroll">
-<fieldset>
-
-<div class="text-center letra background">
-      <h1>Únete a My Concert</h1>
-  </div>
-    
-<!-- Nombre-->
-<div class="form ">
-  <label class="col-md-2 control-label" for="Company Name">Nombre</label>  
-  <div class="col-md-4">
-  <input id="Company Name" name="Company Name" type="text"  class="form-control input-md" required="">   
-  </div>
-
-
-<!-- Apellido-->
-  <label class="col-md-2 control-label" for="Company Name">Apellidos</label>  
-  <div class="col-md-4">
-  <input id="Company Name" name="Company Name" type="text"  class="form-control input-md" required="">   
-  </div>
-
-    
-    
-<div class="form-group">
-  <label class="col-md-2  control-label" for="selectbasic">País</label>
-  <div class="col-md-4 controls">
-    <select id="selectbasic" name="selectbasic" class="input-xlarge required">
-      <option id="marketer">Pais</option>
-      <option id="agency">Costa Rica</option>
-      <option id="agency">Estados Unidos</option>
-    </select>
-  </div>
+<div class="container scroll">
+	<div class="row">
+    <div class="col-md-8">
+        <h1 class="entry-title"><span>Sign Up</span> </h1>
+        <hr>
+            <form class="form-horizontal" method="post" name="signup" id="signup" enctype="multipart/form-data" >        
+        <div class="form-group">
+          <label class="control-label col-sm-3">Email <span class="text-danger">*</span></label>
+          <div class="col-md-8 col-sm-9">
+              <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-envelope"></i></span>
+              <input type="email" class="form-control" name="emailid" id="emailid" placeholder="Enter your Email ID" value="">
+            </div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+          <label class="control-label col-sm-3">Set Password <span class="text-danger">*</span></label>
+          <div class="col-md-5 col-sm-8">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password" class="form-control" name="password" id="password" placeholder="Choose password (5-15 chars)" value="">
+           </div>   
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Confirm Password <span class="text-danger">*</span></label>
+          <div class="col-md-5 col-sm-8">
+            <div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+              <input type="password" class="form-control" name="cpassword" id="cpassword" placeholder="Confirm your password" value="">
+            </div>  
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Full Name <span class="text-danger">*</span></label>
+          <div class="col-md-8 col-sm-9">
+            <input type="text" class="form-control" name="mem_name" id="mem_name" placeholder="Enter your Name here" value="">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Contact No. <span class="text-danger">*</span></label>
+          <div class="col-md-5 col-sm-8">
+          	<div class="input-group">
+              <span class="input-group-addon"><i class="glyphicon glyphicon-phone"></i></span>
+            <input type="text" class="form-control" name="contactnum" id="contactnum" placeholder="Enter your Primary contact no." value="">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="control-label col-sm-3">Profile Photo <br>
+          <small>(optional)</small></label>
+          <div class="col-md-5 col-sm-8">
+            <div class="input-group"> <span class="input-group-addon" id="file_upload"><i class="glyphicon glyphicon-upload"></i></span>
+              <input type="file" name="file_nm" id="file_nm" class="form-control upload" placeholder="" aria-describedby="file_upload">
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-xs-offset-3 col-xs-10">
+            <input name="Submit" type="submit" value="Sign Up" class="btn btn-primary">
+          </div>
+        </div>
+      </form>
+    </div>
 </div>
-    
-    
-<!-- Textarea -->
-
-
-<!-- Text input-->
-  <label class="col-md-2 control-label" for="User Name">*Ubicación</label>  
-  <div class="col-md-4">
-  <input id="User Name" name="User Name" type="text" class="form-control input-md" required="">
-    
-  </div>
-
-
-<!-- Text input-->
-  <label class="col-md-2 control-label" for="User Id">*Universidad</label> 
-  <div class="col-md-4">
-  <input id="User Id" name="User Id" type="text" class="form-control input-md" required="">
-    
-  </div>
-
-
-<!-- Text input-->
-
-  <label class="col-md-2 control-label" for="Mail Id ">Email </label> 
-  <div class="col-md-4">
-  <input id="Mail Id " name="Mail Id " type="text" class="form-control input-md" required="">
-    
-  </div>
-
-
-<!-- Text input-->
-
-  <label class="col-md-2 control-label" for="Mail Id ">Teléfono </label> 
-  <div class="col-md-4">
-  <input id="Mail Id " name="Mail Id " type="text" class="form-control input-md" required="">  
-  </div>
-
-
-<!-- Text input-->
-  <label class="col-md-2 control-label" for="Mail Id ">Nombre de Usuario </label> 
-  <div class="col-md-4">
-  <input id="Mail Id " name="Mail Id " type="text"  class="form-control input-md" required="">  
-  </div>
-	
-<!-- Text input-->
-
-  <label class="col-md-2 control-label" for="Mail Id ">Nombre de Usuario </label> 
-  <div class="col-md-4">
-  <input id="Mail Id " name="Mail Id " type="text"  class="form-control input-md" required="">  
-  </div>
-    
-
-<!--Contraseña-->
-  <label class="col-md-2 control-label" for="Password">Contraseña</label>
-  <div class="col-md-4">
-    <input id="Password" name="Password" type="password"  class="form-control input-md" required="">
-    
-  </div>
-
-<!-- Confirmar contraseña-->
-  <label class="col-md-2 control-label" for="Password Again">Confirmar Contraseña</label>
-  <div class="col-md-4">
-    <input id="Password Again" name="Password Again" type="password"  class="form-control input-md" required="">
-    
-  </div>
-	
-	
-	<label > Fecha de nacimiento
-  <input type="date" id="date-format" placeholder="Select date & time (dd/mm/yyyy)" />
-	</label>
-	
-
-<!-- Button -->
-
-  <label class="col-md-1 control-label" for=""></label>
-  <div class="col-md-4">
-    <button id="" name="" class="btn btn-success">Registrarse</button>
-  </div>
 </div>
-</fieldset>
-</form>

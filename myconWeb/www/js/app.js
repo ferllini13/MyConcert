@@ -1,14 +1,6 @@
-var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/MyConcert.asmx/';
+var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/WebService1.asmx';
 
-angular.module('MyConcert', ['ionic','spotify'])
-
-
-.config(function (SpotifyProvider) {
-	    SpotifyProvider.setClientId('4ea812437f8242599ceefeddacb80df0') ;
-        SpotifyProvider.setRedirectUri('http://localhost:8100/callback.html');
-        SpotifyProvider.setScope('user-read-private playlist-read-private playlist-modify-private playlist-modify-public');
-		SpotifyProvider.setAuthToken(localStorage.getItem('spotify-token'));
-})
+angular.module('MyConcert', ['ionic'])
 
 
 .config( function ( $stateProvider , $urlRouterProvider ){
@@ -84,9 +76,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 				else{
 					$state.go('main');
 				}
-		 	}
-			
-				
+			}
     	});
 		
 	};
@@ -94,6 +84,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 .controller('profileController', function($scope, $state,$http){
+	$scope.active=true;
 	$scope.active=localStorage.getItem('userState');
 })
 
@@ -126,7 +117,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 		$scope.fanaticUser=true;
 		$scope.pomotionUser=false;
 	}
-	else if (rol===3){
+	else if (rol===2){
 		$scope.pomotionUser=true;
 		$scope.fanaticUser=false;
 	}
@@ -163,12 +154,6 @@ angular.module('MyConcert', ['ionic','spotify'])
 
 
 .controller('pbandController', function($scope, $state,Spotify,$http,uploadFile){
-	var clientId ="4ea812437f8242599ceefeddacb80df0";
-	var clientSecret ="13c8e7890bc34b34b1bfd3784e5de0fd";
-	$scope.tracks = [];
-	$scope.audio=new Audio();
-	
-	
 	$scope.pic;
 	$scope.add=function(){
 		var f = document.getElementById('file').files[0];
@@ -178,8 +163,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 	}
 	
 	
-	$scope.uploadFile = function()
-	{
+	$scope.uploadFile = function(){
 		var name = localStorage.getItem('userName');
 		var file = document.getElementById('file');
 		console.log(file.files[0]);
@@ -190,15 +174,7 @@ angular.module('MyConcert', ['ionic','spotify'])
 	}
 	
 	
-	
-	
-	
-	$scope.spotifyLogin=function(){	Spotify.login();}
-	
-	//console.log(localStorage.getItem('spotify-token'));
-	
-	$scope.fun =  function(){
-		
+	$scope.fun =  function(){	
 		var req = {method: 'GET', url: 'https://api.spotify.com/v1/tracks/5XcZRgJv3zMhTqCyESjQrF',headers: {'Authorization': 'Bearer ' + localStorage.getItem('spotify-token')}};
 		
 		$http(req).then(function(response){
