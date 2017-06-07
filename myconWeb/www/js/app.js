@@ -62,18 +62,25 @@ angular.module('MyConcert', ['ionic','spotify'])
 })
    
 
-.controller('LoginController', function($scope,$http,$state,connectApi){
+.controller('LoginController', function($scope,$state,connectApi){
 	$scope.starPage=function(){localStorage.clear();};
-			
-    $scope.checkUser =  function(loginUserName,loginPasword){
-		
+	
+	
+    $scope.checkUser =  function(loginUserName,loginPasword){	
 		var method="VerificarLogeo";
-		var msj={'userName':loginUserName,'password':loginPasword};
-
+		var msj={userName:loginUserName,password:loginPasword};
+	
+		connectApi.httpGet(method,msj).then(function(answer) {
+			console.log(answer)
+      		if (answer.length!=0){
+				localStorage.setItem('userName', loginUserName);
+				localStorage.setItem('userId', answer[0].id);
+				localStorage.setItem('userRol', answer[0].rolID);
+				localStorage.setItem('userState', answer[0].activo);
+				$state.go('main');
+		 	}
+    	});
 		
-		 var answer = connectApi.httpGet($http,method,msj)
-		
-        //$state.go('main');
 	};
 })
 
@@ -100,13 +107,13 @@ angular.module('MyConcert', ['ionic','spotify'])
 .controller('addBandController', function($scope, $state,$http){
             })
 
-.controller('menuController', function($scope, $state,$http){
-	var userName=localStorage.getItem('userName');
-	var rol = localStorage.getItem('userRol');
 
+.controller('menuController', function($scope, $state,$http){
 	$scope.fanaticUser=false;
     $scope.pomotionUser=false;
-	
+	$scope.userName=localStorage.getItem('userName');
+	var rol = localStorage.getItem('userRol');
+
 	if (rol===1){
 		$scope.fanaticUser=true;
 		$scope.pomotionUser=false;
@@ -163,29 +170,24 @@ angular.module('MyConcert', ['ionic','spotify'])
 })
 
 
-
-
-.service('connectApi',function(){
-	return {
-		httpGet: function($http,method,requestJson){
-			$http.get(webSeviceIp + method+'?frase='+JSON.stringify(requestJson)).then(function (response){
-		    	var answer= angular.fromJson(response.data.substring(73, response.data.length - 9));
-				return this.answer;              
-		});},
-		
-		httpPost: function($http,method,requestJson){
-			$http.post(webSeviceIp+method, requestJson).then(function(response) {
-		  		var answer= angular.fromJson(response.data.d);
-				return this.answer;
-       		});}
-	};
-})
-
-
-
 .directive('menu', function() {
  	return {
     	templateUrl: 'html/menu.html',
       	controller:"menuController"
 	};
+})
+
+.service('connectApi',function($http){
+	this.httpGet= function(method,requestJson){
+		var getPromise=$http.get(webSeviceIp + method+'?frase='+JSON.stringify(requestJson)).then(function (response){
+	    	return angular.fromJson(response.data.substring(73, response.data.length - 9));
+		});
+		return getPromise;
+	},
+	this.httpPost= function(method,requestJson){
+		var postPromise=$http.post(webSeviceIp+method, requestJson).then(function(response) {
+	  		return angular.fromJson(response.data.d);
+       	});
+		return postPromise;
+	}
 })
