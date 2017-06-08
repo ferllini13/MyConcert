@@ -9,10 +9,10 @@
       <div class="text-center">  
         <img width="200px" height="200px" src="https://avatars1.githubusercontent.com/u/7444686?v=3&s=460" alt="avatar">
         <h6>Cambie su foto de perfil</h6>
-        <input type="file" class="text-center center-block well well-sm">
+        <input type="file" id="pic" class="text-center center-block well well-sm">
       </div>
 		
-	<div ALIGN="center"><input  type="checkbox" checked data-toggle="toggle"/></div>
+	<div ALIGN="center"><input ng-model="act" type="checkbox" checked data-toggle="toggle"/></div>
 	<div ALIGN="center"><label>Activar/Desactivar su Cuenta</label></div><br><br>	
 
 		
@@ -31,7 +31,7 @@
         <div class="form-group">
           <label class="col-lg-3 control-label">Nombre:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="{{userName}}" type="text">
+            <input class="form-control" ng-model="user.name" value="{{userName}}" type="text">
           </div>
         </div>
         <div class="form-group">
@@ -44,7 +44,7 @@
           <label class="col-lg-3 control-label">Pais:</label>
           <div class="col-lg-8">
             <div class="ui-select">
-              <select id="user_time_zone" class="form-control">
+              <select id="user_time_zone" ng-model="cont" class="form-control">
                 <option value="Costa Rica">Costa Rica</option>
                 <option value="algo">Algo mas</option>
               </select>
@@ -54,37 +54,37 @@
 		<div class="form-group">
           <label class="col-lg-3 control-label">Ubicación:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="http://tuconsultoraseo.com" type="text">
+            <input class="form-control" ng-model="from.adrss" value="http://tuconsultoraseo.com" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Universidad:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="http://tuconsultoraseo.com" type="text">
+            <input class="form-control" ng-model="uni" value="http://tuconsultoraseo.com" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="col-lg-3 control-label">Correo Electrónico:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="carmenestelasi@gmail.com" type="email">
+            <input class="form-control" ng-model="email" value="carmenestelasi@gmail.com" type="email">
           </div>
         </div>
 		<div class="form-group">
           <label class="col-lg-3 control-label">teléfono:</label>
           <div class="col-lg-8">
-            <input class="form-control" value="86244505" type="tel">
+            <input class="form-control" ng-model="tel" value="86244505" type="tel">
           </div>
         </div> 
 		<div class="form-group">
           <label class="col-lg-3 control-label">Fecha de Nacimienot:</label>
           <div class="col-lg-8">
 			<label>
-            	<input class="form-control" value="2015-10-10" type="date"/>
+            	<input class="form-control" ng-model="date" value="2015-10-10" type="date"/>
 			</label>  
 		</div>
         </div>    
         <div class="form-group">
-          <label class="col-md-3 control-label">Nombre de Usuario:</label>
+          <label class="col-md-3 control-label" ng-model="uname">Nombre de Usuario:</label>
           <div class="col-md-8">
             <input class="form-control" value="janeuser" type="text">
           </div>
@@ -92,21 +92,23 @@
         <div class="form-group">
           <label class="col-md-3 control-label">Contraseña:</label>
           <div class="col-md-8">
-            <input class="form-control" value="11111122333" type="password">
+            <input ng-model="pass" class="form-control" value="11111122333" type="password">
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label">Confirmar Contraseña:</label>
           <div class="col-md-8">
-            <input class="form-control" value="11111122333" type="password">
+            <input ng-model="pass2" class="form-control" value="11111122333" type="password">
           </div>
+			
+			
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8">
-            <input class="btn btn-primary" value="Save Changes" type="button">
+            <input class="btn btn-primary" value="Guardar Cambios" type="submit">
             <span></span>
-            <input class="btn btn-default" value="Cancel" type="reset">
+            <input class="btn btn-default" value="Reestablecer" type="reset">
           </div>
         </div>
       </form>

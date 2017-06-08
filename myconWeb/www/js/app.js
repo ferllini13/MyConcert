@@ -1,4 +1,4 @@
-var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/WebService1.asmx';
+var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/WebService1.asmx/';
 
 angular.module('MyConcert', ['ionic'])
 
@@ -134,14 +134,27 @@ angular.module('MyConcert', ['ionic'])
 })
 
 
-.controller('catalogueController', function($scope, $state){
+.controller('catalogueController', function($scope, $state,connectApi){
 	$scope.isEmpty=true;
 	$scope.catalogue=[];
 	
-	if ($scope.catalogue.length!=0){
+	
+	$scope.getBands =  function(){	
+	var method="VerificarLogeo";
+	
+	connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
+		console.log(answer);
+		$scope.catalogue=answer;
+		
+		if ($scope.catalogue.length!=0){
 		$scope.isEmpty=false;
-	}
-	else{$scope.isEmpty=true;}
+		}
+		else{$scope.isEmpty=true;}
+ 
+	});
+	
+	
+	};
 })
 
 

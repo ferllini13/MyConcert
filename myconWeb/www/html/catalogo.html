@@ -1,9 +1,10 @@
 <div menu ></div>
-<div class="container scroll" >
+<div class="container scroll"  ng-init="getBands()">
 
 <br><br><br>
 
 	<h2 ALIGN="center"> Catálogo de bandas registradas</h2>
+
 	<div class="col-sm-3 sidenav"></div>
 	
 		<div class="col-sm-6">
@@ -11,11 +12,12 @@
              			placeholder="Busca una banda"
              			ng-model="search"
              			ng-change="scrollTop()"  
-                		class="full-width white-background">
+                		class="full-width white-background"><br>
+			
 		<ion-list class="list-group">
       		<ion-item class="list-group-item" ng-repeat="band in catalogue | filter:search" >
        		
-				{{band.name}}
+				<a href="#/seeBand/{{band.id}}"><h3>{{band.nombre}}</h3></a>
       
 			</ion-item>
     	</ion-list>
