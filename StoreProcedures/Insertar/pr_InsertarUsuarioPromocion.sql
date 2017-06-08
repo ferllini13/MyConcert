@@ -27,12 +27,12 @@ BEGIN
 		
 		declare @guID int;
 
-		insert into USUARIO_GENERAL(nombre, apellido, contraseña, nombreUsuario,diaInscripcion)
-		values(@nombre, @apellido, @contraseña, @nombreUsuario, @diaInscripcion);
+		insert into USUARIO_GENERAL(nombre, apellido, contraseña, nombreUsuario,diaInscripcion, rolID)
+		values(@nombre, @apellido, @contraseña, @nombreUsuario, @diaInscripcion, @rolID);
 
 		set @guID = (select id from USUARIO_GENERAL where nombreUsuario = @nombreUsuario)
-		insert into USUARIO_PROMOCION(uniqueID,rolID, guID)
-		values(@uniqueID, @rolID, @guID)
+		insert into USUARIO_PROMOCION(uniqueID, guID)
+		values(@uniqueID, @guID)
 		
 
 		SET @msg = ''

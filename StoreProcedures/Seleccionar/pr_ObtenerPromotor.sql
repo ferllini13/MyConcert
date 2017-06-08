@@ -10,14 +10,14 @@ BEGIN
 
     Begin Try	
 
-		declare @tmpTable table(id int ,nombre varchar(30) , apellido varchar(30), contraseña varchar(15), nombreUsuario varchar(10), 
-								diaInscripcion DATE, activo bit, uniqueID varchar, rolID int)
+		declare @tmpTable table(id int ,nombre varchar(30) , apellido varchar(30), contrasena varchar(15), nombreUsuario varchar(10), 
+								diaInscripcion DATE, activo bit, uniqueID varchar(10), rolID int)
 		
-		insert into @tmpTable(id, nombre, apellido, contraseña, nombreUsuario, diaInscripcion, activo,uniqueID, rolID)
-			select UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UP.rolID
+		insert into @tmpTable(id, nombre, apellido, contrasena, nombreUsuario, diaInscripcion, activo,uniqueID, rolID)
+			select UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UG.rolID
 			from USUARIO_GENERAL as UG inner join USUARIO_PROMOCION as UP on UP.guID = UG.id
 			where UP.id = @id
-			group by UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UP.rolID
+			group by UP.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, UP.uniqueID, UG.rolID
 		
 		select * from @tmpTable
 
@@ -26,7 +26,7 @@ BEGIN
     End try
     Begin Catch
 
-        SET @msg = '101'
+        SET @msg = 'Error deleting product: ' + ERROR_MESSAGE() + ' on line ' + CONVERT(NVARCHAR(255), ERROR_LINE() ) + '.'
 		print @msg
         Rollback TRAN obtenerPromotor
 
