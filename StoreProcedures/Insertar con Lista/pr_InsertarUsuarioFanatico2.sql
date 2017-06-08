@@ -34,7 +34,7 @@ CREATE PROCEDURE pr_InsertarUsuarioFanatico2
 	@descripcion varchar(300),
 	@foto varchar(100),
 	@email varchar(30),
-	@rolID varchar(30),
+	@rolID int,
 	@generoID intList readonly
 
 AS

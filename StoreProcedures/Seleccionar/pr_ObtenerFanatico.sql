@@ -15,11 +15,11 @@ BEGIN
 			--select UG.nombre, UG.apellido, UG. from USUARIO_GENERAL as UG where nombreUsuario = @nombreUsuario
 		
 		declare @tmpTable table(id int ,nombre varchar(30) , apellido varchar(30), contrasena varchar(15), nombreUsuario varchar(10), 
-			diaInscripcion DATE, activo bit, pais varchar(30), ubicacion varchar(100), universidad varchar (30), 
-			celular varchar(8), fechaNacimiento DATE, descripcion varchar (300), foto varchar(100), email varchar(30), rolID int)
+			diaInscripcion varchar(10), activo bit, pais varchar(30), ubicacion varchar(100), universidad varchar (30), 
+			celular varchar(8), fechaNacimiento varchar(10), descripcion varchar (300), foto varchar(100), email varchar(30), rolID int)
 		
 		insert into @tmpTable(id, nombre, apellido, contrasena, nombreUsuario, diaInscripcion, activo, pais, ubicacion, universidad, celular, fechaNacimiento, descripcion, foto, email, rolID)
-			select UF.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, P.nombre, UF.ubicacion, UF.universidad, UF.celular, UF.fechaNacimiento, UF.descripcion, UF.foto, UF.email, UG.rolID
+			select UF.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, convert(varchar(10), UG.diaInscripcion), UG.activo, P.nombre, UF.ubicacion, UF.universidad, UF.celular,convert(varchar(10), UF.fechaNacimiento), UF.descripcion, UF.foto, UF.email, UG.rolID
 			from USUARIO_GENERAL as UG inner join FAN_USUARIO as UF on UF.guID = UG.id inner join PAIS as P on UF.paisID = P.id
 			where UF.id = @id
 			group by UF.id, UG.nombre, UG.apellido, UG.contraseña, UG.nombreUsuario, UG.diaInscripcion, UG.activo, P.nombre, UF.ubicacion, UF.universidad, UF.celular, UF.fechaNacimiento, UF.descripcion, UF.foto, UF.email, UG.rolID
