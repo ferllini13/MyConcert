@@ -1,6 +1,6 @@
 <div menu></div>
 <div class="container scroll" style="padding-top: 80px;">
-<h1 ALIGN="center">MI Unete a My Concert</h1><br>
+<h1 ALIGN="center">Únete a My Concert</h1><br>
   <div class="row">
     <!-- left column -->
     <div class="col-md-4 col-sm-6 col-xs-12">
@@ -13,8 +13,8 @@
       </div>
 		
 	<div ALIGN="center">
-		<input class="btn btn-success" type="button" value="Fanatico" >
-		<input type="button" class="btn btn-success" value="Promoción">
+		<input class="btn btn-success" type="button" value="Fanatico" ng-click="changeUserType()" ng-if="!userType">
+		<input type="button" class="btn btn-success" value="Promoción" ng-click="changeUserType()" ng-if="userType">
 	</div>
 
 		
@@ -38,24 +38,30 @@
             <input class="form-control" ng-model="userData.apellido" type="text">
           </div>
         </div>
-		 <div class="form-group">
+		 <div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">Pais:</label>
           <div class="col-lg-8">
             <div class="ui-select">
               <select id="cont" ng-model="userData.pais" class="form-control">
-                <option value="Costa Rica">Costa Rica</option>
-                <option value="algo">Algo mas</option>
-              </select>
+              		<option value="1">Costa Rica</option>
+                	<option value="2">Argentina</option>
+					<option value="3">Chile</option>
+					<option value="4">Colombia</option>
+				  	<option value="5">Brasil</option>
+              		<option value="6">México</option>
+				  	<option value="7">Panama</option>
+				  	<option value="8">Cánada</option>
+				</select>
             </div>
           </div>
         </div>
-		<div class="form-group">
-          <label class="col-lg-3 control-label">Ubicación:</label>
+		<div class="form-group" ng-if="userType">
+          <label class="col-lg-3 control-label" >Ubicación:</label>
           <div class="col-lg-8">
             <input class="form-control" ng-model="userData.ubicacion" type="text">
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">Universidad:</label>
           <div class="col-lg-8">
             <input class="form-control" ng-model="userData.universidad" type="text">
@@ -67,13 +73,13 @@
             <input class="form-control" ng-model="userData.email" type="email">
           </div>
         </div>
-		<div class="form-group">
+		<div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">teléfono:</label>
           <div class="col-lg-8">
             <input class="form-control" ng-model="userData.celular" type="tel">
           </div>
         </div> 
-		<div class="form-group">
+		<div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">Fecha de Nacimiento:</label>
           <div class="col-lg-8">
 			<label>
@@ -100,7 +106,7 @@
             <input class="form-control" ng-model="userData.contrasena" type="password">
           </div>
 		
-		 <div class="form-group">
+		 <div class="form-group" ng-if="userType">
           <label class="col-md-3 control-label"> Descripción:</label>
           <div class="col-md-8">
             <input class="form-control" ng-model="userData.descripcion" type="text">

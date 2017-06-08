@@ -129,16 +129,11 @@ angular.module('MyConcert', ['ionic'])
 })
 
 .controller('RegisterController', function($scope, $state,connectApi){
-	$scope.fanaticUser=false;
-	//$scope.selectType=function(boolUserType){
-		//console.log(boolUserType);
-		//$scope.fanaticUser=boolUserType;	
-	//}
-	
-	
-	
-	
-	
+	$scope.userType=true;
+	$scope.changeUserType=function(){
+		$scope.userType=!$scope.userType;
+		console.log($scope.userType)
+	}
 	
             
             })
