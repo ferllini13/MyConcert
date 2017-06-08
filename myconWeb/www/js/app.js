@@ -86,6 +86,7 @@ angular.module('MyConcert', ['ionic'])
 .controller('profileController', function($scope, $state,$http,connectApi){
     $scope.userName=localStorage.getItem('userName');
 	$scope.userData={};
+	$scope.userDataBackUp={};
 	$scope.fanatic=false;
 	var rol =localStorage.getItem('userRol');
 	$scope.checked=true;
@@ -94,14 +95,20 @@ angular.module('MyConcert', ['ionic'])
 		$scope.fanatic=true;	
 	}else {$scope.fanatic=false;}
 	
-	$scope.getUserData= function(){	
+	$scope.getUserData= function(){
+		var method;
 		if ($scope.fanatic){
-			connectApi.httpGet('ObtenerFanatico',{id:localStorage.getItem('userId')}).then(function(answer) {
-			$scope.userData=answer[0];
-				console.log($scope.userData);
-				updateCheck();
-			});
+			method='ObtenerFanatico';
 		}
+		else{
+			method='/ObtenerPromocion'
+		}	
+		connectApi.httpGet('ObtenerFanatico',{id:localStorage.getItem('userId')}).then(function(answer) {
+			$scope.userData=answer[0];
+			$scope.userDataBackUp=answer[0];
+			console.log($scope.userData);
+			updateCheck();
+		});
 	}
 	
 	var updateCheck=function(){
@@ -110,13 +117,29 @@ angular.module('MyConcert', ['ionic'])
 		}else{$scope.checked=false;}
 	}
 	
-	$scope.updateActive=function(bool){
-		$scope.userData.activo=bool;
+	$scope.updateActive=function(boolActive){
+		$scope.userData.activo=boolActive;
 		updateCheck();
+	}
+	
+	
+	$scope.resetUserData=function(){
+		$scope.userData=$scope.userDataBackUp;
 	}
 })
 
-.controller('RegisterController', function($scope, $state,$http){
+.controller('RegisterController', function($scope, $state,connectApi){
+	$scope.fanaticUser=false;
+	//$scope.selectType=function(boolUserType){
+		//console.log(boolUserType);
+		//$scope.fanaticUser=boolUserType;	
+	//}
+	
+	
+	
+	
+	
+	
             
             })
 
@@ -194,7 +217,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('pbandController', function($scope, $state,Spotify,$http,uploadFile){
+.controller('pbandController', function($scope, $state,$http,uploadFile){
 	$scope.pic;
 	$scope.add=function(){
 		var f = document.getElementById('file').files[0];
@@ -207,6 +230,8 @@ angular.module('MyConcert', ['ionic'])
 	$scope.uploadFile = function(){
 		var name = localStorage.getItem('userName');
 		var file = document.getElementById('file');
+		console.log(file);
+		console.log(file.value);
 		console.log(file.files[0]);
 		//uploadFile.uploadFile(file, name).then(function(res)
 		//{

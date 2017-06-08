@@ -1,1 +1,121 @@
 <div menu></div>
+<div class="container scroll" style="padding-top: 80px;">
+<h1 ALIGN="center">MI Unete a My Concert</h1><br>
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+		<br>
+		<br>
+      <div class="text-center">  
+        <img width="auto" height="200px" src="https://image.ibb.co/dE2cav/My_Concert3.png" alt="avatar">
+        <h6>Cambie su foto de perfil</h6>
+        <input type="file" id="pic" class="text-center center-block well well-sm">
+      </div>
+		
+	<div ALIGN="center">
+		<input class="btn btn-success" type="button" value="Fanatico" >
+		<input type="button" class="btn btn-success" value="Promoción">
+	</div>
+
+		
+	<div ALIGN="center"><label>Usuario Fanático/Promoción</label>
+
+		</div><br><br>
+		
+    </div>
+    <!-- edit form column -->
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Nombre:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.nombre" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Apellido:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.apellido" type="text">
+          </div>
+        </div>
+		 <div class="form-group">
+          <label class="col-lg-3 control-label">Pais:</label>
+          <div class="col-lg-8">
+            <div class="ui-select">
+              <select id="cont" ng-model="userData.pais" class="form-control">
+                <option value="Costa Rica">Costa Rica</option>
+                <option value="algo">Algo mas</option>
+              </select>
+            </div>
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-lg-3 control-label">Ubicación:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.ubicacion" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Universidad:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.universidad" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Correo Electrónico:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.email" type="email">
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-lg-3 control-label">teléfono:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.celular" type="tel">
+          </div>
+        </div> 
+		<div class="form-group">
+          <label class="col-lg-3 control-label">Fecha de Nacimiento:</label>
+          <div class="col-lg-8">
+			<label>
+            	<input data-date-format="DD-MM-YYYY" class="form-control" ng-model="userData.fechaNacimiento" type="date"/>
+			</label>  
+		</div>
+        </div>    
+        <div class="form-group">
+          <label class="col-md-3 control-label" >Nombre de Usuario:</label>
+          <div class="col-md-8">
+            <input class="form-control" ng-model="userData.nombreUsuario" type="text">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Contraseña:</label>
+          <div class="col-md-8">
+            <input id="pass" class="form-control" 
+				   ng-model="userData.contrasena" type="password">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label">Confirmar Contraseña:</label>
+          <div class="col-md-8">
+            <input class="form-control" ng-model="userData.contrasena" type="password">
+          </div>
+		
+		 <div class="form-group">
+          <label class="col-md-3 control-label"> Descripción:</label>
+          <div class="col-md-8">
+            <input class="form-control" ng-model="userData.descripcion" type="text">
+          </div>
+        </div>	
+        </div>
+        <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input class="btn btn-primary" value="Guardar Cambios" type="submit">
+            <span></span>
+            <input class="btn btn-default" value="Reestablecer" type="reset">
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
