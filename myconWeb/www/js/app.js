@@ -67,7 +67,6 @@ angular.module('MyConcert', ['ionic'])
 			console.log(answer)
       		if (answer.length!=0){
 				localStorage.setItem('userName', loginUserName);
-                localStorage.setItem('password',loginPasword);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
 				localStorage.setItem('userState', answer[0].activo);
@@ -84,10 +83,37 @@ angular.module('MyConcert', ['ionic'])
 })
 
 
-.controller('profileController', function($scope, $state,$http){
-	$scope.active=true;
-	$scope.active=localStorage.getItem('userState');
+.controller('profileController', function($scope, $state,$http,connectApi){
     $scope.userName=localStorage.getItem('userName');
+	$scope.userData={};
+	$scope.fanatic=false;
+	var rol =localStorage.getItem('userRol');
+	$scope.checked=true;
+	
+	if (rol==1){
+		$scope.fanatic=true;	
+	}else {$scope.fanatic=false;}
+	
+	$scope.getUserData= function(){	
+		if ($scope.fanatic){
+			connectApi.httpGet('ObtenerFanatico',{id:localStorage.getItem('userId')}).then(function(answer) {
+			$scope.userData=answer[0];
+				console.log($scope.userData);
+				updateCheck();
+			});
+		}
+	}
+	
+	var updateCheck=function(){
+		if ($scope.userData.activo===true){
+			$scope.checked=true;
+		}else{$scope.checked=false;}
+	}
+	
+	$scope.updateActive=function(bool){
+		$scope.userData.activo=bool;
+		updateCheck();
+	}
 })
 
 .controller('RegisterController', function($scope, $state,$http){
