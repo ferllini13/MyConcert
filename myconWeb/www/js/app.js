@@ -69,6 +69,8 @@ angular.module('MyConcert', ['ionic'])
 				localStorage.setItem('userName', loginUserName);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
+				console.log("rol id");
+				console.log(answer[0].id);
 				localStorage.setItem('userState', answer[0].activo);
 				if (answer[0].activo==false){
 					$state.go('profile')	
@@ -86,7 +88,6 @@ angular.module('MyConcert', ['ionic'])
 .controller('profileController', function($scope, $state,$http,connectApi){
     $scope.userName=localStorage.getItem('userName');
 	$scope.userData={};
-	$scope.userDataBackUp={};
 	$scope.fanatic=false;
 	var rol =localStorage.getItem('userRol');
 	$scope.checked=true;
@@ -105,12 +106,13 @@ angular.module('MyConcert', ['ionic'])
 		}	
 		connectApi.httpGet('ObtenerFanatico',{id:localStorage.getItem('userId')}).then(function(answer) {
 			$scope.userData=answer[0];
-			$scope.userDataBackUp=answer[0];
 			console.log($scope.userData);
 			updateCheck();
 		});
 	}
 	
+	
+
 	var updateCheck=function(){
 		if ($scope.userData.activo===true){
 			$scope.checked=true;
@@ -121,22 +123,25 @@ angular.module('MyConcert', ['ionic'])
 		$scope.userData.activo=boolActive;
 		updateCheck();
 	}
-	
-	
-	$scope.resetUserData=function(){
-		$scope.userData=$scope.userDataBackUp;
-	}
 })
 
 .controller('RegisterController', function($scope, $state,connectApi){
+	$scope.userData={};
+	$scope.password={};
 	$scope.userType=true;
 	$scope.changeUserType=function(){
 		$scope.userType=!$scope.userType;
 		console.log($scope.userType)
 	}
 	
-            
-            })
+	$scope.fun =function(){
+	console.log($scope.userData)
+	}
+	$scope.resetData=function(){
+		$scope.userData={};
+		$scope.password={};
+	}	
+})
 
 .controller('SeeBandController', function($scope,$state,$stateParams,$http){
 	$scope.bandToSee= $stateParams.bandId;
@@ -190,7 +195,6 @@ angular.module('MyConcert', ['ionic'])
 	
 	
 	$scope.getBands =  function(){	
-	var method="VerificarLogeo";
 	
 	connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
 		console.log(answer);
@@ -219,6 +223,25 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('pbandController', function($scope, $state,$http,uploadFile){
+	document.getElementById('file').onchange=function() {previewFile()};
+	
+function previewFile() {
+  	var preview = document.querySelector('img');
+  	var file    = document.getElementById('file').files[0];
+  	var reader  = new FileReader();
+
+  reader.addEventListener("load", function () {
+    preview.src = reader.result;
+  }, false);
+
+  if (file) {
+    reader.readAsDataURL(file);
+  }
+}
+	
+	
+	
+	
 	$scope.pic;
 	$scope.add=function(){
 		var f = document.getElementById('file').files[0];

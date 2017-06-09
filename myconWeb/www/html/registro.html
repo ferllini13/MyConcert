@@ -9,7 +9,8 @@
       <div class="text-center">  
         <img width="auto" height="200px" src="https://image.ibb.co/dE2cav/My_Concert3.png" alt="avatar">
         <h6>Cambie su foto de perfil</h6>
-        <input type="file" id="pic" class="text-center center-block well well-sm">
+        <input type="file" id="pic" onchange="previewFile()" class="text-center center-block well well-sm">
+		<img src="" height="200" alt="Image preview...">
       </div>
 		
 	<div ALIGN="center">
@@ -42,7 +43,7 @@
           <label class="col-lg-3 control-label">Pais:</label>
           <div class="col-lg-8">
             <div class="ui-select">
-              <select id="cont" ng-model="userData.pais" class="form-control">
+              <select ng-model="userData.pais" class="form-control">
               		<option value="1">Costa Rica</option>
                 	<option value="2">Argentina</option>
 					<option value="3">Chile</option>
@@ -103,7 +104,7 @@
         <div class="form-group">
           <label class="col-md-3 control-label">Confirmar Contraseña:</label>
           <div class="col-md-8">
-            <input class="form-control" ng-model="userData.contrasena" type="password">
+            <input class="form-control" ng-model="password.contrasena" type="password">
           </div>
 		
 		 <div class="form-group" ng-if="userType">
@@ -113,14 +114,27 @@
           </div>
         </div>	
         </div>
+		
+		<div class="form-group" ng-if="userType">
+          	<label class="col-lg-3 control-label">Seleccione sus generos de Preferencia:</label>
+          	<div class="col-lg-8">
+
+				
+				
+			</div>
+        </div>     
+		  
+		  
+	
+		  
         <div class="form-group">
           <label class="col-md-3 control-label"></label>
           <div class="col-md-8">
             <input class="btn btn-primary" value="Guardar Cambios" type="submit">
             <span></span>
-            <input class="btn btn-default" value="Reestablecer" type="reset">
+            <input class="btn btn-default" value="Reestablecer" ng-click="resetData()" type="reset">
           </div>
-        </div>
+        </div>	  
       </form>
     </div>
   </div>
