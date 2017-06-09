@@ -40,6 +40,11 @@ angular.module('MyConcert', ['ionic'])
                 controller: 'addBandController',
                 templateUrl:'html/añadirBanda.html'
             })
+    $stateProvider.state('addCategory', {
+                url:'/addCategory',
+                controller: 'addCategoryController',
+                templateUrl:'html/añadirCategoria.html'
+            })
     
 	$stateProvider.state('catalogue', {
                 url:'/catalogue',
@@ -203,7 +208,16 @@ angular.module('MyConcert', ['ionic'])
 	
 	connectApi.httpGet('ObtenerBanda',msj).then(function(answer) {
 		console.log(answer);
-	});	
+	});
+    connectApi.httpGet('ObtenerArtistas',msj).then(function(answer) {
+		console.log(answer);
+	});
+	connectApi.httpGet('ObtenerCanciones',msj).then(function(answer) {
+		console.log(answer);
+	});	        
+	connectApi.httpGet('ObtenerComentarios',msj).then(function(answer) {
+		console.log(answer);
+	});        
 	};
     })
 
@@ -248,6 +262,15 @@ angular.module('MyConcert', ['ionic'])
     	}
 	};
 })
+
+
+
+.controller('addCategoryController', function($scope, $state,$http){
+    
+        $scope.sendCategory =  function(NameCategory,description){
+                console.log({NameCategory,description})
+        }
+            })
 
 
 .controller('menuController', function($scope, $state,$http){
