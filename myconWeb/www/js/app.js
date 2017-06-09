@@ -86,6 +86,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('profileController', function($scope, $state,$http,connectApi){
+	document.getElementById('file').onchange=function() {previewFile()};
     $scope.userName=localStorage.getItem('userName');
 	$scope.userData={};
 	$scope.fanatic=false;
@@ -123,9 +124,28 @@ angular.module('MyConcert', ['ionic'])
 		$scope.userData.activo=boolActive;
 		updateCheck();
 	}
+	
+	
+	function previewFile() {
+  		var preview = document.getElementById('pic');
+  		var file    = document.getElementById('file').files[0];
+		console.log(file);
+  		var reader  = new FileReader();
+
+  		reader.addEventListener("load", function () {
+    		preview.src = reader.result;
+		}, false);
+
+  		if (file) {
+    		reader.readAsDataURL(file);
+  		}
+	}
+	
+	
 })
 
 .controller('RegisterController', function($scope, $state,connectApi){
+	document.getElementById('file').onchange=function() {previewFile()};
 	$scope.userData={};
 	$scope.password={};
 	$scope.userType=true;
@@ -140,7 +160,23 @@ angular.module('MyConcert', ['ionic'])
 	$scope.resetData=function(){
 		$scope.userData={};
 		$scope.password={};
-	}	
+	}
+	
+
+	function previewFile() {
+  		var preview = document.getElementById('pic');
+  		var file    = document.getElementById('file').files[0];
+		console.log(file);
+  		var reader  = new FileReader();
+
+  		reader.addEventListener("load", function () {
+    		preview.src = reader.result;
+		}, false);
+
+  		if (file) {
+    		reader.readAsDataURL(file);
+  		}
+	}
 })
 
 .controller('SeeBandController', function($scope,$state,$stateParams,$http){
@@ -154,6 +190,25 @@ angular.module('MyConcert', ['ionic'])
             })
 
 .controller('addBandController', function($scope, $state,$http){
+	
+	$scope.memberList=[];
+	$scope.sonList=[];
+	
+	$scope.addMember=function(menberName){
+		$scope.memberList.add(menberName);
+	}
+	$scope.addSong=function(songName){
+		$scope.sonList.add(songName);
+	}
+	$scope.removeMember=function(){
+		
+	}
+	$scope.removeSong=function(){
+		
+	}
+	
+	
+	
             })
 
 
@@ -219,8 +274,9 @@ angular.module('MyConcert', ['ionic'])
 	document.getElementById('file').onchange=function() {previewFile()};
 	
 function previewFile() {
-  	var preview = document.querySelector('img');
+  	var preview = document.querySelector('file');
   	var file    = document.getElementById('file').files[0];
+	console.log(file);
   	var reader  = new FileReader();
 
   reader.addEventListener("load", function () {
@@ -230,10 +286,7 @@ function previewFile() {
   if (file) {
     reader.readAsDataURL(file);
   }
-}
-	
-	
-	
+}	
 	
 	$scope.pic;
 	$scope.add=function(){
