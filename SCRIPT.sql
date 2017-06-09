@@ -146,6 +146,18 @@ CREATE TABLE BANDA_COMENTARIO
 	CONSTRAINT BandaComentario_pkey PRIMARY KEY (comentarioID,bandaID)
 );
 
+CREATE TABLE BANDA_GENERO
+(
+	bandaID int NOT NULL,
+	generoID int NOT NULL,
+	CONSTRAINT Genero_Banda_fkey FOREIGN KEY (generoID)
+		REFERENCES GENERO (id),
+	CONSTRAINT Banda_Genero_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT BandaGenero_pkey PRIMARY KEY (generoID,bandaID)
+);
+
+
 CREATE TABLE CATEGORIA
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,

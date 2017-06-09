@@ -1,7 +1,8 @@
 CREATE PROCEDURE pr_InsertarBanda2
 	@bandaNombre varchar(30),
 	@artistas StringList readonly,
-	@canciones StringList readonly
+	@canciones StringList readonly,
+	@generos intList readonly
 
 AS
 BEGIN
@@ -29,6 +30,12 @@ BEGIN
 			select C.item, @bandaID
 			from @canciones as C
 			group by C.item
+
+		insert into BANDA_GENERO(generoID, bandaID)
+			select G.id, @bandaID
+			from Genero as G
+			where G.id in (select item from @generos)
+			group by G.id
 
         COMMIT TRAN insertarBanda2
 

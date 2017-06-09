@@ -6,7 +6,7 @@ BEGIN
 
     SET NOCOUNT ON;
 	declare @msg as VARCHAR(1000)
-    Begin Tran obtenerUsuario
+    Begin Tran obtenerFanatico
 
     Begin Try	
 
