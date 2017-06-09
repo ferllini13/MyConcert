@@ -181,7 +181,14 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('SeeBandController', function($scope,$state,$stateParams,$http){
 	$scope.bandToSee= $stateParams.bandId;
-            })
+    var msj = {bandId:$stateParams.bandId}
+    $scope.getBand =  function(){	
+	
+	connectApi.httpGet('ObtenerBanda',msj).then(function(answer) {
+		console.log(answer);
+	});	
+	};
+    })
 
 .controller('editBandController', function($scope, $state,$stateParams,$http){
 	$scope.bandToEdit= $stateParams.bandId;
