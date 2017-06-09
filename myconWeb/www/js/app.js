@@ -56,6 +56,14 @@ angular.module('MyConcert', ['ionic'])
                 controller: 'profileController',
                 templateUrl:'html/perfil.html'
             })
+    
+    $stateProvider.state('createBillboard', {
+                url:'/createBillboard',
+                controller: 'createBillboardController',
+                templateUrl:'html/crearCartelera.html'
+            })
+    
+    
       $urlRouterProvider.otherwise('/login');
 })
    
@@ -298,6 +306,12 @@ function previewFile() {
 })
 
 
+
+.controller('createBillboardController', function($scope, $state,$http){
+            })
+
+
+
 .directive('menu', function() {
  	return {
     	templateUrl: 'html/menu.html',
@@ -319,6 +333,10 @@ function previewFile() {
 		return postPromise;
 	}
 })
+
+
+
+
 
 
 
