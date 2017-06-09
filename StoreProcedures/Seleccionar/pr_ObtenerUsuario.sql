@@ -26,11 +26,11 @@ BEGIN
 				where UG.id = @ugID
 				group by UP.id, UG.rolID, UG.activo
 		end
-		else begin
+		else if (@rolID = 1) begin
 			insert into @tmpTable(id, rolID, activo)
 				select UF.id,  UG.rolID, UG.activo
 				from USUARIO_GENERAL as UG inner join FAN_USUARIO as UF on UF.guID = UG.id
-				where UG.id = ug.id
+				where UG.id = @ugID
 				group by UF.id, UG.rolID, UG.activo
 		end
 		select * from @tmpTable
