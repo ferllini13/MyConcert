@@ -145,7 +145,6 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('SeeBandController', function($scope,$state,$stateParams,$http){
 	$scope.bandToSee= $stateParams.bandId;
-            
             })
 
 .controller('editBandController', function($scope, $state,$stateParams,$http){
