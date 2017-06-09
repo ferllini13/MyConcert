@@ -126,6 +126,12 @@ angular.module('MyConcert', ['ionic'])
 	}
 	
 	
+	
+	$scope.updateProfile=function(){
+		//meter post aqui
+	}
+	
+	
 	function previewFile() {
   		var preview = document.getElementById('pic');
   		var file    = document.getElementById('file').files[0];
@@ -160,6 +166,17 @@ angular.module('MyConcert', ['ionic'])
 	$scope.resetData=function(){
 		$scope.userData={};
 		$scope.password={};
+	}
+	
+	
+	
+	$scope.addUser=function(){
+		if (userType){
+			//fanatico
+		}
+		else {
+			//promocion
+		}
 	}
 	
 
@@ -197,26 +214,40 @@ angular.module('MyConcert', ['ionic'])
             })
 
 .controller('addBandController', function($scope, $state,$http){
-	
-	$scope.memberList=[];
-	$scope.sonList=[];
+	$scope.bandData={memberList:[],sonList:[],nombre:""};
 	
 	$scope.addMember=function(menberName){
-		$scope.memberList.add(menberName);
-	}
+		if (menberName!=""){
+			$scope.bandData.memberList.add(menberName);
+		}
+	};
 	$scope.addSong=function(songName){
-		$scope.sonList.add(songName);
-	}
-	$scope.removeMember=function(){
+		if (songName!=""){
+			$scope.bandData.sonList.add(songName);
+		}
+	};
+	$scope.removeMember=function(menberName){
+		removeItemFromArr($scope.bandData.memberList,menberName);
+	};
+	$scope.removeSong=function(songName){
+		removeItemFromArr($scope.bandData.sonList,songName);
+	};
+	
+	
+	$scope.addBand=function(){
+		connectApi.httpPost('AgregarBanda',$scope.bandData).then(function(answer) {
+			console.log(answer);
+	});
 		
-	}
-	$scope.removeSong=function(){
 		
-	}
-	
-	
-	
-            })
+	};
+	function removeItemFromArr ( arr, item ) {
+    	var i = arr.indexOf( item );
+    	if ( i !== -1 ) {
+        	arr.splice( i, 1 );
+    	}
+	};
+})
 
 
 .controller('menuController', function($scope, $state,$http){
@@ -245,7 +276,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('catalogueController', function($scope, $state,connectApi){
-	$scope.isEmpty=true;
+	$scope.isEmpty;
 	$scope.catalogue=[];
 	
 	
@@ -271,8 +302,6 @@ angular.module('MyConcert', ['ionic'])
 	$scope.imageArray =["https://www.googleplaymusicdesktopplayer.com/img/par1.jpg","http://www.desicomments.com/wp-content/uploads/2017/04/Music-image.jpg","http://az616578.vo.msecnd.net/files/2015/12/19/6358614596527738711752945771_music.jpg","http://az616578.vo.msecnd.net/files/2017/03/05/636243282134517774-314545726_music9.jpg"];
 	
 	$scope.imageArray2 =["http://darbaculture.com/wp-content/uploads/2014/10/sonar-festival-1.jpg","http://estaticos.codigonuevo.com/wp-content/uploads/2015/05/Festivales.jpg","https://www.parkapp.com/blog/wp-content/uploads/2016/05/Festivales-mayo-festify.jpg","http://static.t13.cl/images/sizes/1200x675/mgr_bild-berlin-1.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0b/Electrobeach_Music_Festival_2013.jpg"];
-	
-	
 })
 
 
