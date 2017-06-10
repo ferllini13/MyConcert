@@ -181,8 +181,11 @@ angular.module('MyConcert', ['ionic'])
 	$scope.resetData=function(){
 		$scope.userData={};
 		$scope.password={};
+		$scope.addedGenres=[];
+		$scope.genresId=[];
+		$scope.getGenres();
+		
 	}
-	
 	
 	
 	$scope.addUser=function(){
@@ -210,7 +213,7 @@ angular.module('MyConcert', ['ionic'])
 		$scope.genresId.splice($scope.genresId.indexOf(gen.id),1);
 	}
 	
-	function previewFile() {
+	function previewFile(){
   		var preview = document.getElementById('pic');
   		var file    = document.getElementById('file').files[0];
   		var reader  = new FileReader();
@@ -224,7 +227,7 @@ angular.module('MyConcert', ['ionic'])
 	}
 })
 
-.controller('SeeBandController', function($scope,$state,$stateParams,$http,connectApi){
+.controller('SeeBandController', function($scope,$state,$stateParams,connectApi){
 	var bandToSee= $stateParams.bandId;
     $scope.nameband="";
     $scope.bandquali="";
@@ -254,30 +257,38 @@ angular.module('MyConcert', ['ionic'])
 	};
     })
 
-.controller('editBandController', function($scope, $state,$stateParams,$http){
+.controller('editBandController', function($scope, $state,$stateParams,connectApi){
 	$scope.bandToEdit= $stateParams.bandId;
 	
             
             })
 
-.controller('addBandController', function($scope, $state,$http){
-	$scope.bandData={memberList:[],sonList:[],nombre:""};
+.controller('addBandController', function($scope, $state,connectApi){
+	$scope.genres=[];
+	$scope.addedGenres=[];
+	$scope.bandData={artistas:[],canciones:[],generos:[],nombre:""};
 	
-	$scope.addMember=function(menberName){
-		if (menberName!=""){
-			$scope.bandData.memberList.add(menberName);
+	$scope.addMember=function(){
+		var menberName= document.getElementById('member').value;
+		if (menberName||menberName!=""){
+			$scope.bandData.artistas.push(menberName);
+			document.getElementById('member').value="";
+			console.log($scope.bandData.artistas);
 		}
 	};
-	$scope.addSong=function(songName){
-		if (songName!=""){
-			$scope.bandData.sonList.add(songName);
+	$scope.addSong=function(){
+		var songName=document.getElementById('song').value;
+		if (songName||songName!=""){
+			$scope.bandData.canciones.push(songName);
+			document.getElementById('song').value="";
+			console.log($scope.bandData.canciones);
 		}
 	};
 	$scope.removeMember=function(menberName){
-		removeItemFromArr($scope.bandData.memberList,menberName);
+		$scope.bandData.artistas.splice($scope.bandData.artistas.indexOf(menberName),1);
 	};
 	$scope.removeSong=function(songName){
-		removeItemFromArr($scope.bandData.sonList,songName);
+		$scope.bandData.canciones.splice($scope.bandData.canciones.indexOf(songName),1);
 	};
 	
 	
@@ -286,19 +297,30 @@ angular.module('MyConcert', ['ionic'])
 			console.log(answer);
 	});
 		
-		
 	};
-	function removeItemFromArr ( arr, item ) {
-    	var i = arr.indexOf( item );
-    	if ( i !== -1 ) {
-        	arr.splice( i, 1 );
-    	}
-	};
+	$scope.getGenres=function(){
+		connectApi.httpGet('ObtenerGeneros',"").then(function(answer) {
+			$scope.genres=answer;
+		});	
+	}
+	$scope.addGenre=function(gen){
+		$scope.addedGenres.push(gen);
+		$scope.genres.splice($scope.genres.indexOf(gen),1);
+		$scope.bandData.generos.push(gen.id);
+	}
+	
+	$scope.removeGenre=function(gen){
+		$scope.genres.push(gen);
+		$scope.addedGenres.splice($scope.addedGenres.indexOf(gen),1);
+		$scope.bandData.generos.splice($scope.bandData.generos.indexOf(gen.id),1);
+	}
 })
 
 
 
+
 .controller('addCategoryController', function($scope, $state,$http,connectApi){    
+
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {NameCategory:NameCategory,description:description}
                  console.log(msj);
@@ -532,31 +554,4 @@ function previewFile() {
        	});
 		return postPromise;
 	}
-})
-
-
-
-
-
-
-
-.service('uploadFile', function ($http, $q) 
-{
-	this.uploadFile = function(file, name)
-	{
-		var deferred = $q.defer();
-		var formData = new FormData();
-		formData.append("name", name);
-		formData.append("file", file);
-		return $http({method: 'POST',url:'server.php',formData,headers:{"Content-type": undefined},transformRequest: angular.identity})
-		.success(function(res)
-		{
-			deferred.resolve(res);
-		})
-		.error(function(msg, code)
-		{
-			deferred.reject(msg);
-		})
-		return deferred.promise;
-	}	
 })
