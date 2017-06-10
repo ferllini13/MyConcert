@@ -221,7 +221,7 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandquali=answer[0].calificacion;
         console.log(answer[0].calificacion);
 	});
-/*    connectApi.httpGet('ObtenerArtistas',msj).then(function(answer) {
+/*    connectApi.httpGet('ObtenerMiembros',msj).then(function(answer) {
 		console.log(answer);
 	});
 	connectApi.httpGet('ObtenerCanciones',msj).then(function(answer) {
