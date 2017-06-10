@@ -163,7 +163,7 @@ angular.module('MyConcert', ['ionic'])
 	$scope.genres=[]; 
 	$scope.addedGenres=[];
 	$scope.genresId=[];
-	$scope.userData={};
+	$scope.userData={generos:[],foto:"",fechaInscripcion:""};
 	$scope.password={};
 	$scope.userType=true;
 	$scope.changeUserType=function(){
@@ -173,19 +173,24 @@ angular.module('MyConcert', ['ionic'])
 	$scope.fun =function(){
 	console.log($scope.userData)
 	}
+	
 	$scope.resetData=function(){
 		$scope.userData={};
 		$scope.password={};
 		$scope.addedGenres=[];
-		$scope.genresId=[];
 		$scope.getGenres();
 		
 	}
 	
-	
 	$scope.addUser=function(){
-		if (userType){
-			//fanatico
+		$scope.userData.fechaNacimiento=$scope.userData.fechaNacimiento.toString().substring(0, 10);
+		$scope.userData.fechaInscripcion="2017-06-09";
+		$scope.userData.foto=null;
+		if ($scope.userType){
+			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
+				console.log($scope.userData);
+			updateCheck();
+			});
 		}
 		else {
 			//promocion
@@ -199,13 +204,13 @@ angular.module('MyConcert', ['ionic'])
 	$scope.addGenre=function(gen){
 		$scope.addedGenres.push(gen);
 		$scope.genres.splice($scope.genres.indexOf(gen),1);
-		$scope.genresId.push(gen.id);
+		$scope.userData.generos.push(gen.id);
 	}
 	
 	$scope.removeGenre=function(gen){
 		$scope.genres.push(gen);
 		$scope.addedGenres.splice($scope.addedGenres.indexOf(gen),1);
-		$scope.genresId.splice($scope.genresId.indexOf(gen.id),1);
+		$scope.userData.generos.splice($scope.genresId.indexOf(gen.id),1);
 	}
 	
 	function previewFile(){
@@ -377,53 +382,81 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('pbandController', function($scope, $state,$http,uploadFile,connectApi){
+.controller('pbandController', function($scope, $state,$http,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
 	$scope.try={
-  "artists" : {
-    "href" : "https://api.spotify.com/v1/search?query=poison&type=artist&market=CR&offset=0&limit=1",
-    "items" : [ {
+  "album" : {
+    "album_type" : "album",
+    "artists" : [ {
       "external_urls" : {
-        "spotify" : "https://open.spotify.com/artist/1fBCIkoPOPCDLUxGuWNvyo"
+        "spotify" : "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d"
       },
-      "followers" : {
-        "href" : null,
-        "total" : 348233
-      },
-      "genres" : [ "album rock", "glam metal", "hard rock", "post-grunge", "rock" ],
-      "href" : "https://api.spotify.com/v1/artists/1fBCIkoPOPCDLUxGuWNvyo",
-      "id" : "1fBCIkoPOPCDLUxGuWNvyo",
-      "images" : [ {
-        "height" : 1177,
-        "url" : "https://i.scdn.co/image/62d3549cd7993130ac612909afb584e8752d31b2",
-        "width" : 1000
-      }, {
-        "height" : 753,
-        "url" : "https://i.scdn.co/image/ddb0a8a0049f92ea9a4df44e417eb8efd16e8459",
-        "width" : 640
-      }, {
-        "height" : 235,
-        "url" : "https://i.scdn.co/image/30aaa14ae77a479bb5b1a216b7c31ddfe8c4e7df",
-        "width" : 200
-      }, {
-        "height" : 75,
-        "url" : "https://i.scdn.co/image/3aa231a8644db7ce748d9fc3e9cb28a6bb997c73",
-        "width" : 64
-      } ],
-      "name" : "Poison",
-      "popularity" : 63,
+      "href" : "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
+      "id" : "1dfeR4HaWDbWqFHLkxsg1d",
+      "name" : "Queen",
       "type" : "artist",
-      "uri" : "spotify:artist:1fBCIkoPOPCDLUxGuWNvyo"
+      "uri" : "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d"
     } ],
-    "limit" : 1,
-    "next" : "https://api.spotify.com/v1/search?query=poison&type=artist&market=CR&offset=1&limit=1",
-    "offset" : 0,
-    "previous" : null,
-    "total" : 209
-  }
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/album/7oHaj9jkWHByziQsqGAb8V"
+    },
+    "href" : "https://api.spotify.com/v1/albums/7oHaj9jkWHByziQsqGAb8V",
+    "id" : "7oHaj9jkWHByziQsqGAb8V",
+    "images" : [ {
+      "height" : 640,
+      "url" : "https://i.scdn.co/image/6bd26952895dacf25b7529e58b2f118e61d42226",
+      "width" : 640
+    }, {
+      "height" : 300,
+      "url" : "https://i.scdn.co/image/be6434a26cf7984b47979f89d26c54dc4796a0a0",
+      "width" : 300
+    }, {
+      "height" : 64,
+      "url" : "https://i.scdn.co/image/45e552a7b9f774015de2abe8b4b877bd34ec2727",
+      "width" : 64
+    } ],
+    "name" : "The Works (Deluxe Remastered Version)",
+    "type" : "album",
+    "uri" : "spotify:album:7oHaj9jkWHByziQsqGAb8V"
+  },
+  "artists" : [ {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d"
+    },
+    "href" : "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
+    "id" : "1dfeR4HaWDbWqFHLkxsg1d",
+    "name" : "Queen",
+    "type" : "artist",
+    "uri" : "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d"
+  } ],
+  "disc_number" : 2,
+  "duration_ms" : 258013,
+  "explicit" : false,
+  "external_ids" : {
+    "isrc" : "GBUM71029625"
+  },
+  "external_urls" : {
+    "spotify" : "https://open.spotify.com/track/3Au6174rC3JSzZN5BhCl3D"
+  },
+  "href" : "https://api.spotify.com/v1/tracks/3Au6174rC3JSzZN5BhCl3D",
+  "id" : "3Au6174rC3JSzZN5BhCl3D",
+  "is_playable" : true,
+  "linked_from" : {
+    "external_urls" : {
+      "spotify" : "https://open.spotify.com/track/7h2yhVxcZOGyQdOwD4Hu8J"
+    },
+    "href" : "https://api.spotify.com/v1/tracks/7h2yhVxcZOGyQdOwD4Hu8J",
+    "id" : "7h2yhVxcZOGyQdOwD4Hu8J",
+    "type" : "track",
+    "uri" : "spotify:track:7h2yhVxcZOGyQdOwD4Hu8J"
+  },
+  "name" : "I Want To Break Free - Single Remix",
+  "popularity" : 64,
+  "preview_url" : "https://p.scdn.co/mp3-preview/5d44e5dc88e511bf7270cd254ca8ae586b5c9b49?cid=8897482848704f2a8f8d7c79726a70d4",
+  "track_number" : 2,
+  "type" : "track",
+  "uri" : "spotify:track:3Au6174rC3JSzZN5BhCl3D"
 };
-    
-    
 	
 
 function saveBase64AsFile(blob, fileName) {
@@ -467,37 +500,7 @@ function previewFile() {
     reader.readAsDataURL(file);
   }
 }	
-	
-	$scope.pic;
-	$scope.add=function(){
-		var f = document.getElementById('file').files[0];
-		console.log(f);
-		$scope.pic=f;
-		
-	}
-	
-	
-	$scope.uploadFile = function(){
-		var name = localStorage.getItem('userName');
-		var file = document.getElementById('file');
-		console.log(file);
-		console.log(file.value);
-		console.log(file.files[0]);
-		//uploadFile.uploadFile(file, name).then(function(res)
-		//{
-			//console.log(res);
-		//})
-	}
-	
-	
-	$scope.fun =  function(){	
-		var req = {method: 'GET', url: 'https://api.spotify.com/v1/tracks/5XcZRgJv3zMhTqCyESjQrF',headers: {'Authorization': 'Bearer ' + localStorage.getItem('spotify-token')}};
-		
-		$http(req).then(function(response){
-			$scope.tracks=response.items; 
-			console.log(response)
-		});
-    };
+
 })
 
 
