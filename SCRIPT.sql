@@ -90,7 +90,22 @@ CREATE TABLE BANDA
 	nombre varchar(30) UNIQUE NOT NULL,
 	calificacion FLOAT NOT NULL,
 	activo bit DEFAULT 1,
+	foto varchar(150),
+	seguidores int,
+	popularidad int, 
+	pais varchar(30),
 	CONSTRAINT Banda_pk PRIMARY KEY (id)
+);
+
+CREATE TABLE ALBUM
+(
+	id int IDENTITY(1,1) UNIQUE NOT NULL,
+	nombre varchar(30) UNIQUE NOT NULL,
+	foto varchar(150),
+	bandaID int NOT NULL,
+	CONSTRAINT Banda_album_fkey FOREIGN KEY (bandaID)
+		REFERENCES BANDA (id),
+	CONSTRAINT Album_pk PRIMARY KEY (id)
 );
 
 CREATE TABLE ARTISTA
@@ -174,6 +189,7 @@ CREATE TABLE CARTELERA
 	diaFinalVotaciones date NOT NULL,
 	diaDeInicio date NOT NULL,
 	diaFinal date NOT NULL,
+	foto varchar(150),
 	promocionID int,
 	paisID int,
 	CONSTRAINT Cartelera_pais_fkey FOREIGN KEY (paisID)
@@ -248,6 +264,7 @@ CREATE TABLE FESTIVAL
 	servicios varchar(300) NOT NULL,
 	transporte varchar(300) NOT NULL,
 	comida varchar(300) NOT NULL,
+	foto varchar(150),
 	bandaID int NOT NULL,
 	promocionID int,
 	paisID int,
