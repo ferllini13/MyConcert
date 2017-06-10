@@ -2,9 +2,10 @@ CREATE PROCEDURE pr_InsertarCartelera
 	@nombre varchar(15),
 	@pais int,
 	@ubicacion varchar(100),
-	@diaFinalVotaciones date,
-	@diaDeInicio date,
-	@diaFinal date
+	@diaFinalVotaciones varchar(10),
+	@diaDeInicio varchar(10),
+	@diaFinal varchar(10),
+	@foto varchar(150)
 
 AS
 BEGIN
@@ -15,8 +16,8 @@ BEGIN
 
     Begin Try
 		
-		insert into cartelera(nombre,paisID,ubicacion, diaFinalVotaciones, diaDeInicio, diaFinal)
-		values(@nombre, @pais, @ubicacion, @diaFinalVotaciones, @diaDeInicio, @diaFinal)
+		insert into cartelera(nombre,paisID,ubicacion, diaFinalVotaciones, diaDeInicio, diaFinal, foto)
+		values(@nombre, @pais, @ubicacion, @diaFinalVotaciones, @diaDeInicio, @diaFinal, @foto)
 
         COMMIT TRAN insertarCartelera
 

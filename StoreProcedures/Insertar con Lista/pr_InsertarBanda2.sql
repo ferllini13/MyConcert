@@ -6,6 +6,7 @@ CREATE PROCEDURE pr_InsertarBanda2
 	@foto varchar(150),
 	@artistas StringList readonly,
 	@canciones StringList readonly,
+	@links StringList readonly,
 	@albums StringList readonly,
 	@fotos StringList readonly,
 	@generos intList readonly
@@ -32,10 +33,10 @@ BEGIN
 			group by A.item
 
 		
-		insert into CANCION(nombre, bandaID)
-			select C.item, @bandaID
-			from @canciones as C
-			group by C.item
+		insert into CANCION(nombre, bandaID, link)
+			select C.item, @bandaID, L.item
+			from @canciones as C, @links as L
+			group by C.item, L.item
 
 		insert into BANDA_GENERO(generoID, bandaID)
 			select G.id, @bandaID

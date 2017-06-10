@@ -88,6 +88,26 @@ exec dbo.pr_InsertarUsuarioFanatico
 	@email = 'jairom@gmail.com',
 	@rolID = 1
 
+declare @genero intList
+insert @genero values (4),(7),(10),(11)
+
+exec dbo.pr_InsertarUsuarioFanatico2
+	@nombre = 'Mauricio',
+	@apellido = 'Montero',
+	@contraseña = 'mau26',
+	@nombreUsuario = 'mm26',
+	@diaInscripcion = '09-06-17',
+	@pais = 1,
+	@ubicacion = 'Guapiles, Limon',
+	@universidad = 'ITCR',
+	@celular = '89684312',
+	@fechaNacimiento = '24-04-1996',
+	@descripcion = 'estudiante aburrido',
+	@foto = '',
+	@email = 'maum@gmail.com',
+	@generoID = @genero,
+	@rolID = 1
+	
 exec dbo.pr_InsertarUsuarioPromocion
 	@nombre = 'Jason',
 	@apellido = 'Leiton',
@@ -118,3 +138,9 @@ exec dbo.pr_InsertarBanda2
 	@bandaNombre = 'Queen',
 	@artistas  = @artistas2,
 	@canciones = @canciones2
+
+exec dbo.pr_InsertarComentario
+	@fanID = 1,
+	@bandaID = 3,
+	@descripcion = 'Una banda excelente',
+	@calificacion = 3

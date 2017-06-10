@@ -12,7 +12,7 @@ CREATE PROCEDURE pr_InsertarUsuarioPromocion
 	@apellido varchar(30),
 	@contraseña varchar(50),
 	@nombreUsuario varchar(10),
-	@diaInscripcion date,
+	@diaInscripcion varchar(10),
 	@uniqueID varchar(10),
 	@rolID int
 

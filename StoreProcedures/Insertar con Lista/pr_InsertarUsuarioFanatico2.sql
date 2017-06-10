@@ -25,12 +25,12 @@ CREATE PROCEDURE pr_InsertarUsuarioFanatico2
 	@apellido varchar(30),
 	@contraseña varchar(50),
 	@nombreUsuario varchar(10),
-	@diaInscripcion date,
+	@diaInscripcion varchar(10),
 	@pais int,
 	@ubicacion varchar(100),
 	@universidad varchar (30),
 	@celular varchar(8),
-	@fechaNacimiento date,
+	@fechaNacimiento varchar(10),
 	@descripcion varchar(300),
 	@foto varchar(100),
 	@email varchar(30),
@@ -60,7 +60,7 @@ BEGIN
 			
 		else if (@ubicacion = '' and @universidad != '') 
 			insert into FAN_USUARIO(paisID, celular, fechaNacimiento, descripcion, email, universidad, guID)
-			values(@pais, @celular, @fechaNacimiento, @descripcion, @email, @universidad, @guID)
+			values(@pais, @celular,  @fechaNacimiento, @descripcion, @email, @universidad, @guID)
 			
 		else 
 			insert into FAN_USUARIO(paisID, celular, fechaNacimiento, descripcion, email, universidad, ubicacion, guID)
@@ -82,7 +82,7 @@ BEGIN
     End try
     Begin Catch
 
-        SET @msg = '101'
+        SET @msg = 'Error deleting user: ' + ERROR_MESSAGE() + ' on line ' + CONVERT(NVARCHAR(255), ERROR_LINE() ) + '.'
 		print @msg
         Rollback TRAN insertarFanatico2
 

@@ -25,12 +25,12 @@ CREATE PROCEDURE pr_InsertarUsuarioFanatico
 	@apellido varchar(30),
 	@contraseña varchar(50),
 	@nombreUsuario varchar(10),
-	@diaInscripcion date,
+	@diaInscripcion varchar(10),
 	@pais int,
 	@ubicacion varchar(100),
 	@universidad varchar (30),
 	@celular varchar(8),
-	@fechaNacimiento date,
+	@fechaNacimiento varchar(10),
 	@descripcion varchar(300),
 	@foto varchar(100),
 	@email varchar(30),
@@ -48,7 +48,7 @@ BEGIN
 		declare @guID int;
 
 		insert into USUARIO_GENERAL(nombre, apellido, contraseña, nombreUsuario,diaInscripcion, rolID)
-		values(@nombre, @apellido, @contraseña, @nombreUsuario, @diaInscripcion, @rolID);
+		values(@nombre, @apellido, @contraseña, @nombreUsuario,  @diaInscripcion, @rolID);
 
 		set @guID = (select id from USUARIO_GENERAL where nombreUsuario = @nombreUsuario)
 		

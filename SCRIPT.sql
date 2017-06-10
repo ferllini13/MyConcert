@@ -5,7 +5,7 @@ CREATE TABLE USUARIO_GENERAL
   apellido varchar(30),
   contraseña varchar(50) NOT NULL,
   nombreUsuario varchar(10) NOT NULL,
-  diaInscripcion DATE,
+  diaInscripcion varchar(10),
   activo bit DEFAULT 1,
   rolID int,
   CONSTRAINT GU_rol_fkey FOREIGN KEY (rolID)
@@ -34,7 +34,7 @@ CREATE TABLE FAN_USUARIO
   ubicacion varchar(100) DEFAULT NULL,
   universidad varchar (30) DEFAULT NULL,
   celular varchar(8) NOT NULL, 
-  fechaNacimiento DATE NOT NULL,
+  fechaNacimiento varchar(10) NOT NULL,
   descripcion varchar (300) DEFAULT NULL,
   foto varchar(100) DEFAULT NULL,
   email varchar(30),
@@ -122,6 +122,7 @@ CREATE TABLE CANCION
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	nombre varchar(30) NOT NULL,
+	link varchar(100),
 	bandaID int NOT NULL,
 	CONSTRAINT Banda_Cancion_fkey FOREIGN KEY (bandaID)
 		REFERENCES BANDA (id),
@@ -186,9 +187,9 @@ CREATE TABLE CARTELERA
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	nombre varchar(15) UNIQUE NOT NULL,
 	ubicacion varchar(100) NOT NULL,
-	diaFinalVotaciones date NOT NULL,
-	diaDeInicio date NOT NULL,
-	diaFinal date NOT NULL,
+	diaFinalVotaciones varchar(10) NOT NULL,
+	diaDeInicio varchar(10) NOT NULL,
+	diaFinal varchar(10) NOT NULL,
 	foto varchar(150),
 	promocionID int,
 	paisID int,
@@ -202,7 +203,7 @@ CREATE TABLE CARTELERA
 CREATE TABLE HORARIO
 (
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
-	dia date NOT NULL,
+	dia varchar(10) NOT NULL,
 	horaInicio varchar(10),
 	horaFinal varchar(10),	
 	CONSTRAINT Horario_pk PRIMARY KEY (id)
@@ -258,9 +259,8 @@ CREATE TABLE FESTIVAL
 	id int IDENTITY(1,1) UNIQUE NOT NULL,
 	nombre varchar(15) UNIQUE NOT NULL,
 	ubicacion varchar(100) NOT NULL,
-	diaFinalVotaciones date NOT NULL,
-	diaDeInicio date NOT NULL,
-	diaFinal date NOT NULL,
+	diaDeInicio varchar(10) NOT NULL,
+	diaFinal varchar(10) NOT NULL,
 	servicios varchar(300) NOT NULL,
 	transporte varchar(300) NOT NULL,
 	comida varchar(300) NOT NULL,
