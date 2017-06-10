@@ -250,6 +250,11 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandCom=answer;
 	});        
 	};
+    
+    $scope.comment =  function(Comment, qualification){
+        console.log({Comment,qualification})
+        
+    }
     })
 
 
