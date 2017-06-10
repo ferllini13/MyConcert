@@ -30,11 +30,6 @@ angular.module('MyConcert', ['ionic'])
                 controller: 'SeeBandController',
                 templateUrl:'html/verBanda.html'
             })
-    $stateProvider.state('editBand', {
-                url:'/editBand/:bandId',
-                controller: 'editBandController',
-                templateUrl:'html/editarBanda.html'
-            })
     $stateProvider.state('addBand', {
                 url:'/addBand',
                 controller: 'addBandController',
