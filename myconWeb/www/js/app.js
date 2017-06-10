@@ -165,7 +165,7 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('RegisterController', function($scope, $state,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
-	$scope.genres=[];
+	$scope.genres=[]; 
 	$scope.addedGenres=[];
 	$scope.genresId=[];
 	$scope.userData={};
@@ -403,6 +403,8 @@ angular.module('MyConcert', ['ionic'])
     "total" : 209
   }
 };
+    
+    
 	
 
 function saveBase64AsFile(blob, fileName) {
@@ -481,8 +483,25 @@ function previewFile() {
 
 
 
+
 .controller('createBillboardController', function($scope, $state,$http){
+    document.getElementById('file').onchange=function() {previewFile()};
+    
+	function previewFile() {
+  		var preview = document.getElementById('pic');
+  		var file    = document.getElementById('file').files[0];
+  		var reader  = new FileReader();
+  		reader.addEventListener("load", function () {
+    		preview.src = reader.result;
+		}, false);
+
+  		if (file) {
+    		reader.readAsDataURL(file);
+  		}
+	}
+    
             })
+
 
 
 

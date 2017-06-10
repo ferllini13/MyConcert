@@ -1,1 +1,81 @@
-<div menu ></div>
+<div menu></div>
+<div class="container scroll" style="padding-top: 80px;">
+<h1 ALIGN="center">Crear cartelera</h1><br>
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
+		<br>
+		<br>
+      <div class="text-center">  
+        <img width="auto" id="pic" height="200px" src="https://s-media-cache-ak0.pinimg.com/736x/84/2c/e9/842ce91cd34f5ffbc211086364ac745b.jpg" alt="avatar">
+        <h6>*Agregar foto de Cartelera</h6>
+        <input type="file" id="file" class="text-center center-block well well-sm">
+      </div>		
+    </div>
+      
+    <!-- edit form column -->
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Nombre de la Cartelera</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.nombre" type="text">
+          </div>
+        </div>
+		 <div class="form-group">
+          <label class="col-lg-3 control-label">Pais:</label>
+          <div class="col-lg-8">
+            <div class="ui-select">
+              <select ng-model="userData.pais" class="form-control">
+              		<option value="1">Costa Rica</option>
+                	<option value="2">Argentina</option>
+					<option value="3">Chile</option>
+					<option value="4">Colombia</option>
+				  	<option value="5">Brasil</option>
+              		<option value="6">México</option>
+				  	<option value="7">Panama</option>
+				  	<option value="8">Cánada</option>
+				</select>
+            </div>
+          </div>
+        </div>
+		<div class="form-group">
+          <label class="col-lg-3 control-label" >Ubicación:</label>
+          <div class="col-lg-8">
+            <input class="form-control" ng-model="userData.ubicacion" type="text">
+          </div>
+        </div> 
+          
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Fecha inicio festival:</label>
+          <div class="col-lg-8">
+			<label>
+            	<input data-date-format="DD-MM-YYYY" class="form-control" type="date"/>
+			</label>  
+		</div>
+        </div> 
+          
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Fecha final festival:</label>
+          <div class="col-lg-8">
+			<label>
+            	<input data-date-format="DD-MM-YYYY" class="form-control" type="date"/>
+			</label>  
+		</div>
+        </div>
+          
+          
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Fecha final votacion:</label>
+          <div class="col-lg-8">
+			<label>
+            	<input data-date-format="DD-MM-YYYY" class="form-control" type="date"/>
+			</label>  
+		</div>
+        </div>
+          
+      </form>
+    </div>  
+      
+  </div>
+</div>
