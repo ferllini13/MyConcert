@@ -256,9 +256,10 @@ angular.module('MyConcert', ['ionic'])
 	});        
 	};
     
-    $scope.comment =  function(Comment, qualification){
-        console.log({Comment,qualification})
-        
+    $scope.comment =  function(Comment){
+        console.log(document.getElementById('input-5').value)
+        document.getElementById('input-5').value = "4";
+        console.log(document.getElementById('input-5'))
     }
     })
 
