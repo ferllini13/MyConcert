@@ -165,7 +165,7 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('RegisterController', function($scope, $state,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
-	$scope.genres=[];
+	$scope.genres=[]; 
 	$scope.addedGenres=[];
 	$scope.genresId=[];
 	$scope.userData={};
@@ -239,7 +239,7 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandquali=answer[0].calificacion;
         console.log(answer[0].calificacion);
 	});
-/*    connectApi.httpGet('ObtenerArtistas',msj).then(function(answer) {
+/*    connectApi.httpGet('ObtenerMiembros',msj).then(function(answer) {
 		console.log(answer);
 	});
 	connectApi.httpGet('ObtenerCanciones',msj).then(function(answer) {
@@ -422,6 +422,8 @@ angular.module('MyConcert', ['ionic'])
     "total" : 209
   }
 };
+    
+    
 	
 
 function saveBase64AsFile(blob, fileName) {
@@ -500,8 +502,25 @@ function previewFile() {
 
 
 
+
 .controller('createBillboardController', function($scope, $state,$http){
+    document.getElementById('file').onchange=function() {previewFile()};
+    
+	function previewFile() {
+  		var preview = document.getElementById('pic');
+  		var file    = document.getElementById('file').files[0];
+  		var reader  = new FileReader();
+  		reader.addEventListener("load", function () {
+    		preview.src = reader.result;
+		}, false);
+
+  		if (file) {
+    		reader.readAsDataURL(file);
+  		}
+	}
+    
             })
+
 
 
 
