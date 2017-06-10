@@ -252,11 +252,6 @@ angular.module('MyConcert', ['ionic'])
 	};
     })
 
-.controller('editBandController', function($scope, $state,$stateParams,connectApi){
-	$scope.bandToEdit= $stateParams.bandId;
-	
-            
-            })
 
 .controller('addBandController', function($scope, $state,connectApi){
 	$scope.genres=[];
