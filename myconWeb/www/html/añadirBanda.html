@@ -1,5 +1,5 @@
 <div menu></div>
-	<div class = "container scroll" style="padding-top: 80px;">
+	<div class = "container scroll" style="padding-top: 80px;" ng-init="getGenres()">
 	<form class="form-horizontal">
 
 <!-- Form Name -->
@@ -9,35 +9,77 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Company Name">Nombre de la banda</label>  
   <div class="col-md-6">
-  <input id="Company Name" name="Company Name" type="text" placeholder="Company Name" class="form-control input-md" required="">
+  <input id="bandName" name="Company ng-model="" Name" type="text" placeholder="Company Name" class="form-control input-md" required="">
   </div>
 </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="User Name">Integrantes de la banda</label>  
-  <div class="col-md-6">
-  <input id="User Name" name="User Name" type="text" placeholder="User Name" class="form-control input-md" required="">
-    
+  <div class="col-md-5">
+  <input id="member" name="User Name" type="text" placeholder="Añade un integrante" class="form-control input-md" required="">
+	  <ion-list class="list-group">
+			<ion-item class="list-group-item" ng-repeat="mem in bandData.artistas" >
+					{{mem}}
+			</ion-item>
+	  </ion-list>
   </div>
+	<button ng-click="addMember(menber)" class="col-md-1">Añadir Mas Integrantes</button>
+	<ion-list class="list-group col-md-6">
+    	</ion-list>
+	
 </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="User Id">Canciones principales</label>  
   <div class="col-md-5">
-  <input id="User Id" name="User Id" type="text" placeholder="User Id" class="form-control input-md" required="">
+  	<input type="text" placeholder="Añade una Canción" class="form-control input-md" id="song" required="">
+	 <ion-list class="list-group">
+			<ion-item class="list-group-item" ng-repeat="song in bandData.canciones" >
+					{{song}}
+			</ion-item>
+	  </ion-list>  
+	  
   </div>
-	<button class="col-md-1">añadir Cancion</button> 
+	<button class="col-md-1" ng-click="addSong(song)">Añadir Más Canciones</button> 
 </div>
 
 <!-- Text input-->
 <div class="form-group">
   <label class="col-md-4 control-label" for="Mail Id ">Géneros de la Banda </label>  
-  <div class="col-md-6">
-  <input id="Mail Id " name="Mail Id " type="text" placeholder="Mail Id " class="form-control input-md" required="">
-  </div>
-<button class="col-md-1">añadir Cancion</button> 
+	          	<div class="container panel panel-default col-md-3">
+				<div class="panel-heading">
+				<input type="search"
+             			placeholder="Busca un Género"
+             			ng-model="search"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+    		<div class="panel-body" style="overflow:scroll; height:150px;">
+				<ion-list class="list-group">
+					<ion-item class="list-group-item" ng-repeat="genre in genres | filter:search" ng-click="addGenre(genre)" >
+						<h3 ALIGN="center" >{{genre.nombre}}<span class="glyphicon glyphicon-minus"></span></h3>
+					</ion-item>
+    			</ion-list>
+			</div>
+			</div>
+			<div class="container panel panel-default col-md-3">
+				<div class="panel-heading">
+					<input type="search"
+             			placeholder="Busca un Género Agregado"
+             			ng-model="search2"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+    			<div class="panel-body" style="overflow:scroll; height:150px;">
+            	<ion-list class="list-group">
+					<ion-item class="list-group-item" ng-repeat="genre in addedGenres | filter:search2" ng-click="removeGenre(genre)" >
+						<h3 ALIGN="center" >{{genre.nombre}}<span class="glyphicon glyphicon-minus"></span></h3>
+					</ion-item>
+    			</ion-list>
+			</div>
+			</div>		
 </div>
 
 <!-- Button -->
@@ -45,7 +87,6 @@
   <div  ALIGN="center">
     <input type="submit" Value="ingresar Banda" id="" name="" class="btn btn-success">
   </div>
-<button class="col-md-1">añadir Cancion</button> 
 </div>
 
 	
