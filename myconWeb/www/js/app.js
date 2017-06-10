@@ -228,6 +228,9 @@ angular.module('MyConcert', ['ionic'])
 	var bandToSee= $stateParams.bandId;
     $scope.nameband="";
     $scope.bandquali="";
+    $scope.bandArtist=[];
+    $scope.bandSongs=[];
+    $scope.bandCom=[];
     $scope.getBand =  function(){	
 	
 	connectApi.httpGet('ObtenerUnaBanda',{id:bandToSee}).then(function(answer) {
@@ -236,15 +239,18 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandquali=answer[0].calificacion;
         console.log(answer[0].calificacion);
 	});
-/*    connectApi.httpGet('ObtenerMiembros',msj).then(function(answer) {
+    connectApi.httpGet('ObtenerMiembros',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
+        $scope.bandArtist=answer;
 	});
-	connectApi.httpGet('ObtenerCanciones',msj).then(function(answer) {
+	connectApi.httpGet('ObtenerCanciones',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
+        $scope.bandSongs=answer;
 	});	        
-	connectApi.httpGet('ObtenerComentarios',msj).then(function(answer) {
+	connectApi.httpGet('ObtenerComentarios',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
-	});*/        
+        $scope.bandCom=answer;
+	});        
 	};
     })
 
@@ -292,9 +298,10 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('addCategoryController', function($scope, $state,$http){    
+.controller('addCategoryController', function($scope, $state,$http,connectApi){    
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {NameCategory:NameCategory,description:description}
+                 console.log(msj);
                 connectApi.httpPost('AñadirCategoría',msj).then(function(answer) {
                 console.log(answer);
                 });

@@ -8,21 +8,47 @@
 </div>
     <div class="row">
     <div class="col-md-1"></div>            
-	<div id="cuadroband" class="col-sm-4">
-		<h4 class="text-left">Miembros</h4>
-        <div class="text-left">
-		</div>
-	</div>
-    <div id="cuadroband" class="col-sm-4">
-		<h4 class="text-left">Canciones</h4>
-        <div class="text-left">
-       </div>
-	</div>
-        <div id="cuadroband" class="col-sm-4">
-		<h4 class="text-left">Informacion general</h4>
-        <div class="text-left">
-       </div>
-	</div>
+    <div class="container panel panel-default col-lg-4">
+        <div class="text-center">
+             <h2>Miembros</h2>
+        </div>
+         <div class="panel-body" style="overflow:scroll; height:200px;">
+            	<ion-list class="list-group">
+				<ion-item class="list-group-item" ng-repeat="artist in bandArtist" >
+				<h3 ALIGN="center" >{{artist.nombre}}</h3>
+				</ion-item>
+    	        </ion-list>
+        </div>
+    </div>
+
+    <div class="container panel panel-default col-lg-4">
+        <div class="text-center">
+             <h2>Canciones</h2>
+        </div>
+         <div class="panel-body" style="overflow:scroll; height:200px;">
+            	<ion-list class="list-group">
+				<ion-item class="list-group-item" ng-repeat="songs in bandSongs" >
+				<h3 ALIGN="center" >{{songs.nombre}}</h3>
+				</ion-item>
+    	        </ion-list>
+        </div>
+    </div>        
+        
+    <div class="container panel panel-default col-lg-4">
+        <div class="text-center">
+             <h2>Informacion General</h2>
+        </div>
+         <div class="panel-body" style="overflow:scroll; height:200px;">
+            	<ion-list class="list-group">
+				<ion-item class="list-group-item" ng-repeat="songs in bandSongs" >
+				<h3 ALIGN="center" >{{songs.nombre}}</h3>
+				</ion-item>
+    	        </ion-list>
+        </div>
+    </div>  
+        
+        
+        
     </div>
 <div class="row">
     <div class="col-md-3"></div>
@@ -49,4 +75,18 @@
         <h2>Comentarios</h2>
     </div>
 </div>
+<div class="container panel panel-default ">
+    <div class="text-center">
+            <h2></h2>
+    </div>
+    <div class="panel-body" style="overflow:scroll; height:200px">
+            <ion-list class="list-group">
+             <ion-item class="list-group-item" ng-repeat="comment in bandCom" >
+				<h3 ALIGN="center" >{{comment.descripcion}}</h3>
+             </ion-item>
+    	   </ion-list>
+    </div>
+</div>  
+    
+    
  </div>
