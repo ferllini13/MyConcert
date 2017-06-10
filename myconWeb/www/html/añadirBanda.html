@@ -19,7 +19,7 @@
   <div class="col-md-5">
   <input id="member" name="User Name" type="text" placeholder="Añade un integrante" class="form-control input-md" required="">
 	  <ion-list class="list-group">
-			<ion-item class="list-group-item" ng-repeat="mem in bandData.artistas" >
+			<ion-item ng-click="removeMember(member)" class="list-group-item" ng-repeat="mem in bandData.artistas" >
 					{{mem}}
 			</ion-item>
 	  </ion-list>
@@ -36,7 +36,7 @@
   <div class="col-md-5">
   	<input type="text" placeholder="Añade una Canción" class="form-control input-md" id="song" required="">
 	 <ion-list class="list-group">
-			<ion-item class="list-group-item" ng-repeat="song in bandData.canciones" >
+			<ion-item ng-click="removeSong(song)" class="list-group-item" ng-repeat="song in bandData.canciones" >
 					{{song}}
 			</ion-item>
 	  </ion-list>  

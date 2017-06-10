@@ -186,6 +186,7 @@ angular.module('MyConcert', ['ionic'])
 		$scope.userData.fechaNacimiento=$scope.userData.fechaNacimiento.toString().substring(0, 10);
 		$scope.userData.fechaInscripcion="2017-06-09";
 		$scope.userData.foto=null;
+				console.log($scope.userData);
 		if ($scope.userType){
 			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
 				console.log($scope.userData);
@@ -285,6 +286,7 @@ angular.module('MyConcert', ['ionic'])
 		}
 	};
 	$scope.removeMember=function(menberName){
+		console.log(menberName);
 		$scope.bandData.artistas.splice($scope.bandData.artistas.indexOf(menberName),1);
 	};
 	$scope.removeSong=function(songName){
