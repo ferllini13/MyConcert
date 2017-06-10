@@ -255,6 +255,11 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandCom=answer;
 	});        
 	};
+    
+    $scope.comment =  function(Comment, qualification){
+        console.log({Comment,qualification})
+        
+    }
     })
 
 
@@ -317,7 +322,7 @@ angular.module('MyConcert', ['ionic'])
 .controller('addCategoryController', function($scope, $state,$http,connectApi){    
 
         $scope.sendCategory =  function(NameCategory,description){
-                var msj = {NameCategory:NameCategory,description:description}
+                var msj = {Categoria:NameCategory,descripcion:description}
                  console.log(msj);
                 connectApi.httpPost('AñadirCategoría',msj).then(function(answer) {
                 console.log(answer);

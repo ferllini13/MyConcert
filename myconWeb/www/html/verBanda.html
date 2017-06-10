@@ -56,16 +56,17 @@
         <h2>Comenta y Califica</h2>
     </div>
 </div>
+<form autocomplete="off" id="myForm" method="post" class="form-horizontal" ng-submit="comment(comen,cal)">
 <div class="row">
     <div class="col-md-3"></div>
    <div class="col-md-6">
-     <input id="Company Name" name="Company Name" type="text"  class="form-control input-md" required="">   
+     <input id="Company Name" name="Company Name" type="text"  class="form-control input-md" required=""  ng-model="comen">   
    </div>
 </div>
 <div class="row">
     <div class="col-md-5"></div>
   <div class="col-md-6">
-    <button id="" name="" class="btn btn-success">Añadir Comentario</button>
+    <input type="submit" class="btn sellBtn boton" value="Anadir Commentario">
   </div>    
  </div>
     
@@ -87,6 +88,6 @@
     	   </ion-list>
     </div>
 </div>  
-    
-    
+        <input class="rating rating-loading" data-min="0" data-max="5" data-step="1" id="input-5" name="input-5" value="3" ng-model="cal">
+    </form>
  </div>
