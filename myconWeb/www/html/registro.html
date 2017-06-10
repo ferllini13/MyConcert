@@ -1,5 +1,5 @@
 <div menu></div>
-<div class="container scroll" style="padding-top: 80px;">
+<div class="container scroll" style="padding-top: 80px;" ng-init="getGenres()">
 <h1 ALIGN="center">Únete a My Concert</h1><br>
   <div class="row">
     <!-- left column -->
@@ -7,7 +7,7 @@
 		<br>
 		<br>
       <div class="text-center">  
-        <img width="auto" id="pic" height="200px" src="https://image.ibb.co/dE2cav/My_Concert3.png" alt="avatar">
+        <img width="auto" id="pic" height="200px" src="https://static.comicvine.com/uploads/original/11/113410/3459214-facebook_profile___luffy_by_sashasteins-d6330ot.jpg" alt="avatar">
         <h6>Cambie su foto de perfil</h6>
         <input type="file" id="file" class="text-center center-block well well-sm">
       </div>
@@ -105,6 +105,7 @@
           <div class="col-md-8">
             <input class="form-control" ng-model="password.contrasena" type="password">
           </div>
+		  </div>
 		
 		 <div class="form-group" ng-if="userType">
           <label class="col-md-3 control-label"> Descripción:</label>
@@ -112,14 +113,43 @@
             <input class="form-control" ng-model="userData.descripcion" type="text">
           </div>
         </div>	
-        </div>
 		
 		<div class="form-group" ng-if="userType">
           	<label class="col-lg-3 control-label">Seleccione sus generos de Preferencia:</label>
-          	<div class="col-lg-8">
+          	<div class="container panel panel-default col-lg-4">
+				<div class="panel-heading">
+				<input type="search"
+             			placeholder="Busca un Género"
+             			ng-model="search"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+    		<div class="panel-body" style="overflow:scroll; height:150px;">
+            <ion-list class="list-group">
+      		<ion-item class="list-group-item" ng-repeat="genre in genres | filter:search" ng-click="addGenre(genre)" >
+			<h3 ALIGN="center" >{{genre.nombre}}<span class="glyphicon glyphicon-plus"></span></h3>
+			</ion-item>
+    	</ion-list>
 			</div>
-        </div>     
-	
+			</div>
+			<div class="container panel panel-default col-lg-4">
+				<div class="panel-heading">
+					<input type="search"
+             			placeholder="Busca un Género Agregado"
+             			ng-model="search2"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+    			<div class="panel-body" style="overflow:scroll; height:150px;">
+            	<ion-list class="list-group">
+				<ion-item class="list-group-item" ng-repeat="genre in addedGenres | filter:search2" ng-click="removeGenre(genre)" >
+				<h3 ALIGN="center" >{{genre.nombre}}<span class="glyphicon glyphicon-minus"></span></h3>
+				</ion-item>
+    	</ion-list>
+			</div>
+			</div>			
+		  </div>
+		 
 		  
         <div class="form-group">
           <label class="col-md-3 control-label"></label>

@@ -157,6 +157,9 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('RegisterController', function($scope, $state,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
+	$scope.genres=[];
+	$scope.addedGenres=[];
+	$scope.genresId=[];
 	$scope.userData={};
 	$scope.password={};
 	$scope.userType=true;
@@ -164,7 +167,6 @@ angular.module('MyConcert', ['ionic'])
 		$scope.userType=!$scope.userType;
 		console.log($scope.userType)
 	}
-	
 	$scope.fun =function(){
 	console.log($scope.userData)
 	}
@@ -183,14 +185,27 @@ angular.module('MyConcert', ['ionic'])
 			//promocion
 		}
 	}
+	$scope.getGenres=function(){
+		connectApi.httpGet('ObtenerGeneros',"").then(function(answer) {
+			$scope.genres=answer;
+		});	
+	}
+	$scope.addGenre=function(gen){
+		$scope.addedGenres.push(gen);
+		$scope.genres.splice($scope.genres.indexOf(gen),1);
+		$scope.genresId.push(gen.id);
+	}
 	
-
+	$scope.removeGenre=function(gen){
+		$scope.genres.push(gen);
+		$scope.addedGenres.splice($scope.addedGenres.indexOf(gen),1);
+		$scope.genresId.splice($scope.genresId.indexOf(gen.id),1);
+	}
+	
 	function previewFile() {
   		var preview = document.getElementById('pic');
   		var file    = document.getElementById('file').files[0];
-		console.log(file);
   		var reader  = new FileReader();
-
   		reader.addEventListener("load", function () {
     		preview.src = reader.result;
 		}, false);
@@ -329,11 +344,82 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('pbandController', function($scope, $state,$http,uploadFile){
+.controller('pbandController', function($scope, $state,$http,uploadFile,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
+	$scope.try={
+  "artists" : {
+    "href" : "https://api.spotify.com/v1/search?query=poison&type=artist&market=CR&offset=0&limit=1",
+    "items" : [ {
+      "external_urls" : {
+        "spotify" : "https://open.spotify.com/artist/1fBCIkoPOPCDLUxGuWNvyo"
+      },
+      "followers" : {
+        "href" : null,
+        "total" : 348233
+      },
+      "genres" : [ "album rock", "glam metal", "hard rock", "post-grunge", "rock" ],
+      "href" : "https://api.spotify.com/v1/artists/1fBCIkoPOPCDLUxGuWNvyo",
+      "id" : "1fBCIkoPOPCDLUxGuWNvyo",
+      "images" : [ {
+        "height" : 1177,
+        "url" : "https://i.scdn.co/image/62d3549cd7993130ac612909afb584e8752d31b2",
+        "width" : 1000
+      }, {
+        "height" : 753,
+        "url" : "https://i.scdn.co/image/ddb0a8a0049f92ea9a4df44e417eb8efd16e8459",
+        "width" : 640
+      }, {
+        "height" : 235,
+        "url" : "https://i.scdn.co/image/30aaa14ae77a479bb5b1a216b7c31ddfe8c4e7df",
+        "width" : 200
+      }, {
+        "height" : 75,
+        "url" : "https://i.scdn.co/image/3aa231a8644db7ce748d9fc3e9cb28a6bb997c73",
+        "width" : 64
+      } ],
+      "name" : "Poison",
+      "popularity" : 63,
+      "type" : "artist",
+      "uri" : "spotify:artist:1fBCIkoPOPCDLUxGuWNvyo"
+    } ],
+    "limit" : 1,
+    "next" : "https://api.spotify.com/v1/search?query=poison&type=artist&market=CR&offset=1&limit=1",
+    "offset" : 0,
+    "previous" : null,
+    "total" : 209
+  }
+};
+	
+
+function saveBase64AsFile(blob, fileName) {
+
+        var reader = new FileReader();
+	    reader.readAsDataURL(blob);
+
+    	reader.onloadend = function () {    
+        	var base64 = reader.result ;
+        	var link = document.createElement("a");
+
+			link.setAttribute("href", base64);
+        	link.setAttribute("download", fileName);
+        	link.click();
+    };
+}
+	
+	
+	
+$scope.up=function(){
+	var file    = document.getElementById('file').files[0];
+
+	
+	if(file){
+		var name= file.name;
+		saveBase64AsFile(file,name);
+	}
+}
 	
 function previewFile() {
-  	var preview = document.querySelector('file');
+  	var preview = document.getElementById('pic');
   	var file    = document.getElementById('file').files[0];
 	console.log(file);
   	var reader  = new FileReader();
