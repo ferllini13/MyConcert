@@ -56,6 +56,14 @@ angular.module('MyConcert', ['ionic'])
                 controller: 'profileController',
                 templateUrl:'html/perfil.html'
             })
+    
+    $stateProvider.state('createBillboard', {
+                url:'/createBillboard',
+                controller: 'createBillboardController',
+                templateUrl:'html/crearCartelera.html'
+            })
+    
+    
       $urlRouterProvider.otherwise('/login');
 })
    
@@ -216,15 +224,19 @@ angular.module('MyConcert', ['ionic'])
 	}
 })
 
-.controller('SeeBandController', function($scope,$state,$stateParams,$http){
-	$scope.bandToSee= $stateParams.bandId;
-    var msj = {bandId:$stateParams.bandId}
+.controller('SeeBandController', function($scope,$state,$stateParams,$http,connectApi){
+	var bandToSee= $stateParams.bandId;
+    $scope.nameband="";
+    $scope.bandquali="";
     $scope.getBand =  function(){	
 	
-	connectApi.httpGet('ObtenerBanda',msj).then(function(answer) {
+	connectApi.httpGet('ObtenerUnaBanda',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
+        $scope.nameband=answer[0].nombre;
+        $scope.bandquali=answer[0].calificacion;
+        console.log(answer[0].calificacion);
 	});
-    connectApi.httpGet('ObtenerArtistas',msj).then(function(answer) {
+/*    connectApi.httpGet('ObtenerArtistas',msj).then(function(answer) {
 		console.log(answer);
 	});
 	connectApi.httpGet('ObtenerCanciones',msj).then(function(answer) {
@@ -232,7 +244,7 @@ angular.module('MyConcert', ['ionic'])
 	});	        
 	connectApi.httpGet('ObtenerComentarios',msj).then(function(answer) {
 		console.log(answer);
-	});        
+	});*/        
 	};
     })
 
@@ -280,10 +292,12 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('addCategoryController', function($scope, $state,$http){
-    
+.controller('addCategoryController', function($scope, $state,$http){    
         $scope.sendCategory =  function(NameCategory,description){
-                console.log({NameCategory,description})
+                var msj = {NameCategory:NameCategory,description:description}
+                connectApi.httpPost('AñadirCategoría',msj).then(function(answer) {
+                console.log(answer);
+                });
         }
             })
 
@@ -466,6 +480,12 @@ function previewFile() {
 })
 
 
+
+.controller('createBillboardController', function($scope, $state,$http){
+            })
+
+
+
 .directive('menu', function() {
  	return {
     	templateUrl: 'html/menu.html',
@@ -487,6 +507,10 @@ function previewFile() {
 		return postPromise;
 	}
 })
+
+
+
+
 
 
 
