@@ -1,7 +1,13 @@
 CREATE PROCEDURE pr_InsertarBanda2
 	@bandaNombre varchar(30),
+	@popularidad int,
+	@seguidores int, 
+	@pais varchar(30),
+	@foto varchar(150),
 	@artistas StringList readonly,
 	@canciones StringList readonly,
+	@albums StringList readonly,
+	@fotos StringList readonly,
 	@generos intList readonly
 
 AS
@@ -13,8 +19,8 @@ BEGIN
 
     Begin Try
 
-		insert into BANDA(nombre, calificacion)
-		values(@bandaNombre, 0)
+		insert into BANDA(nombre, calificacion, foto, seguidores, popularidad, pais)
+		values(@bandaNombre, 0, @foto, @seguidores, @popularidad, @pais)
 
 		declare @bandaID int
 
@@ -36,6 +42,12 @@ BEGIN
 			from Genero as G
 			where G.id in (select item from @generos)
 			group by G.id
+
+		insert into ALBUM(nombre, foto, bandaID)
+			select A.item, F.item, @bandaID
+			from @albums as A, @fotos as F
+			group by A.item, F.item
+
 
         COMMIT TRAN insertarBanda2
 
