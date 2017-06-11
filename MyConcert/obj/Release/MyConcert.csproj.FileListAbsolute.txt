@@ -38,3 +38,7 @@ C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\M
 C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\obj\Release\MyConcert.dll
 C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\obj\Release\MyConcert.pdb
 C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\obj\Release\MyConcert.csprojResolveAssemblyReference.cache
+C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\bin\Microsoft.QualityTools.Testing.Fakes.dll
+C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\bin\SpotifyAPI.dll
+C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\bin\SpotifyAPI.xml
+C:\Users\ljjas\OneDrive\Documentos\TEC\Especificación\ProyectoFinal\MyConcert\MyConcert\bin\es\Microsoft.QualityTools.Testing.Fakes.resources.dll

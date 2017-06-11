@@ -9,6 +9,12 @@ using System.Web.Script.Serialization;
 using System.Web.Script.Services;
 using System.Web.Services;
 using TweetSharp;
+using SpotifyAPI.Web; //Base Namespace
+using SpotifyAPI.Web.Auth; //All Authentication-related classes
+using SpotifyAPI.Web.Enums; //Enums
+using SpotifyAPI.Web.Models; //Models for the JSON-responses
+using System.Threading.Tasks;
+
 namespace MyConcert
 {
     /// <summary>
@@ -68,6 +74,54 @@ namespace MyConcert
         {
             Banda banda = new Banda();// crea el objeto de crear banda
             return banda.ObtenerBandas(); // obtiene las bandas
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+        /// <summary>
+        /// Este metodo consiste consiste en devolver una banda del catálogo
+        /// </summary>
+        /// <returns> retorna una banda en json</returns>
+        [WebMethod]
+        public string ObtenerUnaBanda(string frase) // este método hace la prueba de serializar el json
+        {
+            Banda banda = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Banda>(frase);
+
+            return banda.ObtenerUnaBanda();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+        /// <summary>
+        /// Este metodo consiste obtener los miembros de las bandas
+        /// </summary>
+        /// <returns> retorna miembros en json</returns>
+        [WebMethod]
+        public string ObtenerMiembros(string frase) // este método hace la prueba de serializar el json
+        {
+            Banda banda = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Banda>(frase);
+
+            return banda.ObtenerMiembros();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+        /// <summary>
+        /// Este metodo consiste obtener las canciones
+        /// </summary>
+        /// <returns> retorna las canciones json</returns>
+        [WebMethod]
+        public string ObtenerCanciones(string frase) // este método hace la prueba de serializar el json
+        {
+            Banda banda = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Banda>(frase);
+
+            return banda.ObtenerCanciones();
+        }
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////7
+        /// <summary>
+        /// Este metodo consiste obtener las canciones
+        /// </summary>
+        /// <returns> retorna las canciones json</returns>
+        [WebMethod]
+        public string ObtenerComentarios(string frase) // este método hace la prueba de serializar el json
+        {
+            Banda banda = new System.Web.Script.Serialization.JavaScriptSerializer().Deserialize<Banda>(frase);
+
+            return banda.ObtenerComentarios();
         }
         //////////////////////////////////////////////////////////////////////////////////////////////////////////////////77
         /// <summary>
@@ -132,5 +186,18 @@ namespace MyConcert
             Banda banda = new Banda();
             return banda.ObtenerGeneros(); // obtiene las bandas
         }
+        /// <summary>
+        /// este metodo es para conectar con spotyfy 
+        /// </summary>
+        /// <returns></returns>
+        [WebMethod]
+         public string ConectarSpotyfy(string frase) // este método hace la prueba de serializar el json
+        {
+            Banda a =new Banda();
+            //a.WebRequest();
+            return a.ObtenerDatosSpotify(frase);
+
+        }
+   
     }
 }
