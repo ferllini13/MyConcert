@@ -1,5 +1,6 @@
 CREATE PROCEDURE pr_InsertarCancion
-	@nombre varchar(30),
+	@canciones StringList readonly,
+	@links StringList readonly,
 	@bandaID int
 
 AS
@@ -11,8 +12,10 @@ BEGIN
 
     Begin Try
 		
-		insert into cancion(nombre, bandaID)
-		values(@nombre, @bandaID)
+		insert into CANCION(nombre, bandaID, link)
+			select C.item, @bandaID, L.item
+			from @canciones as C, @links as L
+			group by C.item, L.item
 
         COMMIT TRAN insertarCancion
 

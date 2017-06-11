@@ -1,5 +1,9 @@
 CREATE PROCEDURE pr_insertarBanda
-	@nombre varchar(30)
+	@nombre varchar(30),
+	@popularidad int,
+	@seguidores int, 
+	@pais varchar(30),
+	@foto varchar(150)
 
 AS
 BEGIN
@@ -10,8 +14,8 @@ BEGIN
 
     Begin Try
 		
-		insert into BANDA(nombre,calificacion)
-		values(@nombre,0)
+		insert into BANDA(nombre, calificacion, foto, seguidores, popularidad, pais)
+		values(@nombre, 0, @foto, @seguidores, @popularidad, @pais)
 
 		insert into CATALOGO_BANDA(bandaID, catalogoID)
 		values((select id from banda where banda.nombre = @nombre), (select id from catalogo))
