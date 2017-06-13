@@ -1,6 +1,6 @@
 <div menu></div>
 	<div class = "container scroll" style="padding-top: 80px;" ng-init="getGenres()">
-	<form class="form-horizontal">
+	<form class="form-horizontal" ng-submit="addBand()">
 
 <!-- Form Name -->
 <h2 ALIGN="center">AGREGA UNA NUEVA BANDA</h2><br><br>
@@ -9,7 +9,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="Company Name">Nombre de la banda</label>  
   <div class="col-md-6">
-  <input id="bandName" name="Company ng-model="" Name" type="text" placeholder="Company Name" class="form-control input-md" required="">
+  <input id="bandName"  ng-model="bandData.nombre" type="text" placeholder="Añade el nombre de la Banda" class="form-control input-md"  required="">
   </div>
 </div>
 
@@ -17,7 +17,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="User Name">Integrantes de la banda</label>  
   <div class="col-md-5">
-  <input id="member" name="User Name" type="text" placeholder="Añade un integrante" class="form-control input-md" required="">
+  <input id="member" name="User Name" type="text" placeholder="Añade un integrante" class="form-control input-md" >
 	  <ion-list class="list-group">
 			<ion-item ng-click="removeMember(member)" class="list-group-item" ng-repeat="mem in bandData.artistas" >
 					{{mem}}
@@ -34,7 +34,7 @@
 <div class="form-group">
   <label class="col-md-4 control-label" for="User Id">Canciones principales</label>  
   <div class="col-md-5">
-  	<input type="text" placeholder="Añade una Canción" class="form-control input-md" id="song" required="">
+  	<input type="text" placeholder="Añade una Canción" class="form-control input-md" id="song" >
 	 <ion-list class="list-group">
 			<ion-item ng-click="removeSong(song)" class="list-group-item" ng-repeat="song in bandData.canciones" >
 					{{song}}
@@ -85,7 +85,7 @@
 <!-- Button -->
 <div class="form-group">
   <div  ALIGN="center">
-    <input type="submit" Value="ingresar Banda" id="" name="" class="btn btn-success">
+    <input type="submit" Value="ingresar Banda" class="btn btn-success">
   </div>
 </div>
 

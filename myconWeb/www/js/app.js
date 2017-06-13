@@ -317,6 +317,20 @@ angular.module('MyConcert', ['ionic'])
 		$scope.addedGenres.splice($scope.addedGenres.indexOf(gen),1);
 		$scope.bandData.generos.splice($scope.bandData.generos.indexOf(gen.id),1);
 	}
+	
+	
+	$scope.addBand=function(){
+		
+		
+		console.log($scope.bandData);
+		/*
+		connectApi.httpPost('AgregarBanda',$scope.bandData).then(function(answer) {
+				console.log($scope.userData);
+		});
+		*/
+		
+		
+	}
 })
 
 
