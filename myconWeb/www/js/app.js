@@ -336,12 +336,11 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('addCategoryController', function($scope, $state,$http,connectApi){    
-
+.controller('addCategoryController', function($scope, $state,$http,connectApi){
         $scope.sendCategory =  function(NameCategory,description){
-                var msj = {Categoria:NameCategory,descripcion:description}
+                var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
-                connectApi.httpPost('AñadirCategoría',msj).then(function(answer) {
+                connectApi.httpPost('InsertarCategoria',{nombre:NameCategory,descripcion:description}).then(function(answer) {
                 console.log(answer);
                 });
         }
