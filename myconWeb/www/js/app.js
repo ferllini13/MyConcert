@@ -298,9 +298,8 @@ angular.module('MyConcert', ['ionic'])
 		$scope.bandData.canciones.splice($scope.bandData.canciones.indexOf(songName),1);
 	};
 	
-	
 	$scope.addBand=function(){
-		connectApi.httpPost('AgregarBanda',$scope.bandData).then(function(answer) {
+		connectApi.httpPost('InsertarBanda',$scope.bandData).then(function(answer) {
 			console.log(answer);
 	});
 		
@@ -322,25 +321,17 @@ angular.module('MyConcert', ['ionic'])
 		$scope.bandData.generos.splice($scope.bandData.generos.indexOf(gen.id),1);
 	}
 	
-	
-	$scope.addBand=function(){
-		
-		
-		console.log($scope.bandData);
-		/*
-		connectApi.httpPost('AgregarBanda',$scope.bandData).then(function(answer) {
-				console.log($scope.userData);
-		});
-		*/
-		
-		
-	}
 })
 
 
+<<<<<<< HEAD
 
 
 .controller('addCategoryController', function($scope, $state,connectApi,$http){
+=======
+.controller('addCategoryController', function($scope, $state,$http,connectApi){
+
+>>>>>>> d433e8d3699d897ce3c4a0d9485c277c93585d07
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
