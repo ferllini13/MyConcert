@@ -324,14 +324,9 @@ angular.module('MyConcert', ['ionic'])
 })
 
 
-<<<<<<< HEAD
 
 
 .controller('addCategoryController', function($scope, $state,connectApi,$http){
-=======
-.controller('addCategoryController', function($scope, $state,$http,connectApi){
-
->>>>>>> d433e8d3699d897ce3c4a0d9485c277c93585d07
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
