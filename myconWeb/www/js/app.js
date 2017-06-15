@@ -270,7 +270,7 @@ angular.module('MyConcert', ['ionic'])
 .controller('addBandController', function($scope, $state,connectApi){
 	$scope.genres=[];
 	$scope.addedGenres=[];
-	$scope.bandData={artistas:[],canciones:[],generos:[],nombre:""};
+	$scope.bandData={miembros:[],cancionesPrincipales:[],generos:[],nombre:""};
 	
 	$scope.addMember=function(){
 		var menberName= document.getElementById('member').value;
@@ -290,10 +290,10 @@ angular.module('MyConcert', ['ionic'])
 	};
 	$scope.removeMember=function(menberName){
 		console.log(menberName);
-		$scope.bandData.artistas.splice($scope.bandData.artistas.indexOf(menberName),1);
+		$scope.bandData.miembros.splice($scope.bandData.miembros.indexOf(menberName),1);
 	};
 	$scope.removeSong=function(songName){
-		$scope.bandData.canciones.splice($scope.bandData.canciones.indexOf(songName),1);
+		$scope.bandData.cancionesPrincipales.splice($scope.bandData.cancionesPrincipales.indexOf(songName),1);
 	};
 	
 	$scope.addBand=function(){
@@ -550,7 +550,7 @@ function previewFile() {
 		return getPromise;
 	},
 	this.httpPost= function(method,requestJson){
-		var postPromise=$http.post(webSeviceIp+method, requestJson).then(function(response) {
+		var postPromise=$http.post(webSeviceIp+method, {frase:JSON.stringify(requestJson)}).then(function(response) {
 	  		return angular.fromJson(response.data.d);
        	});
 		return postPromise;
