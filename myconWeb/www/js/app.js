@@ -64,7 +64,10 @@ angular.module('MyConcert', ['ionic'])
    
 
 .controller('LoginController', function($scope,$state,connectApi){
-	$scope.starPage=function(){localStorage.clear();};
+	$scope.starPage=function(){
+        localStorage.clear();
+        document.getElementById('myForm').clear;                        
+                              };
 	
 	
     $scope.checkUser =  function(loginUserName,loginPasword){	
@@ -74,6 +77,7 @@ angular.module('MyConcert', ['ionic'])
 		connectApi.httpGet(method,msj).then(function(answer) {
 			console.log(answer)
       		if (answer.length!=0){
+                localStorage.clear();
 				localStorage.setItem('userName', loginUserName);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
@@ -236,7 +240,18 @@ angular.module('MyConcert', ['ionic'])
     $scope.bandArtist=[];
     $scope.bandSongs=[];
     $scope.bandCom=[];
-    $scope.getBand =  function(){	
+    $scope.userComment={comment:""};
+    $scope.userType=true;
+    $scope.getBand =  function(){
+        
+    var rol = localStorage.getItem('userRol');
+	if (rol==1){
+		$scope.userType=true;
+	}
+	else if (rol==2){
+		$scope.userType=false;
+	}
+    
 	
 	connectApi.httpGet('ObtenerUnaBanda',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
@@ -263,9 +278,9 @@ angular.module('MyConcert', ['ionic'])
     return $sce.trustAsResourceUrl(src);
   }
     
-    $scope.comment =  function(Comment){
-        console.log({mensaje:Comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value});
-        connectApi.httpPost('InsertarComentarios',{mensaje:Comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value}).then(function(answer){
+    $scope.comment =  function(){
+        console.log($scope.userComment.comment);       
+        connectApi.httpPost('InsertarComentarios',{mensaje:$scope.userComment.comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value}).then(function(answer){
                             console.log(answer);
                                                            });
     }
