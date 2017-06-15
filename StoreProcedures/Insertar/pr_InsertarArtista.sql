@@ -1,6 +1,6 @@
 CREATE PROCEDURE pr_InsertarArtista	
 	@bandaID int,
-	@nombre varchar(100)
+	@artistas StringList readonly
 
 AS
 BEGIN
@@ -12,7 +12,9 @@ BEGIN
     Begin Try
 		
 		insert into artista(nombre, bandaID)
-		values(@nombre, @bandaID)
+			select A.item, @bandaID
+			from @artistas as A
+			group by A.item
 
         COMMIT TRAN insertarArtista
 

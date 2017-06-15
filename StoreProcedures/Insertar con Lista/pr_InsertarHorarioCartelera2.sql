@@ -11,10 +11,16 @@ BEGIN
 
     Begin Try
 		
-		insert into horario(dia, horaInicio, horaFinal, carteleraID)
-		select h.dia, h.horaInicio, h.horaFinal, @carteleraID
+		insert into horario(dia, horaInicio, horaFinal)
+		select h.dia, h.horaInicio, h.horaFinal
 		from @horarios as h
-		group by h.dia, h.horaInicio, h.horaFinal 
+		group by h.dia, h.horaInicio, h.horaFinal
+		
+		insert into horario_cartelera(horarioID, carteleraID) 
+			select H.id, @carteleraID
+			from Horario as H, @horarios as h2
+			where H.dia = h2.dia and H.horaInicio = h2.horaInicio and H.horaFinal = h2.horaFinal
+			group by H.id
 		
 
 
