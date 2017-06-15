@@ -258,10 +258,12 @@ angular.module('MyConcert', ['ionic'])
 	};
     
     $scope.comment =  function(Comment){
-        console.log(document.getElementById('input-5').value)
-        document.getElementById('input-5').value = "4";
-        console.log(document.getElementById('input-5'))
+        console.log({mensaje:Comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value});
+        connectApi.httpPost('InsertarComentarios',{mensaje:Comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value}).then(function(answer){
+                            console.log(answer);
+                                                           });
     }
+    
     })
 
 
@@ -319,12 +321,13 @@ angular.module('MyConcert', ['ionic'])
 	
 })
 
-.controller('addCategoryController', function($scope, $state,$http,connectApi){    
+
+.controller('addCategoryController', function($scope, $state,$http,connectApi){
 
         $scope.sendCategory =  function(NameCategory,description){
-                var msj = {Categoria:NameCategory,descripcion:description}
+                var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
-                connectApi.httpPost('AñadirCategoría',msj).then(function(answer) {
+                connectApi.httpPost('InsertarCategoria',{nombre:NameCategory,descripcion:description}).then(function(answer) {
                 console.log(answer);
                 });
         }
