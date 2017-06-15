@@ -232,6 +232,7 @@ angular.module('MyConcert', ['ionic'])
 	var bandToSee= $stateParams.bandId;
     $scope.nameband="";
     $scope.bandquali="";
+    $scope.unaBanda = [];
     $scope.bandArtist=[];
     $scope.bandSongs=[];
     $scope.bandCom=[];
@@ -239,6 +240,7 @@ angular.module('MyConcert', ['ionic'])
 	
 	connectApi.httpGet('ObtenerUnaBanda',{id:bandToSee}).then(function(answer) {
 		console.log(answer);
+        $scope.unaBanda=answer;
         $scope.nameband=answer[0].nombre;
         $scope.bandquali=answer[0].calificacion;
         console.log(answer[0].calificacion);
@@ -338,7 +340,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('addCategoryController', function($scope, $state,$http,connectApi){
+.controller('addCategoryController', function($scope, $state,connectApi,$http){
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
@@ -549,7 +551,6 @@ function previewFile() {
 
 
 
-
 .directive('menu', function() {
  	return {
     	templateUrl: 'html/menu.html',
@@ -565,7 +566,7 @@ function previewFile() {
 		return getPromise;
 	},
 	this.httpPost= function(method,requestJson){
-		var postPromise=$http.post(webSeviceIp+method, requestJson).then(function(response) {
+		var postPromise=$http.post(webSeviceIp+method,requestJson).then(function(response) {
 	  		return angular.fromJson(response.data.d);
        	});
 		return postPromise;
