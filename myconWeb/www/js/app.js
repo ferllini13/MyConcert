@@ -282,7 +282,7 @@ angular.module('MyConcert', ['ionic'])
         console.log($scope.userComment.comment);       
         connectApi.httpPost('InsertarComentarios',{mensaje:$scope.userComment.comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value}).then(function(answer){
                             console.log(answer);
-                                                           });
+        });
     }
     
     })
@@ -296,17 +296,17 @@ angular.module('MyConcert', ['ionic'])
 	$scope.addMember=function(){
 		var menberName= document.getElementById('member').value;
 		if (menberName||menberName!=""){
-			$scope.bandData.artistas.push(menberName);
+			$scope.bandData.miembros.push(menberName);
 			document.getElementById('member').value="";
-			console.log($scope.bandData.artistas);
+			console.log($scope.bandData.miembros);
 		}
 	};
 	$scope.addSong=function(){
 		var songName=document.getElementById('song').value;
 		if (songName||songName!=""){
-			$scope.bandData.canciones.push(songName);
+			$scope.bandData.cancionesPrincipales.push(songName);
 			document.getElementById('song').value="";
-			console.log($scope.bandData.canciones);
+			console.log($scope.bandData.cancionesPrincipales);
 		}
 	};
 	$scope.removeMember=function(menberName){
@@ -316,13 +316,8 @@ angular.module('MyConcert', ['ionic'])
 	$scope.removeSong=function(songName){
 		$scope.bandData.cancionesPrincipales.splice($scope.bandData.cancionesPrincipales.indexOf(songName),1);
 	};
-	
-	$scope.addBand=function(){
-		connectApi.httpPost('InsertarBanda',$scope.bandData).then(function(answer) {
-			console.log(answer);
-	});
 		
-	};
+
 	$scope.getGenres=function(){
 		connectApi.httpGet('ObtenerGeneros',"").then(function(answer) {
 			$scope.genres=answer;
@@ -340,6 +335,11 @@ angular.module('MyConcert', ['ionic'])
 		$scope.bandData.generos.splice($scope.bandData.generos.indexOf(gen.id),1);
 	}
 	
+	$scope.addBand=function(){
+		connectApi.httpPost('InsertarBanda',$scope.bandData).then(function(answer) {
+			console.log(answer);
+		});
+	};
 })
 
 
@@ -413,80 +413,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('pbandController', function($scope, $state,$http,connectApi){
-	document.getElementById('file').onchange=function() {previewFile()};
-	$scope.try={
-  "album" : {
-    "album_type" : "album",
-    "artists" : [ {
-      "external_urls" : {
-        "spotify" : "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d"
-      },
-      "href" : "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
-      "id" : "1dfeR4HaWDbWqFHLkxsg1d",
-      "name" : "Queen",
-      "type" : "artist",
-      "uri" : "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d"
-    } ],
-    "external_urls" : {
-      "spotify" : "https://open.spotify.com/album/7oHaj9jkWHByziQsqGAb8V"
-    },
-    "href" : "https://api.spotify.com/v1/albums/7oHaj9jkWHByziQsqGAb8V",
-    "id" : "7oHaj9jkWHByziQsqGAb8V",
-    "images" : [ {
-      "height" : 640,
-      "url" : "https://i.scdn.co/image/6bd26952895dacf25b7529e58b2f118e61d42226",
-      "width" : 640
-    }, {
-      "height" : 300,
-      "url" : "https://i.scdn.co/image/be6434a26cf7984b47979f89d26c54dc4796a0a0",
-      "width" : 300
-    }, {
-      "height" : 64,
-      "url" : "https://i.scdn.co/image/45e552a7b9f774015de2abe8b4b877bd34ec2727",
-      "width" : 64
-    } ],
-    "name" : "The Works (Deluxe Remastered Version)",
-    "type" : "album",
-    "uri" : "spotify:album:7oHaj9jkWHByziQsqGAb8V"
-  },
-  "artists" : [ {
-    "external_urls" : {
-      "spotify" : "https://open.spotify.com/artist/1dfeR4HaWDbWqFHLkxsg1d"
-    },
-    "href" : "https://api.spotify.com/v1/artists/1dfeR4HaWDbWqFHLkxsg1d",
-    "id" : "1dfeR4HaWDbWqFHLkxsg1d",
-    "name" : "Queen",
-    "type" : "artist",
-    "uri" : "spotify:artist:1dfeR4HaWDbWqFHLkxsg1d"
-  } ],
-  "disc_number" : 2,
-  "duration_ms" : 258013,
-  "explicit" : false,
-  "external_ids" : {
-    "isrc" : "GBUM71029625"
-  },
-  "external_urls" : {
-    "spotify" : "https://open.spotify.com/track/3Au6174rC3JSzZN5BhCl3D"
-  },
-  "href" : "https://api.spotify.com/v1/tracks/3Au6174rC3JSzZN5BhCl3D",
-  "id" : "3Au6174rC3JSzZN5BhCl3D",
-  "is_playable" : true,
-  "linked_from" : {
-    "external_urls" : {
-      "spotify" : "https://open.spotify.com/track/7h2yhVxcZOGyQdOwD4Hu8J"
-    },
-    "href" : "https://api.spotify.com/v1/tracks/7h2yhVxcZOGyQdOwD4Hu8J",
-    "id" : "7h2yhVxcZOGyQdOwD4Hu8J",
-    "type" : "track",
-    "uri" : "spotify:track:7h2yhVxcZOGyQdOwD4Hu8J"
-  },
-  "name" : "I Want To Break Free - Single Remix",
-  "popularity" : 64,
-  "preview_url" : "https://p.scdn.co/mp3-preview/5d44e5dc88e511bf7270cd254ca8ae586b5c9b49?cid=8897482848704f2a8f8d7c79726a70d4",
-  "track_number" : 2,
-  "type" : "track",
-  "uri" : "spotify:track:3Au6174rC3JSzZN5BhCl3D"
-};
+document.getElementById('file').onchange=function() {previewFile()};
 	
 
 function saveBase64AsFile(blob, fileName) {
