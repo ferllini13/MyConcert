@@ -228,7 +228,7 @@ angular.module('MyConcert', ['ionic'])
 	}
 })
 
-.controller('SeeBandController', function($scope,$state,$stateParams,connectApi){
+.controller('SeeBandController', function($scope,$state,$stateParams,$sce,connectApi){
 	var bandToSee= $stateParams.bandId;
     $scope.nameband="";
     $scope.bandquali="";
@@ -258,6 +258,10 @@ angular.module('MyConcert', ['ionic'])
         $scope.bandCom=answer;
 	});        
 	};
+    
+  $scope.trustSrc = function(src) {
+    return $sce.trustAsResourceUrl(src);
+  }
     
     $scope.comment =  function(Comment){
         console.log({mensaje:Comment,comentadorId:localStorage.getItem('userId'),bandaId:bandToSee,calificacion:document.getElementById('input-5').value});
