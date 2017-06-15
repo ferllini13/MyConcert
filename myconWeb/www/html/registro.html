@@ -76,28 +76,28 @@
 		<div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">teléfono:</label>
           <div class="col-lg-8">
-            <input class="form-control" ng-model="userData.celular" type="tel">
+            <input class="form-control" ng-model="userData.telefono" type="tel">
           </div>
         </div> 
 		<div class="form-group" ng-if="userType">
           <label class="col-lg-3 control-label">Fecha de Nacimiento:</label>
           <div class="col-lg-8">
 			<label>
-            	<input class="form-control" ng-model="userData.fechaNacimiento" type="date"/>
+            	<input ng-model="date.date" type="date"/>
 			</label>  
 		</div>
         </div>    
         <div class="form-group">
           <label class="col-md-3 control-label" >Nombre de Usuario:</label>
           <div class="col-md-8">
-            <input class="form-control" ng-model="userData.nombreUsuario" type="text">
+            <input class="form-control" ng-model="userData.userName" type="text">
           </div>
         </div>
         <div class="form-group">
           <label class="col-md-3 control-label">Contraseña:</label>
           <div class="col-md-8">
             <input id="pass" class="form-control" 
-				   ng-model="userData.contrasena" type="password">
+				   ng-model="userData.password" type="password">
           </div>
         </div>
         <div class="form-group">

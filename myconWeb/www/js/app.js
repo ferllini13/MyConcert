@@ -160,7 +160,8 @@ angular.module('MyConcert', ['ionic'])
 
 .controller('RegisterController', function($scope, $state,connectApi){
 	document.getElementById('file').onchange=function() {previewFile()};
-	$scope.genres=[]; 
+	$scope.date={};
+	$scope.genres=[];
 	$scope.addedGenres=[];
 	$scope.genresId=[];
 	$scope.userData={generos:[],foto:"",fechaInscripcion:""};
@@ -170,27 +171,26 @@ angular.module('MyConcert', ['ionic'])
 		$scope.userType=!$scope.userType;
 		console.log($scope.userType)
 	}
+	
 	$scope.fun =function(){
 	console.log($scope.userData)
 	}
 	
 	$scope.resetData=function(){
-		$scope.userData={};
+		$scope.userData={generos:[],foto:"",fechaInscripcion:""};
 		$scope.password={};
 		$scope.addedGenres=[];
 		$scope.getGenres();
-		
 	}
-	
+
 	$scope.addUser=function(){
-		$scope.userData.fechaNacimiento=$scope.userData.fechaNacimiento.toString().substring(0, 10);
+		$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
 		$scope.userData.fechaInscripcion="2017-06-09";
-		$scope.userData.foto=null;
+		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
 				console.log($scope.userData);
 		if ($scope.userType){
 			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
 				console.log($scope.userData);
-			updateCheck();
 			});
 		}
 		else {
