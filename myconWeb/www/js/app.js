@@ -194,17 +194,23 @@ angular.module('MyConcert', ['ionic'])
 	}
 
 	$scope.addUser=function(){
-		$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
-		$scope.userData.fechaInscripcion="2017-06-09";
+		var today= new Date();
+		$scope.userData.fechaInscripcion=new Date().toJSON().slice(0,10);
+		console.log($scope.userData.fechaInscripcion);
 		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
-				console.log($scope.userData);
 		if ($scope.userType){
+			$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
 			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
 				console.log($scope.userData);
 			});
 		}
 		else {
-			//promocion
+			console.log($scope.userData);
+			$scope.userData['identificador']= today.getTime().toString().slice(4,14);
+			$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
+			connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
+				console.log($scope.userData);
+			});
 		}
 	}
 	$scope.getGenres=function(){
@@ -351,7 +357,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('addCategoryController', function($scope, $state,connectApi,$http){
+.controller('addCategoryController', function($scope, $state,connectApi){
         $scope.sendCategory =  function(NameCategory,description){
                 var msj = {nombre:NameCategory,descripcion:description}
                  console.log(msj);
@@ -390,8 +396,6 @@ angular.module('MyConcert', ['ionic'])
 .controller('catalogueController', function($scope, $state,connectApi){
 	$scope.isEmpty;
 	$scope.catalogue=[];
-	
-	
 	$scope.getBands =  function(){	
 	
 	connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
@@ -405,7 +409,6 @@ angular.module('MyConcert', ['ionic'])
  
 	});
 	
-	
 	};
 })
 
@@ -418,7 +421,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-.controller('pbandController', function($scope, $state,$http,connectApi){
+.controller('pbandController', function($scope, $state,connectApi){
 document.getElementById('file').onchange=function() {previewFile()};
 	
 
@@ -438,11 +441,8 @@ function saveBase64AsFile(blob, fileName) {
 }
 	
 	
-	
 $scope.up=function(){
 	var file    = document.getElementById('file').files[0];
-
-	
 	if(file){
 		var name= file.name;
 		saveBase64AsFile(file,name);
@@ -466,12 +466,50 @@ function previewFile() {
 
 })
 
-
-
-
-.controller('createBillboardController', function($scope, $state,$http){
+.controller('createBillboardController', function($scope, $state,connectApi){
     document.getElementById('file').onchange=function() {previewFile()};
-    
+	$scope.categories=[];
+	$scope.bands=[];
+	$scope.addedBands=[];
+	$scope.activeCategory;
+	//$scope.addedCategories={categorias=[]};
+	//$scope.jasonCategorie={id:"", bandas=[]};
+	
+	$scope.getCategories=function(){
+		connectApi.httpGet('ObtenerCategorias',"").then(function(answer) {
+			console.log(answer);
+			$scope.categories=answer;
+		});
+		$scope.getBands();
+	}
+	
+	$scope.getBands=function(){
+		connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
+			console.log(answer);
+			$scope.bands=answer;
+		});
+	}
+	
+	$scope.activateCategorie=function(category){
+		if ($scope.activeCategory===category){
+			$scope.activeCategory=null;
+			
+		}
+		else{
+		$scope.activeCategory=category;
+		}	
+	}
+	
+	$scope.addBands= function(band){
+		$scope.addedBands.push(band);
+		$scope.bands.splice($scope.bands.indexOf(band),1);
+	}
+	
+	$scope.addCategories=function(){}
+	
+	$scope.addbandToCategory=function(){}
+	
+	    
 	function previewFile() {
   		var preview = document.getElementById('pic');
   		var file    = document.getElementById('file').files[0];
@@ -484,7 +522,6 @@ function previewFile() {
     		reader.readAsDataURL(file);
   		}
 	}
-    
             })
 
 

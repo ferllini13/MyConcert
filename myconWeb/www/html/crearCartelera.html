@@ -1,5 +1,5 @@
 <div menu></div>
-<div class="container scroll" style="padding-top: 80px;">
+<div class="container scroll" style="padding-top: 80px;" ng-init="getCategories()">
 <h1 ALIGN="center">Crear cartelera</h1><br>
   <div class="row">
     <!-- left column -->
@@ -73,20 +73,44 @@
 			</label>  
 		</div>
         </div>
-      <div class="text-left">  
-        <h4>Establecer horarios</h4>
-      </div>
-          
-      <div class="text-center">  
-        <h4>Asignar Categorias y Bandas</h4>
-      </div>
-          
-    <div class="col-md-4">  
-        <h4>No encuentras una categoria</h4>
-    </div>
-    <div class="col-md-2">  
-        <a href= "#/addCategory" type="button" class="btn sellBtn boton">Crear Nueva Categoria</a>
-    </div>
+    
+		<div class="form-group" >
+          	<label class="col-lg-1 control-label"></label>
+          	<div class="container panel panel-default col-lg-5">
+				<div class="panel-heading">
+				<input type="search"
+             			placeholder="Busca un Género"
+             			ng-model="search"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+    		<div class="panel-body" style="overflow:scroll; height:180px;">
+            <ion-list class="list-group">
+      		<ion-item class="list-group-item" ng-repeat="category in categories | filter:search" ng-click="activateCategorie(category)" >
+			<h3 ALIGN="center" >{{category.nombre}}</h3>
+			</ion-item>
+    	</ion-list>
+			</div>
+			</div>
+			<div ng-if="activeCategory" class="container panel panel-default col-lg-5">
+				<div class="panel-heading">
+					<input type="search"
+             			placeholder="Busca un Género Agregado"
+             			ng-model="search2"
+             			ng-change="scrollTop()"  
+                		class="full-width white-background">
+				</div>
+				<label> <h5>Agregue Bandas a {{activeCategory.nombre}}</h5></label>
+    			<div  class="panel-body " style="overflow:scroll; height:140px;">
+            		<ion-list class="list-group">
+						<ion-item class="list-group-item" ng-repeat="band in bands | filter:search2" ng-click="addBands(band)" >
+							<h3 ALIGN="center" >{{band.nombre}}</h3>
+						</ion-item>
+    				</ion-list>
+			</div>
+			</div>
+		  </div>
+		  
           
       </form>
     </div>  
