@@ -543,6 +543,9 @@ function previewFile() {
 
 .controller('seeBillboardController', function($scope, $state,$http,connectApi){
     $scope.unaCartelera = [];
+    $scope.listCategory= [];
+    $scope.categorybands=[];
+    $scope.categoryAct=[];
     $scope.getBillboard = function(){
         
         connectApi.httpGet('ObtenerUnaCartelera',{id:"1"}).then(function(answer) {
@@ -553,10 +556,17 @@ function previewFile() {
         
         connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:"1"}).then(function(answer) {
 		console.log(answer);
-	});
-        
-        
+        $scope.listCategory=answer;
+	});       
     }
+    
+    $scope.categorieBands=function(category){
+        connectApi.httpGet('ObtenerBandasPorCategoria',{id:"1",popularidad:category.id}).then(function(answer) {
+		console.log(answer);
+        $scope.categorybands=answer;
+        $scope.categoryAct=category;
+	}); 
+	}
     
             })
 
