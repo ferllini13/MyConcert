@@ -1,4 +1,54 @@
 <div menu ></div>
-<div class="container scroll" style="padding-top: 80px;" >
+<div class="container scroll" style="padding-top: 80px;" ng-init="getBillboard()">
+    <div class="text-center">
+        <div class="col-md-3"></div>
+        <div class="text-center letra col-md-6" ng-repeat="cartelera in unaCartelera">
+            <h1 ALIGN="center">{{cartelera.nombre}}</h1>
+        </div>
+    </div> 
+    <div class="col-md-3 col-sm-6 col-xs-12"></div>
+        <div class="col-md-4 col-sm-6 col-xs-12">
+		<br>
+		<br>
+      <div class="text-center">  
+        <img width="auto" id="pic" height="200px" src="https://s-media-cache-ak0.pinimg.com/736x/84/2c/e9/842ce91cd34f5ffbc211086364ac745b.jpg" alt="avatar">
+        <h6>*Agregar foto de Cartelera</h6>
+        <input type="file" id="file" class="text-center center-block well well-sm">
+      </div>		
+    </div>
+    
+    
+     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+      <form class="form-horizontal" role="form">
+          <div class="col-md-8" ng-repeat="cartelera in unaCartelera"> 
+		 <div class="form-group">
+          <label>Pais: {{cartelera.nombre1}}</label>  
+        </div>
+		<div class="form-group">
+          <label >Ubicación: {{cartelera.ubicacion}}</label>
+        </div> 
+          
+        <div class="form-group">
+          <label >Fecha inicio festival: {{cartelera.diaDeInicio}}</label>
+        </div> 
+          
+        <div class="form-group">
+          <label >Fecha final festival:{{cartelera.diaFinal}}</label>
+        </div>
+          
+        <h2>Votaciones</h2>  
+              
+        <div class="form-group">
+          <label >Fecha final votacion: {{cartelera.diaFinalVotaciones}}</label>
+        </div>
+     </div>     
+      </form>
+    </div>
+    
+    <div class="col-md-4 col-sm-6 col-xs-12">
+        
+        
+    </div>
+    
     
 </div>
