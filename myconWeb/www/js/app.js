@@ -179,7 +179,6 @@ angular.module('MyConcert', ['ionic'])
 	$scope.userType=true;
 	$scope.changeUserType=function(){
 		$scope.userType=!$scope.userType;
-		console.log($scope.userType)
 	}
 	
 	$scope.fun =function(){
@@ -195,30 +194,35 @@ angular.module('MyConcert', ['ionic'])
 
 	$scope.addUser=function(){
 		var today= new Date();
+<<<<<<< HEAD
 		$scope.userData.fechaInscripcion=new Date().toJSON().slice(0,10);
 		console.log($scope.userData.fechaInscripcion);
         console.log($scope.userData);
+=======
+		$scope.userData.fechaInscripcion=today.toJSON().slice(0,10);
+>>>>>>> 54cab63a563b480508c6277aa72110f62e9a2ace
 		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
 		if ($scope.userType){
-			$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
+			$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
 			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
-				console.log($scope.userData);
+				console.log(answer);
 			});
 		}
 		else {
-			console.log($scope.userData);
 			$scope.userData['identificador']= today.getTime().toString().slice(4,14);
-			$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
 			connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
-				console.log($scope.userData);
+				console.log(answer);
 			});
 		}
 	}
+	
 	$scope.getGenres=function(){
 		connectApi.httpGet('ObtenerGeneros',"").then(function(answer) {
 			$scope.genres=answer;
 		});	
 	}
+	
+	
 	$scope.addGenre=function(gen){
 		$scope.addedGenres.push(gen);
 		$scope.genres.splice($scope.genres.indexOf(gen),1);
@@ -359,11 +363,13 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('addCategoryController', function($scope, $state,connectApi){
+		var form=document.getElementById('myForm');
+	    $scope.categoryData = {};
         $scope.sendCategory =  function(NameCategory,description){
-                var msj = {nombre:NameCategory,descripcion:description}
-                 console.log(msj);
-                connectApi.httpPost('InsertarCategoria',{nombre:NameCategory,descripcion:description}).then(function(answer) {
-                console.log(answer);
+
+                connectApi.httpPost('InsertarCategoria',$scope.categoryData).then(function(answer) {
+                	console.log(answer);
+					form.reset();
                 });
         }
             })
@@ -478,7 +484,6 @@ function previewFile() {
 	
 	$scope.getCategories=function(){
 		connectApi.httpGet('ObtenerCategorias',"").then(function(answer) {
-			console.log(answer);
 			$scope.categories=answer;
 		});
 		$scope.getBands();
@@ -486,7 +491,6 @@ function previewFile() {
 	
 	$scope.getBands=function(){
 		connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
-			console.log(answer);
 			$scope.bands=answer;
 		});
 	}
