@@ -197,6 +197,7 @@ angular.module('MyConcert', ['ionic'])
 		var today= new Date();
 		$scope.userData.fechaInscripcion=new Date().toJSON().slice(0,10);
 		console.log($scope.userData.fechaInscripcion);
+        console.log($scope.userData);
 		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
 		if ($scope.userType){
 			$scope.userData.fechaNacimiento=$scope.date.date.toString().substring(4, 15);
@@ -549,6 +550,7 @@ function previewFile() {
     $scope.listCategory= [];
     $scope.categorybands=[];
     $scope.categoryAct=[];
+    $scope.datosEnviar={};
     $scope.getBillboard = function(){
         
         connectApi.httpGet('ObtenerUnaCartelera',{id:"1"}).then(function(answer) {
