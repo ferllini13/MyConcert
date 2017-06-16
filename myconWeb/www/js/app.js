@@ -195,18 +195,15 @@ angular.module('MyConcert', ['ionic'])
 	$scope.addUser=function(){
 		var today= new Date();
 		$scope.userData.fechaInscripcion=today.toJSON().slice(0,10);
-		console.log($scope.userData.fechaInscripcion);
 		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
 		if ($scope.userType){
 			$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
 			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
-				console.log($scope.userData);
+				console.log(answer);
 			});
 		}
 		else {
-
 			$scope.userData['identificador']= today.getTime().toString().slice(4,14);
-
 			connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
 				console.log(answer);
 			});
