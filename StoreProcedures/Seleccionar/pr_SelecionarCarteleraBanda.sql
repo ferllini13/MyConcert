@@ -1,5 +1,6 @@
 CREATE PROCEDURE pr_SelecionarCarteleraBanda
-	@carteleraID int
+	@carteleraID int,
+	@categoriaID int
 
 AS
 BEGIN
@@ -12,7 +13,7 @@ BEGIN
 		
 		select B.id, B.nombre
 		from cartelera_categoria_banda as CCB inner join banda as B on B.id = CCB.bandaID
-		where CCB.carteleraID = @carteleraID
+		where CCB.carteleraID = @carteleraID and CCB.categoriaID = @categoriaID
 		group by B.id, B.nombre 
 
         COMMIT TRAN SelecionarCarteleraBanda
