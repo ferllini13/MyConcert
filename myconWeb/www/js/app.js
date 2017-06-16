@@ -194,13 +194,9 @@ angular.module('MyConcert', ['ionic'])
 
 	$scope.addUser=function(){
 		var today= new Date();
-<<<<<<< HEAD
-		$scope.userData.fechaInscripcion=new Date().toJSON().slice(0,10);
 		console.log($scope.userData.fechaInscripcion);
         console.log($scope.userData);
-=======
 		$scope.userData.fechaInscripcion=today.toJSON().slice(0,10);
->>>>>>> 54cab63a563b480508c6277aa72110f62e9a2ace
 		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
 		if ($scope.userType){
 			$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
