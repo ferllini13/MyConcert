@@ -1,28 +1,32 @@
 <div menu></div>
-<div class="container-fluid">
-<br><br><br>
-    <h1 ALIGN="center">Crea Categoría</h1>
-    <form autocomplete="off" id="myForm" method="post" class="form-horizontal" ng-submit="sendCategory(namec,description)">
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3">
-          <h3 ALIGN="center">Nombre Categoría</h3>
-        </div>
-        <div class="col-sm-6">
-          <input type="text" class="form-control" id="inputSuccess"  required="required" ng-model="namec">
-        </div>
-        <div class="col-sm-12"></div>
-        <div class="col-sm-1"></div>
-        <div class="col-sm-3">
-          <h3 ALIGN="center">Descripción*</h3>
-        </div>
-        <div class="col-sm-6">
-            <textarea type="text" rows="5" class="form-control" id="inputSuccess"  required="required" ng-model="description">
-            </textarea>
-        </div>
-        <div class="col-sm-12"></div>
-        <div class="col-sm-6"></div>
-        <div class="col-sm-6">
-         <input type="submit" class="btn sellBtn boton" value="Añadir">
-        </div>
+<div class="container scroll" style="padding-top: 80px;">
+    <h2 ALIGN="center">Crea Categoría</h2><br><br>
+    <form autocomplete="off" id="myForm" class="form-horizontal" ng-submit="sendCategory()">
+		
+	<div class="form-group">
+  		<label class="col-md-4 control-label" for="Company Name">Nombre Categoría</label>  
+  		<div class="col-md-6">
+  			<input type="text" class="form-control" id="inputSuccess" placeholder="Añade el nombre de la categoría"  required="required" ng-model="categoryData.nombre">
+  		</div>
+	</div>
+		
+		<div class="form-group">
+  		<label class="col-md-4 control-label" for="Company Name">Descripción*</label>  
+  		<div class="col-md-6">
+  			<textarea type="text" rows="5" required="" placeholder="Añade la Descripción de la Categoría" ng-model="categoryData.descripcion"></textarea>
+  		</div>
+	</div>
+		
+	<div class="form-group">
+  		<div  ALIGN="center">
+    		<input type="submit" class="btn sellBtn boton" value="Añadir">
+		</div>
+	</div>
+		
     </form>
+	
+	<div class="col-md-2"></div>
+	<div class="col-md-8"><br><br><br><br><br><br>
+		<a  href="#/createBillboard"><button type="button" class="btn btn-success btn-lg">Regresar a crear Cartelera</button></a>
+	</div>
 </div>

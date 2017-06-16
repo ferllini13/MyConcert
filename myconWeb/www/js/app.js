@@ -212,11 +212,14 @@ angular.module('MyConcert', ['ionic'])
 			});
 		}
 	}
+	
 	$scope.getGenres=function(){
 		connectApi.httpGet('ObtenerGeneros',"").then(function(answer) {
 			$scope.genres=answer;
 		});	
 	}
+	
+	
 	$scope.addGenre=function(gen){
 		$scope.addedGenres.push(gen);
 		$scope.genres.splice($scope.genres.indexOf(gen),1);
@@ -357,11 +360,13 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('addCategoryController', function($scope, $state,connectApi){
+		var form=document.getElementById('myForm');
+	    $scope.categoryData = {};
         $scope.sendCategory =  function(NameCategory,description){
-                var msj = {nombre:NameCategory,descripcion:description}
-                 console.log(msj);
-                connectApi.httpPost('InsertarCategoria',{nombre:NameCategory,descripcion:description}).then(function(answer) {
-                console.log(answer);
+
+                connectApi.httpPost('InsertarCategoria',$scope.categoryData).then(function(answer) {
+                	console.log(answer);
+					form.reset();
                 });
         }
             })
