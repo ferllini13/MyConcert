@@ -115,7 +115,7 @@ body{
   color: #000000;
   padding: 2%;
   width: 31%;
-  margin: 100px 5% 5% auto;
+  margin: 100px 5% 5% 500px;
   float: right;
 }
 
@@ -127,7 +127,7 @@ body{
   color: #000000;
   padding: 2%;
   width: 31%;
-  margin: 50px 10px 300px 200px;
+  margin: 50px 10px 300px 100px;
   float: right;
 }
 
@@ -138,7 +138,7 @@ body{
   color: #000000;
   padding: 2%;
   width: 31%;
-  margin: 350px -30px 70px -390px;
+  margin: 350px -30px 70px -350px;
   float: right;
 }
 
