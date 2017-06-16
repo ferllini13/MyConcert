@@ -425,52 +425,18 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('pbandController', function($scope, $state,connectApi){
-document.getElementById('file').onchange=function() {previewFile()};
-	
-
-function saveBase64AsFile(blob, fileName) {
-
-        var reader = new FileReader();
-	    reader.readAsDataURL(blob);
-
-    	reader.onloadend = function () {    
-        	var base64 = reader.result ;
-        	var link = document.createElement("a");
-
-			link.setAttribute("href", base64);
-        	link.setAttribute("download", fileName);
-        	link.click();
-    };
-}
-	
-	
-$scope.up=function(){
-	var file    = document.getElementById('file').files[0];
-	if(file){
-		var name= file.name;
-		saveBase64AsFile(file,name);
-	}
-}
-	
-function previewFile() {
-  	var preview = document.getElementById('pic');
-  	var file    = document.getElementById('file').files[0];
-	console.log(file);
-  	var reader  = new FileReader();
-
-  reader.addEventListener("load", function () {
-    preview.src = reader.result;
-  }, false);
-
-  if (file) {
-    reader.readAsDataURL(file);
-  }
-}	
-
+  $scope.items = [1, 2, 3, 4];
+  $scope.values = [];
+  
+  $scope.saveAllValues = function() {
+    alert($scope.values);
+  }
 })
 
 .controller('createBillboardController', function($scope, $state,connectApi){
     document.getElementById('file').onchange=function() {previewFile()};
+    $scope.date={};
+    $scope.userData={nombre:"",ubicacion:"",diaInicio:"",diaFinal:"",fechaFinal:"",foto:"",promocionId:localStorage.getItem('userId'),pais:"",categorias:[]};
 	$scope.categories=[];
 	$scope.bands=[];
 	$scope.addedBands=[];
@@ -524,9 +490,25 @@ function previewFile() {
 		$scope.addedBands=[];
 		$scope.categories.splice($scope.categories.indexOf($scope.activeCategory),1);
 		$scope.activeCategory=null;
+        $scope.userData.categorias=$scope.addedCategories;
+        
+        console.log($scope.addedCategories);
+        console.log($scope.userData);
 		
 	}
 	
+    $scope.create=function(){
+        $scope.userData.diaInicio= new Date($scope.date.dateIF).toJSON().slice(0,10);
+        $scope.userData.diaFinal= new Date($scope.date.dateFF).toJSON().slice(0,10);
+        $scope.userData.fechaFinal= new Date($scope.date.dateFV).toJSON().slice(0,10);
+        console.log($scope.userData);
+        connectApi.httpPost('CrearCartelera',$scope.userData).then(function(answer) {
+                	console.log(answer);
+                });
+        
+    }
+    
+    
 	$scope.addbandToCategory=function(){}
 	
 	    
@@ -550,28 +532,38 @@ function previewFile() {
     $scope.listCategory= [];
     $scope.categorybands=[];
     $scope.categoryAct=[];
+    $scope.votes=[];
+    $scope.values = [];
     $scope.datosEnviar={};
     $scope.getBillboard = function(){
         
-        connectApi.httpGet('ObtenerUnaCartelera',{id:"1"}).then(function(answer) {
+        connectApi.httpGet('ObtenerUnaCartelera',{id:"10"}).then(function(answer) {
 		console.log(answer);
         $scope.unaCartelera=answer;
 	});
         
         
-        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:"1"}).then(function(answer) {
+        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:"10"}).then(function(answer) {
 		console.log(answer);
         $scope.listCategory=answer;
 	});       
     }
     
     $scope.categorieBands=function(category){
-        connectApi.httpGet('ObtenerBandasPorCategoria',{id:"1",popularidad:category.id}).then(function(answer) {
+        connectApi.httpGet('ObtenerBandasPorCategoria',{id:"10",popularidad:category.id}).then(function(answer) {
 		console.log(answer);
         $scope.categorybands=answer;
         $scope.categoryAct=category;
 	}); 
 	}
+    
+    $scope.votesCategory=function(){
+        console.log(document.getElementById('votaciones').value);
+    }
+    
+$scope.votesCategory = function() {
+    alert($scope.values);
+  }
     
             })
 
@@ -593,6 +585,7 @@ function previewFile() {
 	},
 	this.httpPost= function(method,requestJson){
 		var postPromise=$http.post(webSeviceIp+method, {frase:JSON.stringify(requestJson)}).then(function(response) {
+            console.log(response);
 	  		return angular.fromJson(response.data.d);
        	});
 		return postPromise;
