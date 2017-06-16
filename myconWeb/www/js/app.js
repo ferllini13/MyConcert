@@ -58,6 +58,12 @@ angular.module('MyConcert', ['ionic'])
                 templateUrl:'html/crearCartelera.html'
             })
     
+    $stateProvider.state('seeBillboard', {
+                url:'/seeBillboard',
+                controller: 'seeBillboardController',
+                templateUrl:'html/verCartelera.html'
+            })
+    
     
       $urlRouterProvider.otherwise('/login');
 })
@@ -478,6 +484,11 @@ function previewFile() {
     		reader.readAsDataURL(file);
   		}
 	}
+    
+            })
+
+
+.controller('seeBillboardController', function($scope, $state,$http){
     
             })
 
