@@ -488,7 +488,22 @@ function previewFile() {
             })
 
 
-.controller('seeBillboardController', function($scope, $state,$http){
+.controller('seeBillboardController', function($scope, $state,$http,connectApi){
+    $scope.unaCartelera = [];
+    $scope.getBillboard = function(){
+        
+        connectApi.httpGet('ObtenerUnaCartelera',{id:"1"}).then(function(answer) {
+		console.log(answer);
+        $scope.unaCartelera=answer;
+	});
+        
+        
+        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:"1"}).then(function(answer) {
+		console.log(answer);
+	});
+        
+        
+    }
     
             })
 
