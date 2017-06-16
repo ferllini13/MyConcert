@@ -472,8 +472,8 @@ function previewFile() {
 	$scope.bands=[];
 	$scope.addedBands=[];
 	$scope.activeCategory;
-	//$scope.addedCategories={categorias=[]};
-	//$scope.jasonCategorie={id:"", bandas=[]};
+	$scope.addedCategories=[];
+	var addedBandsIds=[];
 	
 	$scope.getCategories=function(){
 		connectApi.httpGet('ObtenerCategorias',"").then(function(answer) {
@@ -493,19 +493,38 @@ function previewFile() {
 	$scope.activateCategorie=function(category){
 		if ($scope.activeCategory===category){
 			$scope.activeCategory=null;
+			addedBandsIds=[];
+			for (i = 0; i < $scope.addedBands.length; i++) { 
+    			$scope.bands.push($scope.addedBands[i]);
+			}
+			$scope.addedBands=[];
 			
 		}
 		else{
-		$scope.activeCategory=category;
+			$scope.activeCategory=category;
+			addedBandsIds=[];
+			for (i = 0; i < $scope.addedBands.length; i++) {
+    			$scope.bands.push($scope.addedBands[i]);
+			}
+			$scope.addedBands=[];
 		}	
 	}
 	
 	$scope.addBands= function(band){
 		$scope.addedBands.push(band);
 		$scope.bands.splice($scope.bands.indexOf(band),1);
+		addedBandsIds.push(band.id);
+		
 	}
 	
-	$scope.addCategories=function(){}
+	$scope.confirmCategories=function(){
+		$scope.addedCategories.push({id:$scope.activeCategory.id,bandas:addedBandsIds})
+		addedBandsIds=[];
+		$scope.addedBands=[];
+		$scope.categories.splice($scope.categories.indexOf($scope.activeCategory),1);
+		$scope.activeCategory=null;
+		
+	}
 	
 	$scope.addbandToCategory=function(){}
 	
