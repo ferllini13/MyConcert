@@ -75,7 +75,11 @@
             		<ion-list class="list-group">
 						<ion-item class="list-group-item" ng-repeat="band in categorybands | filter:search2">
 							<a style="color:black;" href="#/seeBand/{{band.id}}"><h3>{{band.nombre}}</h3></a>
-                            <h3>Total: 0</h3>
+                                <form>
+                            	<input type="number" value="0" max="100" min="0" step="1" maxlength="3" size="3" required="required">
+                                  <input type="submit">
+                                </form>
+                            <h3>Total: {{band.vote}}</h3>
 						</ion-item>
     				</ion-list>
 			</div>
