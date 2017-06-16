@@ -15,6 +15,11 @@ div.scroll {
     overflow: scroll;
 }
 
+.columns {
+  columns: 2;
+}
+
+
 .full-width {
   width: 100%;
 }
