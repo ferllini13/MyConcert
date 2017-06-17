@@ -1,5 +1,8 @@
 <div menu></div>
-<div class="scroll" style="padding-top: 80px;" ng-init="getAllData()"> 
+<div class="scroll" style="padding-top: 80px;" ng-init="getAllData()">
+	<h2 ALIGN="center" class="col-sm-5" >CARTELERAS</h2>
+	<h2 ALIGN="center" class="col-sm-5" >FESTIVALES</h2>
+
 	<div class="container">
   			<div class="col-sm-6">
 				<ion-slide-box 
@@ -11,21 +14,16 @@
 					delegate-handle="slidebox1"  
 					on-slide-changed="slideHasChanged($index, 'slidebox1')">
 
-					<ion-slide ng-repeat="billboard in billboards">
-						<div>
-							<a href="#/seeBillboard/{{billboard.id}}"><img ng-src={{billboard.foto}} alt="" height="300" width="auto"></a>
+					<ion-slide ng-repeat="billboard in billboards">	
+							<a href="#/seeBillboard/{{billboard.id}}"><img ng-src={{billboard.foto}} alt="" height="300" width="auto">
+							</a>
+							<h3>{{billboard.nombre}}</h3>
 							
-						</div>
 					</ion-slide>
 				</ion-slide-box>
 			</div>
-		</div>
-	<br>
-	<br>
-	<br>
-	<div class="container section">
-		<div class="col-sm-6 sidenav">
-		</div>
+
+
 		<div class="col-sm-6">
 				<ion-slide-box 
 					  show-pager="true" 
@@ -37,9 +35,8 @@
 					on-slide-changed="slideHasChanged($index, 'slidebox2')">
 
 					<ion-slide ng-repeat="festival in festivals">
-						<div>
-							<a href="#/seeFestival/{{festival.id}}"><img ng-src={{festival.foto}} alt="" height="300" width="500"></a>
-						</div>	
+						<a href="#/seeFestival/{{festival.id}}"><img ng-src={{festival.foto}} alt="" height="300" width="500"></a>
+							<h3>{{festival.nombre}}</h3>
 					</ion-slide>
 				</ion-slide-box>
 		</div>

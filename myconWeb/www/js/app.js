@@ -631,6 +631,7 @@ angular.module('MyConcert', ['ionic'])
                 	console.log(answer);
                 });
 		}
+		else{alert("Debe finalizar la votación en todas las categorias primero");}
 	}
 	
 	function finishVote(){
