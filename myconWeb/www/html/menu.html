@@ -1,4 +1,4 @@
-<nav class="navbar navbar-default navbar-fixed-top">
+<nav class="navbar navbar-default navbar-fixed-top" ng-init="checkRol()">
   <div class="container-fluid">
     <div class="navbar-header">
 		<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -6,15 +6,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-		 <a><img   src="https://image.ibb.co/dE2cav/My_Concert3.png" width="95" height="70"/></a>
+		 <a><img  src="https://image.ibb.co/dE2cav/My_Concert3.png" width="95" height="70"/></a>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li><a  href="#/main">INICIO</a></li>
-          <li><a  href="#/createBillboard">CREAR CARTELERA</a></li>
-		    <li><a href="#/addBand">AÑADIR BANDAS</a></li>
-            <li><a href="#/catalogue">CATALOGO</a></li>
-		  <li class="dropdown">
+		<li ng-if="!fanaticUser&&!pomotionUser"><a  href="#/login">REGRESAR</a></li>
+        <li ng-if="fanaticUser||pomotionUser"><a  href="#/main">INICIO</a></li>
+          <li ng-if="pomotionUser" ><a  href="#/createBillboard">CREAR CARTELERA</a></li>
+		    <li ng-if="pomotionUser"><a href="#/addBand">AÑADIR BANDAS</a></li>
+            <li ng-if="pomotionUser"><a href="#/catalogue">CATALOGO</a></li>
+		  <li ng-if="fanaticUser||pomotionUser" class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" >{{userName}}
           <span class="caret"></span></a>
           <ul class="dropdown-menu">

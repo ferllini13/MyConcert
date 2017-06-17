@@ -84,8 +84,9 @@ angular.module('MyConcert', ['ionic'])
 .controller('LoginController', function($scope,$state,connectApi){
 	$scope.starPage=function(){
         localStorage.clear();
+		localStorage= null;
         document.getElementById('myForm').clear;                        
-                              };
+       };
 	
 	
     $scope.checkUser =  function(loginUserName,loginPasword){	
@@ -108,6 +109,9 @@ angular.module('MyConcert', ['ionic'])
 				else{
 					$state.go('main');
 				}
+			}
+			else if(answer.length==0){
+				alert("Usuario no registrado: revise su nombre de usuario y contraseña");
 			}
     	});
 		
@@ -195,15 +199,12 @@ angular.module('MyConcert', ['ionic'])
 	$scope.genres=[];
 	$scope.addedGenres=[];
 	$scope.genresId=[];
-	$scope.userData={generos:[],foto:"",fechaInscripcion:""};
+	$scope.userData={generos:[],foto:"",fechaInscripcion:"",password:""};
 	$scope.password={};
 	$scope.userType=true;
-	$scope.changeUserType=function(){
-		$scope.userType=!$scope.userType;
-	}
 	
-	$scope.fun =function(){
-	console.log($scope.userData)
+	$scope.changeUserType=function(){
+	$scope.userType=!$scope.userType;
 	}
 	
 	$scope.resetData=function(){
@@ -214,23 +215,34 @@ angular.module('MyConcert', ['ionic'])
 	}
 
 	$scope.addUser=function(){
-		var today= new Date();
-		console.log($scope.userData.fechaInscripcion);
-        console.log($scope.userData);
-		$scope.userData.fechaInscripcion=today.toJSON().slice(0,10);
-		$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
-		if ($scope.userType){
-			$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
-			connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
-				console.log(answer);
-			});
+		
+		if ($scope.password.contrasena1==$scope.password.contrasena2){
+			$scope.userData.password=$scope.password.contrasena1;
+			var today= new Date();
+			$scope.userData.fechaInscripcion=today.toJSON().slice(0,10);
+			$scope.userData.foto='https://s-media-cache-ak0.pinimg.com/originals/76/11/73/761173b79751f1f8a87681e676af7348.jpg';
+			if ($scope.userType){
+				$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
+				connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
+					if (answer.lenght==0){
+						document.getElementById('registro').clear;
+						$state.go('main');
+					}
+					else{alert("No se pudo Registar");}
+				});
+			}
+			else {
+				$scope.userData['identificador']= today.getTime().toString().slice(4,14);
+				connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
+					if (answer.lenght==0){
+						document.getElementById('registro').clear;
+						$state.go('main');
+					}
+					else{alert("No se pudo Registar");}
+				});
+			}
 		}
-		else {
-			$scope.userData['identificador']= today.getTime().toString().slice(4,14);
-			connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
-				console.log(answer);
-			});
-		}
+		else{alert("contraseñas no concuerdan");}
 	}
 	
 	$scope.getGenres=function(){
@@ -322,7 +334,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('addBandController', function($scope, $state,connectApi){
-	$scope.genres=[];
+	$scope.genres=[];document.getElementById('myFrom').clear;
 	$scope.addedGenres=[];
 	$scope.bandData={miembros:[],cancionesPrincipales:[],generos:[],nombre:""};
 	
@@ -370,7 +382,12 @@ angular.module('MyConcert', ['ionic'])
 	
 	$scope.addBand=function(){
 		connectApi.httpPost('InsertarBanda',$scope.bandData).then(function(answer) {
-			console.log(answer);
+			if (answer.length==0){
+				document.getElementById('myFrom').clear;
+				alert("banda Añadidad Correctamente")
+			}
+			else{alert("No se puede Agregar banda");}
+			
 		});
 	};
 })
@@ -379,38 +396,39 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('addCategoryController', function($scope, $state,connectApi){
-		var form=document.getElementById('myForm');
 	    $scope.categoryData = {};
         $scope.sendCategory =  function(NameCategory,description){
 
                 connectApi.httpPost('InsertarCategoria',$scope.categoryData).then(function(answer) {
-                	console.log(answer);
-					form.reset();
+                	if (answer.length==0){
+						alert("Categoria Agregada Correctamente");
+						document.getElementById('myForm').reset();
+					}
+					else{alert("No se puede agregar Catagoria");}
                 });
         }
             })
 
 
 .controller('menuController', function($scope, $state,$http){
-	$scope.fanaticUser=false;
-    $scope.pomotionUser=false;
 	$scope.userName=localStorage.getItem('userName');
 	var rol = localStorage.getItem('userRol');
+	$scope.fanaticUser=false;
+    $scope.pomotionUser=false;
 
-	if (rol===1){
-		$scope.fanaticUser=true;
-		$scope.pomotionUser=false;
-	}
-	else if (rol===2){
-		$scope.pomotionUser=true;
-		$scope.fanaticUser=false;
-	}
-
-	//colocar el else y algun tipo de error
 	
+	if (rol==1){
+			$scope.fanaticUser=true;
+			$scope.pomotionUser=false;
+	}
+	else if (rol==2){
+			$scope.pomotionUser=true;
+			$scope.fanaticUser=false;
+	}
 	
 	$scope.logOut=function(){
 		localStorage.clear();
+		localStorage= null;
 		$state.go('login');
 	};
 })
@@ -436,21 +454,10 @@ angular.module('MyConcert', ['ionic'])
 })
 
 
-.controller('mainController', function($scope, $state){
-	$scope.imageArray =["https://www.googleplaymusicdesktopplayer.com/img/par1.jpg","http://www.desicomments.com/wp-content/uploads/2017/04/Music-image.jpg","http://az616578.vo.msecnd.net/files/2015/12/19/6358614596527738711752945771_music.jpg","http://az616578.vo.msecnd.net/files/2017/03/05/636243282134517774-314545726_music9.jpg"];
+.controller('mainController', function($scope, $state,connectApi){
 	
-	$scope.imageArray2 =["http://darbaculture.com/wp-content/uploads/2014/10/sonar-festival-1.jpg","http://estaticos.codigonuevo.com/wp-content/uploads/2015/05/Festivales.jpg","https://www.parkapp.com/blog/wp-content/uploads/2016/05/Festivales-mayo-festify.jpg","http://static.t13.cl/images/sizes/1200x675/mgr_bild-berlin-1.jpg","https://upload.wikimedia.org/wikipedia/commons/0/0b/Electrobeach_Music_Festival_2013.jpg"];
-})
+	
 
-
-
-.controller('pbandController', function($scope, $state,connectApi){
-  $scope.items = [1, 2, 3, 4];
-  $scope.values = [];
-  
-  $scope.saveAllValues = function() {
-    alert($scope.values);
-  }
 })
 
 .controller('createBillboardController', function($scope, $state,connectApi){
