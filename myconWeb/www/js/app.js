@@ -528,17 +528,19 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('seeBillboardController', function($scope, $state,$http,connectApi){
+    $scope.sumvotes=0;
     $scope.unaCartelera = [];
+    $scope.userData={idCartelera:"10",usuarioId:localStorage.getItem('userId'),categorias:[]};
     $scope.listCategory= [];
     $scope.categorybands=[];
     $scope.categoryAct=[];
-    $scope.votes=[];
     $scope.values = [];
-    $scope.datosEnviar={};
-    $scope.getBillboard = function(){
-        
+    $scope.bandsId = [];
+    $scope.datosEnviar=[];
+    $scope.jsonEnviar={id:0,bandas:[],votos:[]}
+    
+    $scope.getBillboard = function(){    
         connectApi.httpGet('ObtenerUnaCartelera',{id:"10"}).then(function(answer) {
-		console.log(answer);
         $scope.unaCartelera=answer;
 	});
         
@@ -552,18 +554,64 @@ angular.module('MyConcert', ['ionic'])
     $scope.categorieBands=function(category){
         connectApi.httpGet('ObtenerBandasPorCategoria',{id:"10",popularidad:category.id}).then(function(answer) {
 		console.log(answer);
+        $scope.sumvotes=0;
+        $scope.values = [];
+ //       $scope.exist = false;
+        $scope.bandsId = [];
         $scope.categorybands=answer;
         $scope.categoryAct=category;
+        for(var i=0;i < $scope.categorybands.length;i++){
+            $scope.bandsId.push($scope.categorybands[i].id)
+        }
+        console.log($scope.datosEnviar.length);
+        console.log($scope.datosEnviar);
 	}); 
 	}
     
-    $scope.votesCategory=function(){
-        console.log(document.getElementById('votaciones').value);
+    $scope.votesCategory=function(){ 
+        
+//For para obtener la suma de los votos en una categoria
+        for(var i=0;i< $scope.values.length;i++){
+            if(typeof($scope.values[i])==='undefined'){
+                $scope.values[i]=0;
+            }
+            $scope.sumvotes=$scope.values[i]+$scope.sumvotes;
+        }
+        
+        console.log($scope.sumvotes);
+        
+        if($scope.sumvotes==100){
+            console.log($scope.datosEnviar)
+            $scope.jsonEnviar.id=$scope.categoryAct.id;
+            $scope.jsonEnviar.bandas=$scope.bandsId;
+            $scope.jsonEnviar.votos= $scope.values;
+            if($scope.datosEnviar.length==0){
+                console.log("solo una vez")
+                $scope.datosEnviar.push($scope.jsonEnviar);
+            }
+            else{
+                for(var i=0;i< $scope.datosEnviar.length;i++){
+                    if($scope.jsonEnviar.id==$scope.datosEnviar[i].id){
+                       $scope.datosEnviar[i].votos=$scope.jsonEnviar.votos;
+                        $scope.exist = true;
+                        break;
+                       }
+              }
+                if(!$scope.exist){
+                    $scope.datosEnviar.push($scope.jsonEnviar);
+                }
+            } 
+            console.log($scope.jsonEnviar);
+        }
+        
+        else{
+            alert("suma mayor o menor de cien dolares porfavor vuelva a votar");
+        }
+        console.log($scope.sumvotes);
+        console.log("llego");
+        console.log($scope.datosEnviar) 
+        $scope.sumvotes=0;
     }
-    
-$scope.votesCategory = function() {
-    alert($scope.values);
-  }
     
             })
 
