@@ -224,9 +224,9 @@ angular.module('MyConcert', ['ionic'])
 			if ($scope.userType){
 				$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
 				connectApi.httpPost('CrearFanatico',$scope.userData).then(function(answer) {
-					if (answer.lenght==0){
-						document.getElementById('registro').clear;
-						$state.go('main');
+					if (answer.length==0){
+						document.getElementById("registro").reset();
+						$state.go('login');
 					}
 					else{alert("No se pudo Registar");}
 				});
@@ -234,9 +234,9 @@ angular.module('MyConcert', ['ionic'])
 			else {
 				$scope.userData['identificador']= today.getTime().toString().slice(4,14);
 				connectApi.httpPost('CrearUsuarioPromocion',$scope.userData).then(function(answer) {
-					if (answer.lenght==0){
-						document.getElementById('registro').clear;
-						$state.go('main');
+					if (answer.length==0){
+						document.getElementById("registro").reset();
+						$state.go('login');
 					}
 					else{alert("No se pudo Registar");}
 				});
