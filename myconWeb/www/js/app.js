@@ -122,6 +122,7 @@ angular.module('MyConcert', ['ionic'])
     $scope.userName=localStorage.getItem('userName');//carga datos del cache
 	//se  definen variables de importancia para el manejo de los datos
 	$scope.userData={};
+	$scope.date={};
 	$scope.fanatic=false;//tipo de usuario fanitico=true
 	var rol =localStorage.getItem('userRol');
 	$scope.checked=true;
@@ -165,12 +166,18 @@ angular.module('MyConcert', ['ionic'])
 		var method;
 		if ($scope.fanatic){
 			method='ActualizarFanatico';
+			if ($scope.date.date){
+				$scope.userData.fechaNacimiento= new Date($scope.date.date).toJSON().slice(0,10);
+			}
 		}
 		else{
 			method='/ActualizarPromocion'
-		}	
+		}
+		
+		$scope.userData.foto="no foto";
+		console.log($scope.userData);
 		//http post para setear datos nuevos modificados 
-		connectApi.httpPost('method',$scope.userData).then(function(answer) {
+		connectApi.httpPost(method,$scope.userData).then(function(answer) {
 				console.log(answer);
 			});
 	}
@@ -186,9 +193,9 @@ angular.module('MyConcert', ['ionic'])
     		preview.src = reader.result;
 		}, false);
 
-  		if (file) {
-    		reader.readAsDataURL(file);
-  		}
+			if (file) {
+				reader.readAsDataURL(file);
+			}
 	}
 })
 
