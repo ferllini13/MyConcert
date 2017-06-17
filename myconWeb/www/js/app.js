@@ -743,6 +743,15 @@ angular.module('MyConcert', ['ionic'])
         console.log($scope.userData);
 		
 	}
+    
+    $scope.create=function(){
+        $scope.userData.nombre=$scope.oneBillboard.nombre;
+        $scope.userData.ubicacion=$scope.oneBillboard.ubicacion;
+        connectApi.httpPost('CrearCartelera',$scope.userData).then(function(answer) {
+                	console.log(answer);
+                });
+        
+    }
 })
 
 

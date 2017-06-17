@@ -86,6 +86,29 @@
 				<button ng-click="confirmCategories()">Confirmar</button>
 			</div>
 		  </div>
+          
+          <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label class="col-lg-3 control-label">Comida:</label>
+                    <div class="col-lg-8">
+                    <textarea type="text" rows="5" required="" placeholder="Comida" ng-model="userData.comida"></textarea>
+                </div>
+                </div>
+            <div class="form-group">
+            <label class="col-lg-3 control-label">Servicios:</label>
+            <div class="col-lg-8">
+                <textarea type="text" rows="5" required="" placeholder="Servicios" ng-model="userData.servicios"></textarea>
+            </div>
+                </div>
+        <div class="form-group">
+            <label class="col-lg-3 control-label">Transporte:</label>
+            <div class="col-lg-8">
+                <textarea type="text" rows="5" required="" placeholder="Transporte" ng-model="userData.transporte"></textarea>
+            </div>
+            </div>
+          </form>
+          
+          
 		  
 		   <div class="form-group">
           <label class="col-md-3 control-label"></label>
