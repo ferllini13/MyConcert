@@ -59,7 +59,7 @@ angular.module('MyConcert', ['ionic'])
             })
     
     $stateProvider.state('seeBillboard', {
-                url:'/seeBillboard',
+                url:'/seeBillboard/:billboardId',
                 controller: 'seeBillboardController',
                 templateUrl:'html/verCartelera.html'
             })
@@ -135,7 +135,7 @@ angular.module('MyConcert', ['ionic'])
 		else{
 			method='/ObtenerPromocion'
 		}	
-		connectApi.httpGet('ObtenerFanatico',{id:localStorage.getItem('userId')}).then(function(answer) {
+		connectApi.httpGet(method,{id:localStorage.getItem('userId')}).then(function(answer) {
 			$scope.userData=answer[0];
 			console.log($scope.userData);
 			updateCheck();
@@ -158,7 +158,16 @@ angular.module('MyConcert', ['ionic'])
 	
 	
 	$scope.updateProfile=function(){
-		//meter post aqui
+		var method;
+		if ($scope.fanatic){
+			method='ActualizarFanatico';
+		}
+		else{
+			method='/ActualizarPromocion'
+		}	
+		connectApi.httpPost('method',$scope.userData).then(function(answer) {
+				console.log(answer);
+			});
 	}
 	
 	
@@ -309,7 +318,6 @@ angular.module('MyConcert', ['ionic'])
                             console.log(answer);
         });
     }
-    
     })
 
 
@@ -453,7 +461,7 @@ angular.module('MyConcert', ['ionic'])
 	$scope.bands=[];
 	$scope.addedBands=[];
 	$scope.activeCategory;
-	$scope.addedCategories=[];
+	$scope.addedCategories=[];  
 	var addedBandsIds=[];
 	
 	$scope.getCategories=function(){
@@ -493,7 +501,6 @@ angular.module('MyConcert', ['ionic'])
 		$scope.addedBands.push(band);
 		$scope.bands.splice($scope.bands.indexOf(band),1);
 		addedBandsIds.push(band.id);
-		
 	}
 	
 	$scope.confirmCategories=function(){
@@ -516,8 +523,7 @@ angular.module('MyConcert', ['ionic'])
         console.log($scope.userData);
         connectApi.httpPost('CrearCartelera',$scope.userData).then(function(answer) {
                 	console.log(answer);
-                });
-        
+                });   
     }
     
     
@@ -539,93 +545,109 @@ angular.module('MyConcert', ['ionic'])
             })
 
 
-.controller('seeBillboardController', function($scope, $state,$http,connectApi){
-    $scope.sumvotes=0;
-    $scope.unaCartelera = [];
-    $scope.userData={idCartelera:"10",usuarioId:localStorage.getItem('userId'),categorias:[]};
-    $scope.listCategory= [];
-    $scope.categorybands=[];
-    $scope.categoryAct=[];
-    $scope.values = [];
-    $scope.bandsId = [];
-    $scope.datosEnviar=[];
-    $scope.jsonEnviar={id:0,bandas:[],votos:[]}
+.controller('seeBillboardController', function($scope, $state,$stateParams,connectApi){
+	var billboardToSee= $stateParams.billboardId;
+	document.getElementById('file').onchange=function() {previewFile()};
+    $scope.Billboard = {};
+    $scope.BillboardData={idCartelera:billboardToSee,usuarioId:localStorage.getItem('userId'),categorias:[]};
+    $scope.categories= [];
+ 	$scope.selectedCategory;
+    $scope.bands = [];
+	$scope.bandsId=[];
+	$scope.votes = [];
+	$scope.total=100;
+	
     
     $scope.getBillboard = function(){    
-        connectApi.httpGet('ObtenerUnaCartelera',{id:"10"}).then(function(answer) {
-        $scope.unaCartelera=answer;
-	});
-        
-        
-        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:"10"}).then(function(answer) {
-		console.log(answer);
-        $scope.listCategory=answer;
-	});       
+        connectApi.httpGet('ObtenerUnaCartelera',{id:billboardToSee}).then(function(answer) {
+          $scope.Billboard=answer[0];
+		});
+        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:billboardToSee}).then(function(answer) {
+			console.log(answer);
+        	$scope.categories=answer;
+			$scope.categorieBands($scope.categories[0]);
+		});
+		 
     }
     
     $scope.categorieBands=function(category){
-        connectApi.httpGet('ObtenerBandasPorCategoria',{id:"10",popularidad:category.id}).then(function(answer) {
-		console.log(answer);
-        $scope.sumvotes=0;
-        $scope.values = [];
- //       $scope.exist = false;
-        $scope.bandsId = [];
-        $scope.categorybands=answer;
-        $scope.categoryAct=category;
-        for(var i=0;i < $scope.categorybands.length;i++){
-            $scope.bandsId.push($scope.categorybands[i].id)
-        }
-        console.log($scope.datosEnviar.length);
-        console.log($scope.datosEnviar);
-	}); 
+		if (category==$scope.selectedCategory&&$scope.total==100){
+				$scope.selectedCategory=null;
+			}	
+		else if($scope.total!=0&&$scope.total!=100){
+			alert("debe terminar de botar en esta categoria");
+		}
+		else{
+			$scope.total=100;
+			$scope.votes = [];
+			$scope.bandsId = [];
+			$scope.selectedCategory=category;
+			connectApi.httpGet('ObtenerBandasPorCategoria',{id:billboardToSee,popularidad:category.id}).then(function(answer) {
+					console.log(answer);
+					$scope.bands=[];
+					$scope.bands=answer;
+					for(var i=0;i < $scope.bands.length;i++){
+            			$scope.bandsId.push($scope.bands[i].id);
+						$scope.votes.push(0);
+        			}
+				});
+		}
 	}
-    
-    $scope.votesCategory=function(){ 
-        
-//For para obtener la suma de los votos en una categoria
-        for(var i=0;i< $scope.values.length;i++){
-            if(typeof($scope.values[i])==='undefined'){
-                $scope.values[i]=0;
-            }
-            $scope.sumvotes=$scope.values[i]+$scope.sumvotes;
-        }
-        
-        console.log($scope.sumvotes);
-        
-        if($scope.sumvotes==100){
-            console.log($scope.datosEnviar)
-            $scope.jsonEnviar.id=$scope.categoryAct.id;
-            $scope.jsonEnviar.bandas=$scope.bandsId;
-            $scope.jsonEnviar.votos= $scope.values;
-            if($scope.datosEnviar.length==0){
-                console.log("solo una vez")
-                $scope.datosEnviar.push($scope.jsonEnviar);
-            }
-            else{
-                for(var i=0;i< $scope.datosEnviar.length;i++){
-                    if($scope.jsonEnviar.id==$scope.datosEnviar[i].id){
-                       $scope.datosEnviar[i].votos=$scope.jsonEnviar.votos;
-                        $scope.exist = true;
-                        break;
-                       }
-              }
-                if(!$scope.exist){
-                    $scope.datosEnviar.push($scope.jsonEnviar);
-                }
-            } 
-            console.log($scope.jsonEnviar);
-        }
-        
-        else{
-            alert("suma mayor o menor de cien dolares porfavor vuelva a votar");
-        }
-        console.log($scope.sumvotes);
-        console.log("llego");
-        console.log($scope.datosEnviar) 
-        $scope.sumvotes=0;
-    }
-    
-            })
+	
+	$scope.clickVote =function(band){
+		if ($scope.total==0){
+			alert("Ya gasto sus 100$");
+			finishVote();
+		}
+		else{
+			var index=$scope.bandsId.indexOf(band.id);
+			$scope.votes[index]=$scope.votes[index]+10;
+			$scope.total=$scope.total-10;
+			finishVote();
+		}
+	}
+	
+	$scope.sendVotes=function(){
+		if ($scope.categories.length===0){
+			 connectApi.httpPost('RealizarVotacion',$scope.BillboardData).then(function(answer) {
+                	console.log(answer);
+                });
+		}
+	}
+	
+	function finishVote(){
+		if ($scope.total==0){
+		$scope.BillboardData.categorias.push({bandas:$scope.bandsId,votos:$scope.votes});
+
+		
+		for (i=0;i<$scope.categories.length;i++){
+			console.log($scope.categories[i].id);
+			if ($scope.categories[i].id===$scope.selectedCategory.id){
+				$scope.categories.splice(i,1);
+				$scope.selectedCategory=null
+				$scope.votes = [];
+				$scope.bands=[];
+				$scope.bandsId=[];;
+				$scope.total=100;
+				alert("votacion de esta categoria lista");	
+			}
+		}
+	}
+	}
+	
+	function previewFile() {
+  		var preview = document.getElementById('pic');
+  		var file    = document.getElementById('file').files[0];
+  		var reader  = new FileReader();
+  		reader.addEventListener("load", function () {
+    		preview.src = reader.result;
+		}, false);
+
+  		if (file) {
+    		reader.readAsDataURL(file);
+  		}
+	}
+         })
 
 
 .controller('seeFestivalController', function($scope, $state, $stateParams, $http,connectApi){

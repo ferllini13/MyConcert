@@ -1,13 +1,9 @@
 <div menu ></div>
 <div class="container scroll" style="padding-top: 80px;" ng-init="getBillboard()">
-    <div class="text-center">
-        <div class="col-md-3"></div>
-        <div class="text-center letra col-md-6" ng-repeat="cartelera in unaCartelera">
-            <h1 ALIGN="center">{{cartelera.nombre}}</h1>
-        </div>
-    </div> 
-    <div class="col-md-3 col-sm-6 col-xs-12"></div>
-        <div class="col-md-4 col-sm-6 col-xs-12">
+<h1 ALIGN="center">{{Billboard.nombre}}</h1><br>
+  <div class="row">
+    <!-- left column -->
+    <div class="col-md-4 col-sm-6 col-xs-12">
 		<br>
 		<br>
       <div class="text-center">  
@@ -16,79 +12,98 @@
         <input type="file" id="file" class="text-center center-block well well-sm">
       </div>		
     </div>
-    
-    
-    
-<form class="form-horizontal" role="form">
-    
-    
-     <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
+	
+	
+    <div class="col-md-8 col-sm-6 col-xs-12 personal-info">	
+		
+      <form class="form-horizontal" role="form">
+        <div class="form-group">
+          <label class="col-lg-3 control-label">País</label>
+          <div class="col-lg-8">
+            {{Billboard.nombre1}}
+          </div>
+        </div>
 
-          <div class="col-md-8" ng-repeat="cartelera in unaCartelera"> 
+          
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Ubicación:</label>
+          <div class="col-lg-8">
+            	{{Billboard.ubicacion}}
+		</div>
+        </div>
+          
+          
+        <div class="form-group">
+          <label class="col-lg-3 control-label">Fecha final festival:</label>
+          <div class="col-lg-8">
+			<label>
+            	{{Billboard.diaDeInicio}}
+			</label>  
+		</div>
+        </div>
+		
+		  
 		 <div class="form-group">
-          <label>Pais: {{cartelera.nombre1}}</label>  
+          <label class="col-lg-3 control-label">Fecha final votacion:</label>
+          <div class="col-lg-8">
+			<label>
+            	{{Billboard.diaFinalVotaciones}}
+			</label>  
+		</div>
         </div>
-		<div class="form-group">
-          <label >Ubicación: {{cartelera.ubicacion}}</label>
-        </div> 
-          
-        <div class="form-group">
-          <label >Fecha inicio festival: {{cartelera.diaDeInicio}}</label>
-        </div> 
-          
-        <div class="form-group">
-          <label >Fecha final festival:{{cartelera.diaFinal}}</label>
-        </div>
-          
-        <h2>Votaciones</h2>  
-              
-        <div class="form-group">
-          <label >Fecha final votacion: {{cartelera.diaFinalVotaciones}}</label>
-        </div>
-     </div>     
-    
-    </div>
-
-        <div class="container panel panel-default col-lg-4">
+        
+        <h2>Asignar Categorías y Bandas</h2>
+		<div class="form-group" >
+          	<label class="col-lg-12 control-label"></label>
+          	<div class="container panel panel-default col-lg-5">
 				<div class="panel-heading">
 				<input type="search"
-             			placeholder="Busca un Categoria"
+             			placeholder="Busca una Categoria"
              			ng-model="search"
              			ng-change="scrollTop()"  
                 		class="full-width white-background">
 				</div>
-    		<div class="panel-body" style="overflow:scroll; height:180px;">
+    		<div class="panel-body" style="overflow:scroll; height:220px;">
             <ion-list class="list-group">
-      		<ion-item class="list-group-item" ng-repeat="category in listCategory | filter:search" ng-click="categorieBands(category)" >
+      		<ion-item class="list-group-item" ng-repeat="category in categories | filter:search" ng-click="categorieBands(category)" >
 			<h3 ALIGN="center" >{{category.nombre}}</h3>
 			</ion-item>
     	</ion-list>
-            </div>
-        </div>
-    
-        <div class="container panel panel-default col-lg-4">
+			</div>
+			</div>
+			<div ng-if="selectedCategory" class="container panel panel-default col-lg-6">
 				<div class="panel-heading">
 					<input type="search"
-             			placeholder="Busca una Banda"
+             			placeholder="Busca un Género Agregado"
              			ng-model="search2"
              			ng-change="scrollTop()"  
                 		class="full-width white-background">
 				</div>
-             <h5 ALIGN="center">{{categoryAct.nombre}}</h5>
-    			<div  class="panel-body " style="overflow:scroll; height:140px;">
+				<label> <h4>Categoría {{selectedCategoty.nombre}}   (Restantes: ${{total}})</h4></label>
+    			<div  class="panel-body " style="overflow:scroll; height:175px;">
             		<ion-list class="list-group">
-						<ion-item class="list-group-item row" ng-repeat="band in categorybands | filter:search2">
-							<a style="color:black;" href="#/seeBand/{{band.id}}"><h3>{{band.nombre}}</h3></a>
-
-                            	<input type="number" value="0" max="100" min="0" step="1" maxlength="3" size="3" ng-model="values[$index]">
-                                
-
-                            <h3>Total: {{band.vote}}</h3>
+						<ion-item class="list-group-item" ng-repeat="band in bands | filter:search2" ng-click="addBands(band)" >
+							<a href="#/seeBand/{{band.id}}"><h2 ALIGN="center" >{{band.nombre}}</h2></a>
+							<div class="columns">
+							<div><span ng-click="clickVote(band)" class="glyphicon glyphicon-usd"></span> <label ALIGN="right">Total a Agregar: {{votes[$index]}},Total General: {{band.voto}}</label> </div>	
+							</div>
 						</ion-item>
     				</ion-list>
 			</div>
-            <button ng-click="votesCategory()">Confirmar</button>
-			</div>    
-              
-                </form>
+			</div>
+		  </div>
+		  
+		   <div class="form-group">
+          <label class="col-md-3 control-label"></label>
+          <div class="col-md-8">
+            <input class="btn btn-primary" value="Terminar de Votar" ng-click="sendVotes()" type="submit">
+            <span></span>
+          </div>
+        </div>	  
+          
+      </form>
+    </div>  
+	
 </div>
+    
+    
