@@ -697,7 +697,7 @@ angular.module('MyConcert', ['ionic'])
 .controller('createFestivalController', function($scope, $state, $stateParams,connectApi){
     var billboardBef= $stateParams.billboardId;
     $scope.oneFestival=[];
-    $scope.userData={nombre:"",ubicacion:"",diaInicio:"",diaFinal:"",fechaFinal:"",servicios: "",transporte:"",comida:"",foto:"",promocionId:localStorage.getItem('userId'),pais:"",categorias:[]};
+    $scope.userData={nombre:"",ubicacion:"",fechaInicio:"",fechaFinal:"",foto:"",promotorId:localStorage.getItem('userId'),pais:"",servicio:"",transporte:"",comida:"",categorias:[]};
     $scope.categories=[];
     $scope.bands=[];
     $scope.addedBands=[];
@@ -761,6 +761,18 @@ angular.module('MyConcert', ['ionic'])
         console.log($scope.userData);
 		
 	}
+    
+    $scope.create=function(){
+        $scope.userData.nombre=$scope.oneBillboard.nombre;
+        $scope.userData.ubicacion=$scope.oneBillboard.ubicacion;
+        $scope.userData.fechaInicio=$scope.oneBillboard.diaDeInicio;
+        $scope.userData.fechaFinal=$scope.oneBillboard.diaFinal;
+        $scope.userData.pais=$scope.oneBillboard.nombre1;
+        console.log($scope.userData);
+      connectApi.httpPost('CrearFestival',$scope.userData).then(function(answer) {
+                	console.log(answer);
+                });
+    }
 })
 
 
