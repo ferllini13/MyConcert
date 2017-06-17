@@ -4,7 +4,7 @@
 	<h2 ALIGN="center" class="col-sm-5" >FESTIVALES</h2>
 
 	<div class="container">
-  			<div class="col-sm-6">
+  			<div class="col-md-6">
 				<ion-slide-box 
 					show-pager="true" 
 					does-continue="true" 
@@ -15,16 +15,16 @@
 					on-slide-changed="slideHasChanged($index, 'slidebox1')">
 
 					<ion-slide ng-repeat="billboard in billboards">	
-							<a href="#/seeBillboard/{{billboard.id}}"><img ng-src={{billboard.foto}} alt="" height="300" width="auto">
+							<a href="#/seeBillboard/{{billboard.id}}"><img ng-src={{billboard.foto}} alt="" height="300" width="500">
 							</a>
 							<h3>{{billboard.nombre}}</h3>
 							
 					</ion-slide>
 				</ion-slide-box>
 			</div>
+		<div class="col-md-1"></div>
 
-
-		<div class="col-sm-6">
+		<div class="col-md-6">
 				<ion-slide-box 
 					  show-pager="true" 
 					  does-continue="true" 

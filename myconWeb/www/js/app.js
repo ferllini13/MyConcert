@@ -2,115 +2,113 @@ var webSeviceIp = 'http://webservicemyconcert.azurewebsites.net/WebService1.asmx
 
 angular.module('MyConcert', ['ionic'])
 
-
+//Definicion general de las vistas, con su respectiva url y html
 .config( function ( $stateProvider , $urlRouterProvider ){
     
-	$stateProvider.state('login', {
+	$stateProvider.state('login', {//vista de login
                 url:'/login',
                 controller: 'LoginController',
                 templateUrl:'html/login.html'
             })
-    $stateProvider.state('register', {
+    $stateProvider.state('register', {//vista de registro
                 url:'/register',
                 controller: 'RegisterController',
                 templateUrl:'html/registro.html'
             })
-    $stateProvider.state('main', {
+    $stateProvider.state('main', {//vista pagina principal
                 url:'/main',
                 controller: 'mainController',
                 templateUrl:'html/inicio.html'
             })
-	$stateProvider.state('pband', {
-                url:'/pband',
-                controller: 'pbandController',
-                templateUrl:'html/banda.html'
-            })
-	$stateProvider.state('seeBand', {
+	$stateProvider.state('seeBand', {//vista para ver una banda, url resive el id de la banda
                 url:'/seeBand/:bandId',
                 controller: 'SeeBandController',
                 templateUrl:'html/verBanda.html'
             })
-    $stateProvider.state('addBand', {
+    $stateProvider.state('addBand', {//vista para añadir una banda
                 url:'/addBand',
                 controller: 'addBandController',
                 templateUrl:'html/añadirBanda.html'
             })
-    $stateProvider.state('addCategory', {
+    $stateProvider.state('addCategory', {//vista para añadir una categoria
                 url:'/addCategory',
                 controller: 'addCategoryController',
                 templateUrl:'html/añadirCategoria.html'
             })
     
-	$stateProvider.state('catalogue', {
+	$stateProvider.state('catalogue', {//vista para ver todo el catalogo de bandas
                 url:'/catalogue',
                 controller: 'catalogueController',
                 templateUrl:'html/catalogo.html'
             })
-	$stateProvider.state('profile', {
+	$stateProvider.state('profile', {//vista de perfil
                 url:'/profile',
                 controller: 'profileController',
                 templateUrl:'html/perfil.html'
             })
     
-    $stateProvider.state('createBillboard', {
+    $stateProvider.state('createBillboard', {//vista para crear una cartelera
                 url:'/createBillboard',
                 controller: 'createBillboardController',
                 templateUrl:'html/crearCartelera.html'
             })
     
-    $stateProvider.state('seeBillboard', {
+    $stateProvider.state('seeBillboard', {//vista para ver una cartelera ya creada
                 url:'/seeBillboard/:billboardId',
                 controller: 'seeBillboardController',
                 templateUrl:'html/verCartelera.html'
             })
     
-    $stateProvider.state('seeFestival', {
+    $stateProvider.state('seeFestival', {//vista para ver un festival ya creado
                 url:'/seeFestival/:festivalid',
                 controller: 'seeFestivalController',
                 templateUrl:'html/verFestival.html'
             })
     
-    $stateProvider.state('createFestival', {
+    $stateProvider.state('createFestival', {//vista para crear un festival
                 url:'/createFestival/:billboardId',
                 controller: 'createFestivalController',
                 templateUrl:'html/crearFestival.html'
             })
     
     
-      $urlRouterProvider.otherwise('/login');
+      $urlRouterProvider.otherwise('/login');//si no se seleeciona una url permitida, el defecto es el login
 })
    
-
+//controlador de la vista login
 .controller('LoginController', function($scope,$state,connectApi){
-	$scope.starPage=function(){
+	$scope.starPage=function(){//condiciones iniciales
         localStorage.clear();
 		localStorage= null;
         document.getElementById('myForm').clear;                        
        };
 	
 	
-    $scope.checkUser =  function(loginUserName,loginPasword){	
+    $scope.checkUser =  function(loginUserName,loginPasword){//verificacion de la existencia de un usuario	
 		var method="VerificarLogeo";
 		var msj={userName:loginUserName,password:loginPasword};
 	
+		//metod de http angular
 		connectApi.httpGet(method,msj).then(function(answer) {
 			console.log(answer)
       		if (answer.length!=0){
+				//se llena el cache con los datos del usuario retornados por la base.
                 localStorage.clear();
+				localStorage= null;
 				localStorage.setItem('userName', loginUserName);
 				localStorage.setItem('userId', answer[0].id);
 				localStorage.setItem('userRol', answer[0].rolID);
 				console.log("rol id");
 				console.log(answer[0].id);
 				localStorage.setItem('userState', answer[0].activo);
-				if (answer[0].activo==false){
+				if (answer[0].activo==false){//condiciones de verificacion de estado, activo, inactivo
 					$state.go('profile')	
 				}
 				else{
 					$state.go('main');
 				}
 			}
-			else if(answer.length==0){
+			else if(answer.length==0){//no hubo coincidencia con la base de datos
 				alert("Usuario no registrado: revise su nombre de usuario y contraseña");
 			}
     	});
@@ -118,49 +116,51 @@ angular.module('MyConcert', ['ionic'])
 	};
 })
 
-
+//controladro de la vista de perfil
 .controller('profileController', function($scope, $state,$http,connectApi){
-	document.getElementById('file').onchange=function() {previewFile()};
-    $scope.userName=localStorage.getItem('userName');
+	document.getElementById('file').onchange=function() {previewFile()};//conrolador de la preview de la imagen de perfil
+    $scope.userName=localStorage.getItem('userName');//carga datos del cache
+	//se  definen variables de importancia para el manejo de los datos
 	$scope.userData={};
-	$scope.fanatic=false;
+	$scope.fanatic=false;//tipo de usuario fanitico=true
 	var rol =localStorage.getItem('userRol');
 	$scope.checked=true;
 	
-	if (rol==1){
+	if (rol==1){//verificacion de permisiso
 		$scope.fanatic=true;	
 	}else {$scope.fanatic=false;}
 	
-	$scope.getUserData= function(){
+	
+	$scope.getUserData= function(){//solicitud datos del usuario al servidor 
 		var method;
 		if ($scope.fanatic){
 			method='ObtenerFanatico';
 		}
 		else{
 			method='/ObtenerPromocion'
-		}	
+		}
+		//http.get de los datos
 		connectApi.httpGet(method,{id:localStorage.getItem('userId')}).then(function(answer) {
-			$scope.userData=answer[0];
-			console.log($scope.userData);
+			$scope.userData=answer[0];//almacenamiento de datos recibidos para su uso
 			updateCheck();
 		});
 	}
 	
 	
-
+	//actualiza el estado del usuario
 	var updateCheck=function(){
 		if ($scope.userData.activo===true){
 			$scope.checked=true;
 		}else{$scope.checked=false;}
 	}
-	
+	//actualiza el estado del usuario en caso de desactivarse
 	$scope.updateActive=function(boolActive){
 		$scope.userData.activo=boolActive;
 		updateCheck();
 	}
 	
 	
-	
+	//actualiza los datos de la base de datos
 	$scope.updateProfile=function(){
 		var method;
 		if ($scope.fanatic){
@@ -169,12 +169,13 @@ angular.module('MyConcert', ['ionic'])
 		else{
 			method='/ActualizarPromocion'
 		}	
+		//http post para setear datos nuevos modificados 
 		connectApi.httpPost('method',$scope.userData).then(function(answer) {
 				console.log(answer);
 			});
 	}
 	
-	
+	//actualiza el preview de la foto
 	function previewFile() {
   		var preview = document.getElementById('pic');
   		var file    = document.getElementById('file').files[0];
@@ -189,12 +190,12 @@ angular.module('MyConcert', ['ionic'])
     		reader.readAsDataURL(file);
   		}
 	}
-	
-	
 })
 
+//controlador de la vista de registro
 .controller('RegisterController', function($scope, $state,connectApi){
-	document.getElementById('file').onchange=function() {previewFile()};
+	document.getElementById('file').onchange=function() {previewFile()};//para actualizar preview de la vista
+	//seteo de variables para almacenamiento y manejo de datos
 	$scope.date={};
 	$scope.genres=[];
 	$scope.addedGenres=[];
@@ -278,8 +279,10 @@ angular.module('MyConcert', ['ionic'])
 	}
 })
 
+
+//controlador de la vista de ver banda
 .controller('SeeBandController', function($scope,$state,$stateParams,$sce,connectApi){
-	var bandToSee= $stateParams.bandId;
+	var bandToSee= $stateParams.bandId;//if a visualizar pasado por parametro
     $scope.nameband="";
     $scope.bandquali="";
     $scope.unaBanda = [];
@@ -333,6 +336,7 @@ angular.module('MyConcert', ['ionic'])
     })
 
 
+//controlador de la vista de anañdir banda
 .controller('addBandController', function($scope, $state,connectApi){
 	$scope.genres=[];document.getElementById('myFrom').clear;
 	$scope.addedGenres=[];
@@ -394,7 +398,7 @@ angular.module('MyConcert', ['ionic'])
 
 
 
-
+//controlador de la vista de añadir catagoria
 .controller('addCategoryController', function($scope, $state,connectApi){
 	    $scope.categoryData = {};
         $scope.sendCategory =  function(NameCategory,description){
@@ -409,42 +413,45 @@ angular.module('MyConcert', ['ionic'])
         }
             })
 
-
+//controlador del .service de menu
 .controller('menuController', function($scope, $state,$http){
+	//carga los datos en cache del usuario logueado
 	$scope.userName=localStorage.getItem('userName');
 	var rol = localStorage.getItem('userRol');
 	$scope.fanaticUser=false;
     $scope.pomotionUser=false;
 
 	
-	if (rol==1){
+	if (rol==1){//verifica seguridad y setea las variables de restriccion, usuario fanatico
 			$scope.fanaticUser=true;
 			$scope.pomotionUser=false;
 	}
-	else if (rol==2){
+	else if (rol==2){//verifica seguridad y setea las variables de restriccion, usuario promocion
 			$scope.pomotionUser=true;
 			$scope.fanaticUser=false;
 	}
 	
-	$scope.logOut=function(){
+	$scope.logOut=function(){//cierra sesion y se hacegura de borrar el cache de los datos del usuario
 		localStorage.clear();
 		localStorage= null;
 		$state.go('login');
+		location.reload();
 	};
 })
 
 
+//controlador de la vista de catalogo
 .controller('catalogueController', function($scope, $state,connectApi){
 	$scope.isEmpty;
 	$scope.catalogue=[];
 	$scope.getBands =  function(){	
-	
-	connectApi.httpGet('ObtenerTodosFestivales()',"").then(function(answer) {
+	//carga todas las bandas
+	connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
 		console.log(answer);
 		$scope.catalogue=answer;
 		
 		if ($scope.catalogue.length!=0){
-		$scope.isEmpty=false;
+		$scope.isEmpty=false;//describe us es vacio
 		}
 		else{$scope.isEmpty=true;}
  
@@ -453,16 +460,16 @@ angular.module('MyConcert', ['ionic'])
 	};
 })
 
-
+//controlor de la pantalla de inicio
 .controller('mainController', function($scope, $state,connectApi){
 	$scope.billboards=[];
 	$scope.festivals=[];
-	
+	//se cargan los datos de festivales y carteleras
 	$scope.getAllData = function(){
-		connectApi.httpGet('ObtenerTodosFestivales',"").then(function(answer) {
+		connectApi.httpGet('ObtenerTodosFestivales',"").then(function(answer) {//get festivales
 			$scope.festivals=answer;
 		});
-		connectApi.httpGet('ObtenerTodasCarteleras',"").then(function(answer) {
+		connectApi.httpGet('ObtenerTodasCarteleras',"").then(function(answer) {//get carteleras
 			$scope.billboards=answer;
 		});
 		
@@ -471,6 +478,7 @@ angular.module('MyConcert', ['ionic'])
 	}
 })
 
+//controlador de la vista de crear cartelera
 .controller('createBillboardController', function($scope, $state,connectApi){
     document.getElementById('file').onchange=function() {previewFile()};
     $scope.date={};
@@ -562,7 +570,7 @@ angular.module('MyConcert', ['ionic'])
 	}
             })
 
-
+//controlador de la vista de ver cartelera
 .controller('seeBillboardController', function($scope, $state,$stateParams,connectApi){
 	var billboardToSee= $stateParams.billboardId;
 	document.getElementById('file').onchange=function() {previewFile()};
@@ -669,16 +677,19 @@ angular.module('MyConcert', ['ionic'])
          })
 
 
+//controlador de la vista de ver festival
 .controller('seeFestivalController', function($scope, $state, $stateParams, $http,connectApi){
-    var festToSee= $stateParams.festivalid;
+    var festToSee= $stateParams.festivalid;//id pasado por parametro
     $scope.oneFestival=[];
     $scope.categoriesFes=[];
     $scope.bandFest=[];
+	//se cargan los datos del fesival
     $scope.getFestival =function(){
         connectApi.httpGet('ObtenerDatosFestival',{id:festToSee}).then(function(answer) {
         $scope.oneFestival=answer[0];
         console.log($scope.oneFestival);
 	});  
+	//se cargan los datos del festival	
         connectApi.httpGet('ObtenerCategoriasFestival',{id:festToSee}).then(function(answer) {
         $scope.categoriesFes=answer;
         console.log($scope.categoriesFes);
@@ -694,7 +705,7 @@ angular.module('MyConcert', ['ionic'])
     }
 })
 
-
+//controlador de la vista de de crear festival
 .controller('createFestivalController', function($scope, $state, $stateParams,connectApi){
     var billboardBef= $stateParams.billboardId;
     $scope.oneFestival=[];
@@ -777,7 +788,7 @@ angular.module('MyConcert', ['ionic'])
 })
 
 
-
+//directive que permite la funcionalidad del menu
 .directive('menu', function() {
  	return {
     	templateUrl: 'html/menu.html',
@@ -785,13 +796,17 @@ angular.module('MyConcert', ['ionic'])
 	};
 })
 
+
+//sevice que sobrecarga http con el fin de hacerlo accesible desde todos los comtroladores
 .service('connectApi',function($http){
+	//implementacion del gttp.get
 	this.httpGet= function(method,requestJson){
 		var getPromise=$http.get(webSeviceIp + method+'?frase='+JSON.stringify(requestJson)).then(function (response){
 	    	return angular.fromJson(response.data.substring(73, response.data.length - 9));
 		});
 		return getPromise;
 	},
+	//implementacion del http.post
 	this.httpPost= function(method,requestJson){
 		var postPromise=$http.post(webSeviceIp+method, {frase:JSON.stringify(requestJson)}).then(function(response) {
             console.log(response);
