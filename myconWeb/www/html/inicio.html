@@ -1,47 +1,47 @@
 <div menu></div>
-<div class="scroll" style="padding-top: 80px;">
+<div class="scroll" style="padding-top: 80px;" ng-init="getAllData()"> 
 	<div class="container">
-		<div class="col-sm-2 sidenav">
-		</div>
-  			<div class="col-sm-8">
+  			<div class="col-sm-6">
 				<ion-slide-box 
 					show-pager="true" 
 					does-continue="true" 
 					pager-click="true" 
 					auto-play="true" 
-					slide-interval="4000"
+					slide-interval="1500"
 					delegate-handle="slidebox1"  
 					on-slide-changed="slideHasChanged($index, 'slidebox1')">
 
-					<ion-slide ng-repeat="image in imageArray">
-							<img ng-src={{image}} alt="" height="500" width="auto">
+					<ion-slide ng-repeat="billboard in billboards">
+						<div>
+							<a href="#/seeBillboard/{{billboard.id}}"><img ng-src={{billboard.foto}} alt="" height="300" width="auto"></a>
+							
+						</div>
 					</ion-slide>
 				</ion-slide-box>
 			</div>
-		<div class="col-sm-2 sidenav">
-		</div>
 		</div>
 	<br>
 	<br>
-	<div class="container">
-		<div class="col-sm-2 sidenav">
+	<br>
+	<div class="container section">
+		<div class="col-sm-6 sidenav">
 		</div>
-		<div class="col-sm-8">
+		<div class="col-sm-6">
 				<ion-slide-box 
 					  show-pager="true" 
 					  does-continue="true" 
 					  pager-click="true" 
 					  auto-play="true" 
-					  slide-interval="4000"
+					  slide-interval="1500"
 							   delegate-handle="slidebox2"  
 					on-slide-changed="slideHasChanged($index, 'slidebox2')">
 
-					<ion-slide ng-repeat="image in imageArray2">
-							<img ng-src={{image}} alt="" height="500" width="auto">
+					<ion-slide ng-repeat="festival in festivals">
+						<div>
+							<a href="#/seeFestival/{{festival.id}}"><img ng-src={{festival.foto}} alt="" height="300" width="500"></a>
+						</div>	
 					</ion-slide>
 				</ion-slide-box>
-		</div>
-		<div class="col-sm-2 sidenav">
 		</div>
 	</div>	
 </div>

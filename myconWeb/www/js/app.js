@@ -439,7 +439,7 @@ angular.module('MyConcert', ['ionic'])
 	$scope.catalogue=[];
 	$scope.getBands =  function(){	
 	
-	connectApi.httpGet('ObtenerTodasBandas',"").then(function(answer) {
+	connectApi.httpGet('ObtenerTodosFestivales()',"").then(function(answer) {
 		console.log(answer);
 		$scope.catalogue=answer;
 		
@@ -455,9 +455,20 @@ angular.module('MyConcert', ['ionic'])
 
 
 .controller('mainController', function($scope, $state,connectApi){
+	$scope.billboards=[];
+	$scope.festivals=[];
 	
-	
-
+	$scope.getAllData = function(){
+		connectApi.httpGet('ObtenerTodosFestivales',"").then(function(answer) {
+			$scope.festivals=answer;
+		});
+		connectApi.httpGet('ObtenerTodasCarteleras',"").then(function(answer) {
+			$scope.billboards=answer;
+		});
+		
+		
+		
+	}
 })
 
 .controller('createBillboardController', function($scope, $state,connectApi){
