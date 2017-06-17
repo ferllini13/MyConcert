@@ -64,6 +64,18 @@ angular.module('MyConcert', ['ionic'])
                 templateUrl:'html/verCartelera.html'
             })
     
+    $stateProvider.state('seeFestival', {
+                url:'/seeFestival/:festivalid',
+                controller: 'seeFestivalController',
+                templateUrl:'html/verFestival.html'
+            })
+    
+    $stateProvider.state('createFestival', {
+                url:'/createFestival/:billboardId',
+                controller: 'createFestivalController',
+                templateUrl:'html/crearFestival.html'
+            })
+    
     
       $urlRouterProvider.otherwise('/login');
 })
@@ -614,6 +626,102 @@ angular.module('MyConcert', ['ionic'])
     }
     
             })
+
+
+.controller('seeFestivalController', function($scope, $state, $stateParams, $http,connectApi){
+    var festToSee= $stateParams.festivalid;
+    $scope.oneFestival=[];
+    $scope.categoriesFes=[];
+    $scope.bandFest=[];
+    $scope.getFestival =function(){
+        connectApi.httpGet('ObtenerDatosFestival',{id:festToSee}).then(function(answer) {
+        $scope.oneFestival=answer[0];
+        console.log($scope.oneFestival);
+	});  
+        connectApi.httpGet('ObtenerCategoriasFestival',{id:festToSee}).then(function(answer) {
+        $scope.categoriesFes=answer;
+        console.log($scope.categoriesFes);
+	});  
+        
+    }
+    
+    $scope.BandsCatFes= function(category){
+        connectApi.httpGet('ObtenerBandasCayegoriasFestival',{rol:category.id,id:festToSee}).then(function(answer) {
+        $scope.bandFest=answer;
+        console.log($scope.bandFest);
+	});    
+    }
+})
+
+
+.controller('createFestivalController', function($scope, $state, $stateParams,connectApi){
+    var billboardBef= $stateParams.billboardId;
+    $scope.oneFestival=[];
+    $scope.userData={nombre:"",ubicacion:"",diaInicio:"",diaFinal:"",fechaFinal:"",servicios: "",transporte:"",comida:"",foto:"",promocionId:localStorage.getItem('userId'),pais:"",categorias:[]};
+    $scope.categories=[];
+    $scope.bands=[];
+    $scope.addedBands=[];
+    $scope.activeCategory;
+    $scope.oneBillboard={};
+    $scope.addedCategories=[];
+    var addedBandsIds=[];
+    
+    
+    $scope.getBillboardInfo =function(){
+        connectApi.httpGet('ObtenerUnaCartelera',{id:billboardBef}).then(function(answer) {
+        $scope.oneBillboard=answer[0];
+        console.log($scope.oneBillboard);
+	});
+        connectApi.httpGet('ObtenerCategoriasPorCartelera',{id:billboardBef}).then(function(answer) {
+			$scope.categories=answer;
+            console.log($scope.categories);
+		});
+        
+    }
+    
+    $scope.activateCategorie=function(category){
+        connectApi.httpGet('ObtenerBandasPorCategoria',{id:billboardBef,popularidad:category.id}).then(function(answer) {
+			$scope.bands=answer;
+		});
+        
+		if ($scope.activeCategory===category){
+			$scope.activeCategory=null;
+			addedBandsIds=[];
+			for (i = 0; i < $scope.addedBands.length; i++) { 
+    			$scope.bands.push($scope.addedBands[i]);
+			}
+			$scope.addedBands=[];
+			
+		}
+		else{
+			$scope.activeCategory=category;
+			addedBandsIds=[];
+			for (i = 0; i < $scope.addedBands.length; i++) {
+    			$scope.bands.push($scope.addedBands[i]);
+			}
+			$scope.addedBands=[];
+		}	
+	}
+    
+    $scope.addBands= function(band){
+		$scope.addedBands.push(band);
+		$scope.bands.splice($scope.bands.indexOf(band),1);
+		addedBandsIds.push(band.id);		
+	}
+    
+    $scope.confirmCategories=function(){
+		$scope.addedCategories.push({id:$scope.activeCategory.id,bandas:addedBandsIds})
+		addedBandsIds=[];
+		$scope.addedBands=[];
+		$scope.categories.splice($scope.categories.indexOf($scope.activeCategory),1);
+		$scope.activeCategory=null;
+        $scope.userData.categorias=$scope.addedCategories;
+        
+        console.log($scope.addedCategories);
+        console.log($scope.userData);
+		
+	}
+})
 
 
 
