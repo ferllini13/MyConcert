@@ -18,8 +18,12 @@
     </div>
     
     
+    
+<form class="form-horizontal" role="form">
+    
+    
      <div class="col-md-8 col-sm-6 col-xs-12 personal-info">
-      <form class="form-horizontal" role="form">
+
           <div class="col-md-8" ng-repeat="cartelera in unaCartelera"> 
 		 <div class="form-group">
           <label>Pais: {{cartelera.nombre1}}</label>  
@@ -42,9 +46,9 @@
           <label >Fecha final votacion: {{cartelera.diaFinalVotaciones}}</label>
         </div>
      </div>     
-      </form>
-    </div>
     
+    </div>
+
         <div class="container panel panel-default col-lg-4">
 				<div class="panel-heading">
 				<input type="search"
@@ -75,13 +79,16 @@
             		<ion-list class="list-group">
 						<ion-item class="list-group-item row" ng-repeat="band in categorybands | filter:search2">
 							<a style="color:black;" href="#/seeBand/{{band.id}}"><h3>{{band.nombre}}</h3></a>
-                                <form>
-                            	<input type="number" value="0" max="100" min="0" step="1" maxlength="3" size="3" required="required">
-                                  <input type="submit">
-                                </form>
+
+                            	<input type="number" value="0" max="100" min="0" step="1" maxlength="3" size="3" ng-model="values[$index]">
+                                
+
                             <h3>Total: {{band.vote}}</h3>
 						</ion-item>
     				</ion-list>
 			</div>
+            <button ng-click="votesCategory()">Confirmar</button>
 			</div>    
+              
+                </form>
 </div>

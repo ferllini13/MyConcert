@@ -1,21 +1,8 @@
-<div class="scroll">
+  <div ng-repeat="item in items">
+    <input type="text" ng-model="values[$index]">
+  </div>
+  <button type="button" ng-click="saveAllValues()">Save</button>
 
-
-<input id="file" type="file"><br>
-<img src="" i height="200" id="pic" ait="Image preview...">
-<br><br><br>
-<button ng-click="up()" > Dele aqui  </button>
-
-
-
-
-
-<h1> {{try.preview_url}}  </h1>
-
-
-
-
-</div>
 
 
 
