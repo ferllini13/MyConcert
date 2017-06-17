@@ -295,7 +295,6 @@ angular.module('MyConcert', ['ionic'])
                             console.log(answer);
         });
     }
-    
     })
 
 
